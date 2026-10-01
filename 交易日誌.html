@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交易日誌</title>
+    <!-- 引入 Font Awesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --border-color: #333;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #f0b90b; /* 幣安黃 */
+            --accent-green: #2ecc71;
+            --accent-red: #e74c3c;
+            --input-bg: #2a2a2a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            padding: 20px;
+            padding-bottom: 80px;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        /* 頂部導航 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .header h1 { font-size: 1.5rem; font-weight: 600; }
+        .header .date { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* 分頁切換 */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .tab-btn.active {
+            background: var(--accent-color);
+            color: #121212;
+            border-color: var(--accent-color);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* 卡片樣式 */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+        }
+        .card-title i { color: var(--accent-color); }
+
+        /* 表單元素 */
+        .form-group { margin-bottom: 15px; }
+        .form-row { display: flex; gap: 15px; flex-wrap: wrap; }
+        .form-row > .form-group { flex: 1; min-width: 200px; }
+        
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        input[type="text"], input[type="number"], input[type="date"], input[type="datetime-local"], select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        textarea { resize: vertical; min-height: 60px; }
+
+        /* 按鈕群組 (單選/多選) */
+        .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+        .chip {
+            padding: 6px 14px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .chip.selected {
+            background: rgba(240, 185, 11, 0.2);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+        .chip.selected.red {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+        .chip.selected.green {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* 自動計算顯示區 */
+        .calc-box {
+            background: #1a1a1a;
+            border: 1px dashed var(--accent-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        .calc-item { text-align: center; }
+        .calc-item .label { font-size: 0.75rem; color: var(--text-secondary); }
+        .calc-item .value { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); }
+
+        /* 統計數據面板 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        .stat-card .label { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 5px; }
+        .stat-card .value { font-size: 1.4rem; font-weight: bold; }
+        .stat-card .value.green { color: var(--accent-green); }
+        .stat-card .value.red { color: var(--accent-red); }
+
+        /* 歷史紀錄列表 */
+        .history-list { display: flex; flex-direction: column; gap: 10px; }
+        .history-item {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .history-item .info { flex: 2; min-width: 200px; }
+        .history-item .info h4 { font-size: 1rem; margin-bottom: 5px; }
+        .history-item .info p { font-size: 0.8rem; color: var(--text-secondary); }
+        .history-item .result { font-weight: bold; font-size: 1.1rem; text-align: right; }
+        .history-item .result.green { color: var(--accent-green); }
+        .history-item .result.red { color: var(--accent-red); }
+        
+        .history-item .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .history-item .actions button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+        .history-item .actions .edit-btn { color: var(--accent-color); }
+        .history-item .actions .delete-btn { color: var(--accent-red); }
+        .history-item .actions .copy-excel-btn {
+            color: var(--accent-green);
+            font-size: 0.75rem;
+            background: rgba(46, 204, 113, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--accent-green);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+        .history-item .actions .view-img-btn {
+            color: var(--accent-color);
+            font-size: 0.75rem;
+            background: rgba(240, 185, 11, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--accent-color);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* 日期篩選器 */
+        .date-filter-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: var(--input-bg);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .date-filter-container input {
+            width: auto;
+            flex: 1;
+            min-width: 130px;
+            padding: 6px 10px;
+        }
+        .date-filter-container button {
+            padding: 6px 12px;
+            background: var(--accent-color);
+            color: #121212;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .date-filter-container .clear-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        /* 圖片連結輸入區 */
+        .image-link-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .image-link-container input {
+            flex: 1;
+        }
+        .image-link-container button {
+            padding: 0 15px;
+            background: var(--accent-color);
+            color: #121212;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .image-preview-container {
+            display: none;
+            margin-top: 15px;
+            position: relative;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            background: #1a1a1a;
+            min-height: 100px;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-preview-container img {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 4px;
+            display: none;
+        }
+        .image-error-msg {
+            color: var(--accent-red);
+            font-size: 0.9rem;
+            display: none;
+        }
+        .open-link-btn {
+            display: none;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: var(--accent-color);
+            color: #121212;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* 圖片彈窗 (Modal) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+        }
+        .modal .close {
+            position: absolute;
+            top: 20px; right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        /* 底部導航 (模擬 APP) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
+        .nav-item.active { color: var(--accent-color); }
+
+        /* 響應式 */
+        @media (max-width: 600px) {
+            .form-row > .form-group { min-width: 100%; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .date-filter-container { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 頂部 -->
+    <div class="header">
+        <h1><i class="fas fa-coins"></i> 交易日誌</h1>
+        <div class="date" id="currentDate"></div>
+    </div>
+
+    <!-- 分頁切換 -->
+    <div class="tabs">
+        <div class="tab-btn active" onclick="switchTab('entry')"><i class="fas fa-pen"></i> 記錄交易</div>
+        <div class="tab-btn" onclick="switchTab('dashboard')"><i class="fas fa-chart-pie"></i> 數據統計</div>
+    </div>
+
+    <!-- ================= 頁面 1: 記錄交易 ================= -->
+    <div id="tab-entry" class="tab-content active">
+        <form id="tradeForm">
+            <input type="hidden" id="editId" value=""> <!-- 隱藏欄位，用於編輯時記錄 ID -->
+            
+            <!-- 區塊 1: 進場與風控計算 (已移至第一) -->
+            <div class="card">
+                <div class="card-title"><i class="fas fa-calculator"></i> 1. 交易設定與風控計算</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>交易對 (幣種)</label>
+                        <input type="text" id="symbol" placeholder="例如: BTCUSDT, ETHUSDT" required>
+                    </div>
+                    <div class="form-group">
+                        <label>交易方向</label>
+                        <select id="direction">
+                            <option value="long">做多 (Long)</option>
+                            <option value="short">做空 (Short)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>交易狀態</label>
+                        <select id="status">
+                            <option value="計劃">計劃 (Plan)</option>
+                            <option value="持倉">持倉 (Open)</option>
+                            <option value="已平倉">已平倉 (Closed)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>策略名稱</label>
+                    <input type="text" id="strategy" placeholder="例如: 突破策略、均線回踩、纏論">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>倉位倍數 (槓桿)</label>
+                        <input type="number" id="leverage" step="1" placeholder="請輸入槓桿倍數">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>進場選擇</label>
+                        <select id="entryType">
+                            <option value="市價">市價</option>
+                            <option value="限價">限價</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>進場手續費 (%)</label>
+                        <input type="number" id="entryFee" step="0.001" placeholder="請輸入進場手續費">
+                    </div>
+                    <div class="form-group">
+                        <label>進場價 (Entry)</label>
+                        <input type="number" id="entryPrice" step="0.0001" placeholder="0.00" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>出場選擇</label>
+                        <select id="exitType">
+                            <option value="市價">市價</option>
+                            <option value="限價">限價</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>出場手續費 (%)</label>
+                        <input type="number" id="exitFee" step="0.001" placeholder="請輸出入場手續費">
+                    </div>
+                    <div class="form-group">
+                        <label>出場價 (Exit Price) - 平倉後填寫</label>
+                        <input type="number" id="exitPrice" step="0.0001" placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>止損價 (Stop Loss)</label>
+                        <input type="number" id="stopLoss" step="0.0001" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label>目標價 (Take Profit)</label>
+                        <input type="number" id="takeProfit" step="0.0001" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label>數量 / 倉位大小 (Size)</label>
+                        <input type="number" id="size" step="0.0001" placeholder="例如: 0.1" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>開單時間</label>
+                        <input type="datetime-local" id="openTime">
+                    </div>
+                    <div class="form-group">
+                        <label>平倉時間</label>
+                        <input type="datetime-local" id="closeTime">
+                    </div>
+                </div>
+
+                <!-- 自動計算結果 -->
+                <div class="calc-box">
+                    <div class="calc-item">
+                        <div class="label">風險金額 (1R)</div>
+                        <div class="value" id="riskAmount">0</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="label">預期盈虧比 (RR)</div>
+                        <div class="value" id="riskReward">0</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="label">實際盈虧 (含手續費)</div>
+                        <div class="value" id="profitLoss">0</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="label">實際 R 數</div>
+                        <div class="value" id="rMultiple">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 區塊 2: 開單前觀察 -->
+            <div class="card">
+                <div class="card-title"><i class="fas fa-eye"></i> 2. 開單前，你看見了什麼？</div>
+                <div class="form-group">
+                    <label>市場觀察與策略假設</label>
+                    <textarea id="marketView" placeholder="描述當時的市場結構、型態或指標訊號..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>進場觸發條件</label>
+                    <textarea id="trigger" placeholder="什麼條件讓你決定進場？"></textarea>
+                </div>
+                
+                <!-- TV 截圖連結輸入區 -->
+                <div class="form-group" style="margin-top: 20px;">
+                    <label><i class="fas fa-link"></i> TradingView 截圖連結 (選填)</label>
+                    <div class="image-link-container">
+                        <input type="text" id="imageUrlInput" placeholder="請貼上圖片網址 (例如: https://...jpg)" oninput="handleImageUrlChange()">
+                    </div>
+                    <div class="image-preview-container" id="imagePreviewContainer">
+                        <img id="imagePreview" src="" alt="預覽圖" onerror="handleImageError()">
+                        <div class="image-error-msg" id="imageErrorMsg">⚠️ 圖片載入失敗。可能是網址錯誤，或該網站不允許外連。</div>
+                        <a href="#" id="openLinkBtn" class="open-link-btn" target="_blank"><i class="fas fa-external-link-alt"></i> 在新分頁開啟連結</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 區塊 3: 系統遵循度 -->
+            <div class="card">
+                <div class="card-title"><i class="fas fa-check-double"></i> 3. 這筆交易符合系統嗎？</div>
+                <div class="form-group">
+                    <label>交易決策類型</label>
+                    <select id="systemType" onchange="toggleCustomInput(this)">
+                        <option value="系統交易：符合既定策略">系統交易：符合既定策略</option>
+                        <option value="主觀交易：偏離系統">主觀交易：偏離系統</option>
+                        <option value="衝動交易：無計畫">衝動交易：無計畫</option>
+                        <option value="自行輸入">--- 自行輸入 ---</option>
+                    </select>
+                    <!-- 自行輸入的隱藏文字框 -->
+                    <input type="text" id="customSystemType" placeholder="請輸入您的決策類型..." style="display:none; margin-top:10px;">
+                </div>
+                <div class="form-group">
+                    <label>開單前一致性檢查 (可多選)</label>
+                    <div class="chip-group" id="checklistGroup">
+                        <div class="chip" data-val="符合市場環境">符合市場環境</div>
+                        <div class="chip" data-val="符合策略型態">符合策略型態</div>
+                        <div class="chip" data-val="出現明確進場訊號">出現明確進場訊號</div>
+                        <div class="chip" data-val="進場前已設定止損">進場前已設定止損</div>
+                        <div class="chip" data-val="進場前已設定目標">進場前已設定目標</div>
+                        <div class="chip" data-val="風險符合原定規則">風險符合原定規則</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 區塊 4: 心理狀態 -->
+            <div class="card">
+                <div class="card-title"><i class="fas fa-brain"></i> 4. 當下的心理狀態</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>進場時的主要情緒</label>
+                        <select id="emotion">
+                            <option value="冷靜">冷靜</option>
+                            <option value="興奮">興奮</option>
+                            <option value="焦慮">焦慮</option>
+                            <option value="恐懼">恐懼</option>
+                            <option value="貪婪">貪婪</option>
+                            <option value="報復性">報復性</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>做單信心 (1-10)</label>
+                        <input type="range" id="confidence" min="1" max="10" value="5" style="width:100%;">
+                        <div style="text-align:center; font-size:0.8rem;" id="confidenceVal">5</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>當時內心在想什麼？</label>
+                    <textarea id="mindset" placeholder="記錄當下的想法..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>出現哪些念頭或行為？ (可多選)</label>
+                    <div class="chip-group" id="biasGroup">
+                        <div class="chip" data-val="想凹單">想凹單</div>
+                        <div class="chip" data-val="逆勢硬扛">逆勢硬扛</div>
+                        <div class="chip" data-val="移動止損">移動止損</div>
+                        <div class="chip" data-val="虧損後放大風險">虧損後放大風險</div>
+                        <div class="chip" data-val="連續後放大風險">連續後放大風險</div>
+                        <div class="chip" data-val="追價 / FOMO">追價 / FOMO</div>
+                        <div class="chip" data-val="報復性交易">報復性交易</div>
+                        <div class="chip" data-val="過度交易">過度交易</div>
+                        <div class="chip" data-val="提前出場">提前出場</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 區塊 5: 個人檢討 -->
+            <div class="card">
+                <div class="card-title"><i class="fas fa-clipboard-check"></i> 5. 個人檢討 / 覆盤筆記</div>
+                <div class="form-group">
+                    <textarea id="personalReview" placeholder="記錄這筆交易學到了什麼？哪裡可以做得更好？"></textarea>
+                </div>
+            </div>
+
+            <!-- 提交按鈕 -->
+            <button type="submit" id="submitBtn" class="tab-btn active" style="width:100%; padding:15px; font-size:1.1rem; margin-top:10px;">
+                <i class="fas fa-save"></i> 儲存交易紀錄
+            </button>
+            
+            <!-- 取消編輯按鈕 (預設隱藏) -->
+            <button type="button" id="cancelEditBtn" class="tab-btn" style="width:100%; padding:15px; font-size:1.1rem; margin-top:10px; border-color: var(--accent-red); color: var(--accent-red); display: none;" onclick="cancelEdit()">
+                <i class="fas fa-times"></i> 取消編輯
+            </button>
+        </form>
+    </div>
+
+    <!-- ================= 頁面 2: 數據統計 ================= -->
+    <div id="tab-dashboard" class="tab-content">
+        <!-- 日期篩選器 -->
+        <div class="card" style="padding: 15px;">
+            <div class="card-title" style="margin-bottom: 10px;"><i class="fas fa-calendar-alt"></i> 日期範圍篩選</div>
+            <div class="date-filter-container">
+                <input type="date" id="filterStartDate" onchange="renderDashboard()">
+                <span style="color: var(--text-secondary);">至</span>
+                <input type="date" id="filterEndDate" onchange="renderDashboard()">
+                <button class="clear-btn" onclick="clearDateFilter()"><i class="fas fa-times"></i> 清除</button>
+            </div>
+        </div>
+
+        <!-- 核心數據 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-chart-bar"></i> 核心數據</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="label">總 R 數</div>
+                    <div class="value" id="statTotalR">0.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">勝率</div>
+                    <div class="value" id="statWinRate">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">總交易數</div>
+                    <div class="value" id="statTotalTrades">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">平均 R</div>
+                    <div class="value" id="statAvgR">0.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">獲利交易</div>
+                    <div class="value green" id="statWins">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">虧損交易</div>
+                    <div class="value red" id="statLosses">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">最大 R 回撤</div>
+                    <div class="value red" id="statMaxDrawdown">0.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">總盈虧 (USDT)</div>
+                    <div class="value" id="statTotalPL">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 多空比較 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-balance-scale"></i> 多空比較</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>做多 (Long)</label>
+                    <div>交易數: <span id="longCount">0</span> 筆 | 勝率: <span id="longWinRate">0%</span></div>
+                </div>
+                <div class="form-group">
+                    <label>做空 (Short)</label>
+                    <div>交易數: <span id="shortCount">0</span> 筆 | 勝率: <span id="shortWinRate">0%</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Excel 網址設定與開啟 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-file-excel"></i> Excel 表格設定</div>
+            
+            <!-- 新增 EX 副本按鈕 -->
+            <button onclick="window.open('https://docs.google.com/spreadsheets/d/18xLiHU8R3xe9w8QdFOnBefabKWIEhwXz7weSxSeroO4/copy', '_blank')" class="tab-btn" style="width:100%; padding:12px; font-size:1rem; margin-bottom: 15px; border-color: var(--accent-color); color: var(--accent-color);">
+                <i class="fas fa-copy"></i> 新增 EX 副本
+            </button>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; display: block;">
+                    設定您的 Excel / Google Sheets 網址
+                </label>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="text" id="excelUrlInput" placeholder="請貼上您的 Google Sheets 網址..." style="flex: 1; padding: 8px 12px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.9rem;">
+                    <button onclick="saveExcelUrl()" style="padding: 8px 15px; background: var(--accent-color); color: #121212; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+                        <i class="fas fa-save"></i> 儲存
+                    </button>
+                    <button onclick="clearExcelUrl()" style="padding: 8px 15px; background: transparent; color: var(--accent-red); border: 1px solid var(--accent-red); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+                        <i class="fas fa-times"></i> 清除
+                    </button>
+                </div>
+                <div style="margin-top: 8px; font-size: 0.8rem; color: var(--text-secondary);" id="excelUrlStatus">
+                    目前尚未設定網址
+                </div>
+            </div>
+            <button onclick="openExcelLink()" class="tab-btn" style="width:100%; padding:12px; font-size:1rem; border-color: var(--accent-green); color: var(--accent-green);">
+                <i class="fas fa-external-link-alt"></i> 開啟 EX 表格
+            </button>
+        </div>
+
+        <!-- 歷史紀錄 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-history"></i> 歷史交易紀錄 <span id="filterInfo" style="font-size: 0.8rem; color: var(--text-secondary); font-weight: normal; margin-left: 10px;"></span></div>
+            <div class="history-list" id="historyList">
+                <!-- 動態生成 -->
+                <p style="color:var(--text-secondary); text-align:center;">尚無交易紀錄</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 圖片預覽彈窗 -->
+<div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="close">&times;</span>
+    <img id="modalImage" src="" alt="截圖">
+</div>
+
+<!-- 底部導航 -->
+<div class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('entry')">
+        <i class="fas fa-pen"></i>
+        <span>紀錄</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('dashboard')">
+        <i class="fas fa-chart-pie"></i>
+        <span>統計</span>
+    </div>
+</div>
+
+<script>
+    // === 狀態管理 ===
+    let trades = JSON.parse(localStorage.getItem('tradingJournalData')) || [];
+    let currentImageUrl = ""; // 暫存當前輸入的圖片網址
+    let isEditing = false; // 是否正在編輯模式
+
+    // === 初始化 ===
+    document.addEventListener('DOMContentLoaded', () => {
+        // 設定當前日期
+        const now = new Date();
+        document.getElementById('currentDate').textContent = now.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
+        
+        // 綁定表單事件
+        document.getElementById('tradeForm').addEventListener('submit', handleFormSubmit);
+        
+        // 綁定即時計算事件
+        ['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'size', 'entryFee', 'exitFee', 'leverage'].forEach(id => {
+            document.getElementById(id).addEventListener('input', calculateMetrics);
+        });
+
+        // 綁定信心 slider
+        document.getElementById('confidence').addEventListener('input', (e) => {
+            document.getElementById('confidenceVal').textContent = e.target.value;
+        });
+
+        // 初始化 Chip 選擇
+        initChips('checklistGroup');
+        initChips('biasGroup');
+
+        // 載入已儲存的 Excel 網址
+        loadExcelUrl();
+
+        // 載入上次使用的交易參數
+        loadDefaultParams();
+
+        // 渲染統計
+        renderDashboard();
+    });
+
+    // === 載入上次使用的參數 ===
+    function loadDefaultParams() {
+        const savedLeverage = localStorage.getItem('defaultLeverage');
+        const savedEntryFee = localStorage.getItem('defaultEntryFee');
+        const savedExitFee = localStorage.getItem('defaultExitFee');
+
+        if (savedLeverage) document.getElementById('leverage').value = savedLeverage;
+        if (savedEntryFee) document.getElementById('entryFee').value = savedEntryFee;
+        if (savedExitFee) document.getElementById('exitFee').value = savedExitFee;
+    }
+
+    // === 儲存當前使用的參數 ===
+    function saveDefaultParams() {
+        localStorage.setItem('defaultLeverage', document.getElementById('leverage').value);
+        localStorage.setItem('defaultEntryFee', document.getElementById('entryFee').value);
+        localStorage.setItem('defaultExitFee', document.getElementById('exitFee').value);
+    }
+
+    // === 自行輸入切換邏輯 ===
+    function toggleCustomInput(selectElement) {
+        const customInput = document.getElementById('customSystemType');
+        if (selectElement.value === '自行輸入') {
+            customInput.style.display = 'block';
+            customInput.focus();
+        } else {
+            customInput.style.display = 'none';
+            customInput.value = ''; // 隱藏時清空
+        }
+    }
+
+    // === Excel 網址管理 ===
+    function saveExcelUrl() {
+        const url = document.getElementById('excelUrlInput').value.trim();
+        if (!url) {
+            alert('請先輸入網址！');
+            return;
+        }
+        localStorage.setItem('excelUrl', url);
+        document.getElementById('excelUrlStatus').innerHTML = `<i class="fas fa-check-circle" style="color: var(--accent-green);"></i> 已儲存: <a href="${url}" target="_blank" style="color: var(--accent-color); word-break: break-all;">${url}</a>`;
+        alert('✅ 網址已儲存！');
+    }
+
+    function clearExcelUrl() {
+        if (confirm('確定要清除已儲存的網址嗎？')) {
+            localStorage.removeItem('excelUrl');
+            document.getElementById('excelUrlInput').value = '';
+            document.getElementById('excelUrlStatus').textContent = '目前尚未設定網址';
+            alert('已清除網址。');
+        }
+    }
+
+    function loadExcelUrl() {
+        const savedUrl = localStorage.getItem('excelUrl');
+        if (savedUrl) {
+            document.getElementById('excelUrlInput').value = savedUrl;
+            document.getElementById('excelUrlStatus').innerHTML = `<i class="fas fa-check-circle" style="color: var(--accent-green);"></i> 已儲存: <a href="${savedUrl}" target="_blank" style="color: var(--accent-color); word-break: break-all;">${savedUrl}</a>`;
+        }
+    }
+
+    function openExcelLink() {
+        const savedUrl = localStorage.getItem('excelUrl');
+        if (!savedUrl) {
+            alert('您尚未設定 Excel 網址！請先在上方輸入並儲存。');
+            return;
+        }
+        window.open(savedUrl, '_blank');
+    }
+
+    // === 圖片連結處理邏輯 ===
+    function handleImageUrlChange() {
+        const url = document.getElementById('imageUrlInput').value.trim();
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        const previewImg = document.getElementById('imagePreview');
+        const errorMsg = document.getElementById('imageErrorMsg');
+        const openLinkBtn = document.getElementById('openLinkBtn');
+
+        if (url) {
+            currentImageUrl = url;
+            previewContainer.style.display = 'flex';
+            previewImg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            openLinkBtn.style.display = 'none';
+            
+            // 設定圖片來源，並在載入成功/失敗時切換顯示
+            previewImg.src = url;
+            previewImg.onload = function() {
+                previewImg.style.display = 'block';
+                errorMsg.style.display = 'none';
+                openLinkBtn.style.display = 'none';
+            };
+            previewImg.onerror = function() {
+                previewImg.style.display = 'none';
+                errorMsg.style.display = 'block';
+                openLinkBtn.style.display = 'inline-block';
+                openLinkBtn.href = url; // 設定開啟連結的網址
+            };
+        } else {
+            currentImageUrl = "";
+            previewContainer.style.display = 'none';
+            previewImg.src = "";
+        }
+    }
+
+    // === 圖片彈窗邏輯 ===
+    function openModal(imageSrc) {
+        if (!imageSrc) return;
+        document.getElementById('modalImage').src = imageSrc;
+        document.getElementById('imageModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
+
+    // === 分頁切換 ===
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+        
+        // 更新頂部與底部按鈕狀態
+        if(tabName === 'entry') {
+            document.querySelector('.tabs .tab-btn:first-child').classList.add('active');
+            document.querySelector('.bottom-nav .nav-item:first-child').classList.add('active');
+        } else {
+            document.querySelector('.tabs .tab-btn:last-child').classList.add('active');
+            document.querySelector('.bottom-nav .nav-item:last-child').classList.add('active');
+            renderDashboard(); // 切換到統計頁時重新計算
+        }
+    }
+
+    // === Chip 點擊邏輯 ===
+    function initChips(containerId) {
+        const container = document.getElementById(containerId);
+        if(!container) return;
+        container.querySelectorAll('.chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                chip.classList.toggle('selected');
+                // 根據內容給予不同顏色
+                if(chip.classList.contains('selected')) {
+                    const val = chip.dataset.val;
+                    if(['想凹單', '逆勢硬扛', '虧損後放大風險', '追價 / FOMO', '報復性交易'].includes(val)) {
+                        chip.classList.add('red');
+                    } else {
+                        chip.classList.add('green');
+                    }
+                } else {
+                    chip.classList.remove('red', 'green');
+                }
+            });
+        });
+    }
+
+    // 取得 Chip 選中的值
+    function getSelectedChips(containerId) {
+        const container = document.getElementById(containerId);
+        const selected = [];
+        container.querySelectorAll('.chip.selected').forEach(chip => {
+            selected.push(chip.dataset.val);
+        });
+        return selected;
+    }
+
+    // === 自動計算核心邏輯 (已加入手續費扣除) ===
+    function calculateMetrics() {
+        const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
+        const stop = parseFloat(document.getElementById('stopLoss').value) || 0;
+        const target = parseFloat(document.getElementById('takeProfit').value) || 0;
+        const exit = parseFloat(document.getElementById('exitPrice').value) || 0;
+        const size = parseFloat(document.getElementById('size').value) || 0;
+        const entryFeePercent = parseFloat(document.getElementById('entryFee').value) || 0;
+        const exitFeePercent = parseFloat(document.getElementById('exitFee').value) || 0;
+        const direction = document.getElementById('direction').value; // 'long' or 'short'
+
+        let riskAmount = 0;
+        let rewardAmount = 0;
+        let rr = 0;
+        let pl = 0; // 實際盈虧 (含手續費)
+        let rMultiple = 0;
+
+        if(entry && stop && size) {
+            // 計算 1R 風險
+            if (direction === 'long') {
+                riskAmount = (entry - stop) * size;
+                rewardAmount = target ? (target - entry) * size : 0;
+            } else {
+                riskAmount = (stop - entry) * size;
+                rewardAmount = target ? (entry - target) * size : 0;
+            }
+            
+            // 避免除以零
+            if (riskAmount > 0) {
+                rr = rewardAmount / riskAmount;
+            }
+        }
+
+        if(exit && entry && size) {
+            // 計算原始盈虧 (未扣手續費)
+            let rawPl = 0;
+            if (direction === 'long') {
+                rawPl = (exit - entry) * size;
+            } else {
+                rawPl = (entry - exit) * size;
+            }
+
+            // 計算手續費
+            const entryFeeAmount = entry * size * (entryFeePercent / 100);
+            const exitFeeAmount = exit * size * (exitFeePercent / 100);
+
+            // 實際盈虧 = 原始盈虧 - 進場手續費 - 出場手續費
+            pl = rawPl - entryFeeAmount - exitFeeAmount;
+
+            // 計算 R 數 (使用原始盈虧，不扣手續費)
+            if (riskAmount > 0) {
+                rMultiple = rawPl / riskAmount;
+            }
+        }
+
+        // 更新 UI
+        document.getElementById('riskAmount').textContent = riskAmount.toFixed(2);
+        document.getElementById('riskReward').textContent = rr.toFixed(2);
+        document.getElementById('profitLoss').textContent = pl.toFixed(2);
+        document.getElementById('rMultiple').textContent = rMultiple.toFixed(2);
+
+        // 顏色變化
+        const plEl = document.getElementById('profitLoss');
+        const rEl = document.getElementById('rMultiple');
+        
+        if(pl > 0) { plEl.style.color = 'var(--accent-green)'; } 
+        else if (pl < 0) { plEl.style.color = 'var(--accent-red)'; } 
+        else { plEl.style.color = 'var(--accent-color)'; }
+
+        if(rMultiple > 0) { rEl.style.color = 'var(--accent-green)'; } 
+        else if (rMultiple < 0) { rEl.style.color = 'var(--accent-red)'; } 
+        else { rEl.style.color = 'var(--accent-color)'; }
+    }
+
+    // === 表單提交 ===
+    function handleFormSubmit(e) {
+        e.preventDefault();
+
+        const entry = parseFloat(document.getElementById('entryPrice').value);
+        const stop = parseFloat(document.getElementById('stopLoss').value);
+        const target = parseFloat(document.getElementById('takeProfit').value) || 0;
+        const exit = parseFloat(document.getElementById('exitPrice').value) || 0;
+        const size = parseFloat(document.getElementById('size').value);
+        const direction = document.getElementById('direction').value;
+        const leverage = parseFloat(document.getElementById('leverage').value) || 0;
+        const entryFeePercent = parseFloat(document.getElementById('entryFee').value) || 0;
+        const exitFeePercent = parseFloat(document.getElementById('exitFee').value) || 0;
+
+        // 儲存此次使用的參數
+        saveDefaultParams();
+
+        // 取得系統類型 (判斷是否自行輸入)
+        const systemTypeSelect = document.getElementById('systemType').value;
+        const customSystemType = document.getElementById('customSystemType').value;
+        const finalSystemType = systemTypeSelect === '自行輸入' ? customSystemType : systemTypeSelect;
+
+        // 計算最終數據
+        let riskAmount = 0, pl = 0, rMultiple = 0;
+        if (direction === 'long') {
+            riskAmount = (entry - stop) * size;
+        } else {
+            riskAmount = (stop - entry) * size;
+        }
+
+        if (exit && entry && size) {
+            // 原始盈虧
+            let rawPl = 0;
+            if (direction === 'long') {
+                rawPl = (exit - entry) * size;
+            } else {
+                rawPl = (entry - exit) * size;
+            }
+
+            // 手續費
+            const entryFeeAmount = entry * size * (entryFeePercent / 100);
+            const exitFeeAmount = exit * size * (exitFeePercent / 100);
+
+            // 實際盈虧 (扣手續費)
+            pl = rawPl - entryFeeAmount - exitFeeAmount;
+
+            // R 數 (用原始盈虧)
+            if (riskAmount > 0) {
+                rMultiple = rawPl / riskAmount;
+            }
+        }
+
+        const editId = document.getElementById('editId').value;
+
+        const tradeData = {
+            id: editId ? parseInt(editId) : Date.now(), // 如果是編輯，保留原本 ID
+            date: new Date().toLocaleString('zh-TW'),
+            symbol: document.getElementById('symbol').value,
+            direction: direction,
+            directionText: direction === 'long' ? '做多' : '做空',
+            status: document.getElementById('status').value,
+            strategy: document.getElementById('strategy').value,
+            leverage: leverage,
+            entryType: document.getElementById('entryType').value,
+            entryFee: entryFeePercent,
+            exitType: document.getElementById('exitType').value,
+            exitFee: exitFeePercent,
+            marketView: document.getElementById('marketView').value,
+            trigger: document.getElementById('trigger').value,
+            imageUrl: currentImageUrl, // 儲存圖片的網址
+            systemType: finalSystemType, // 使用最終的系統類型
+            checklist: getSelectedChips('checklistGroup'),
+            emotion: document.getElementById('emotion').value,
+            confidence: document.getElementById('confidence').value,
+            mindset: document.getElementById('mindset').value,
+            biases: getSelectedChips('biasGroup'),
+            personalReview: document.getElementById('personalReview').value,
+            entryPrice: entry,
+            stopLoss: stop,
+            takeProfit: target,
+            exitPrice: exit,
+            size: size,
+            openTime: document.getElementById('openTime').value,
+            closeTime: document.getElementById('closeTime').value,
+            riskAmount: riskAmount,
+            pl: pl,
+            rMultiple: rMultiple
+        };
+
+        if (editId) {
+            // 編輯模式：更新陣列中的資料
+            const index = trades.findIndex(t => t.id === parseInt(editId));
+            if (index !== -1) {
+                trades[index] = tradeData;
+            }
+            alert('交易紀錄已更新！');
+            cancelEdit(); // 重置編輯狀態
+        } else {
+            // 新增模式
+            trades.push(tradeData);
+            alert('交易紀錄已儲存！');
+        }
+
+        saveData();
+        
+        // 重置表單 (但保留槓桿與手續費)
+        document.getElementById('tradeForm').reset();
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected', 'red', 'green'));
+        document.getElementById('confidenceVal').textContent = '5';
+        document.getElementById('customSystemType').style.display = 'none'; // 重置隱藏輸入框
+        
+        // 重新載入預設參數
+        loadDefaultParams();
+        
+        // 重置圖片預覽
+        currentImageUrl = "";
+        document.getElementById('imageUrlInput').value = "";
+        document.getElementById('imagePreviewContainer').style.display = 'none';
+        document.getElementById('imagePreview').src = "";
+        
+        calculateMetrics(); // 重置計算框
+        
+        switchTab('dashboard'); // 自動跳轉到統計頁
+    }
+
+    // === 編輯模式 ===
+    function editTrade(id) {
+        const trade = trades.find(t => t.id === id);
+        if (!trade) return;
+
+        // 填寫表單
+        document.getElementById('editId').value = trade.id;
+        document.getElementById('symbol').value = trade.symbol;
+        document.getElementById('direction').value = trade.direction;
+        document.getElementById('status').value = trade.status;
+        document.getElementById('strategy').value = trade.strategy;
+        document.getElementById('leverage').value = trade.leverage || '';
+        document.getElementById('entryType').value = trade.entryType || '市價';
+        document.getElementById('entryFee').value = trade.entryFee || '';
+        document.getElementById('exitType').value = trade.exitType || '市價';
+        document.getElementById('exitFee').value = trade.exitFee || '';
+        document.getElementById('marketView').value = trade.marketView;
+        document.getElementById('trigger').value = trade.trigger;
+        document.getElementById('imageUrlInput').value = trade.imageUrl || '';
+        handleImageUrlChange(); // 觸發圖片預覽
+        
+        // 系統類型
+        const systemTypeSelect = document.getElementById('systemType');
+        const customInput = document.getElementById('customSystemType');
+        const standardTypes = ['系統交易：符合既定策略', '主觀交易：偏離系統', '衝動交易：無計畫'];
+        
+        if (standardTypes.includes(trade.systemType)) {
+            systemTypeSelect.value = trade.systemType;
+            customInput.style.display = 'none';
+            customInput.value = '';
+        } else {
+            systemTypeSelect.value = '自行輸入';
+            customInput.style.display = 'block';
+            customInput.value = trade.systemType;
+        }
+
+        // 一致性檢查 (Chips)
+        document.querySelectorAll('#checklistGroup .chip').forEach(chip => {
+            chip.classList.toggle('selected', trade.checklist.includes(chip.dataset.val));
+        });
+
+        document.getElementById('emotion').value = trade.emotion;
+        document.getElementById('confidence').value = trade.confidence;
+        document.getElementById('confidenceVal').textContent = trade.confidence;
+        document.getElementById('mindset').value = trade.mindset;
+
+        // 偏誤 (Chips)
+        document.querySelectorAll('#biasGroup .chip').forEach(chip => {
+            chip.classList.toggle('selected', trade.biases.includes(chip.dataset.val));
+        });
+
+        document.getElementById('personalReview').value = trade.personalReview || '';
+        document.getElementById('entryPrice').value = trade.entryPrice;
+        document.getElementById('stopLoss').value = trade.stopLoss;
+        document.getElementById('takeProfit').value = trade.takeProfit;
+        document.getElementById('exitPrice').value = trade.exitPrice;
+        document.getElementById('size').value = trade.size;
+        document.getElementById('openTime').value = trade.openTime || '';
+        document.getElementById('closeTime').value = trade.closeTime || '';
+
+        calculateMetrics(); // 重新計算
+
+        // 切換按鈕狀態
+        isEditing = true;
+        document.getElementById('submitBtn').innerHTML = '<i class="fas fa-edit"></i> 更新交易紀錄';
+        document.getElementById('submitBtn').style.borderColor = 'var(--accent-color)';
+        document.getElementById('submitBtn').style.color = 'var(--accent-color)';
+        document.getElementById('cancelEditBtn').style.display = 'block';
+
+        // 滾動到頂部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        switchTab('entry'); // 確保切換到記錄頁面
+    }
+
+    function cancelEdit() {
+        isEditing = false;
+        document.getElementById('editId').value = '';
+        document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> 儲存交易紀錄';
+        document.getElementById('submitBtn').style.borderColor = '';
+        document.getElementById('submitBtn').style.color = '';
+        document.getElementById('cancelEditBtn').style.display = 'none';
+        
+        // 重置表單 (但保留槓桿與手續費)
+        document.getElementById('tradeForm').reset();
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected', 'red', 'green'));
+        document.getElementById('confidenceVal').textContent = '5';
+        document.getElementById('customSystemType').style.display = 'none';
+        currentImageUrl = "";
+        document.getElementById('imageUrlInput').value = "";
+        document.getElementById('imagePreviewContainer').style.display = 'none';
+        document.getElementById('imagePreview').src = "";
+        
+        // 重新載入預設參數
+        loadDefaultParams();
+        
+        calculateMetrics();
+    }
+
+    // === 儲存資料 ===
+    function saveData() {
+        localStorage.setItem('tradingJournalData', JSON.stringify(trades));
+    }
+
+    // === 日期篩選功能 ===
+    function clearDateFilter() {
+        document.getElementById('filterStartDate').value = '';
+        document.getElementById('filterEndDate').value = '';
+        renderDashboard();
+    }
+
+    function getFilteredTrades() {
+        const startDate = document.getElementById('filterStartDate').value;
+        const endDate = document.getElementById('filterEndDate').value;
+
+        if (!startDate && !endDate) return trades;
+
+        return trades.filter(t => {
+            // 將交易時間轉換為 YYYY-MM-DD 格式進行比較
+            let tradeDate = '';
+            if (t.openTime) {
+                tradeDate = t.openTime.split('T')[0];
+            } else {
+                // 如果沒有開單時間，嘗試從 date 欄位解析
+                const d = new Date(t.date);
+                if (!isNaN(d)) {
+                    tradeDate = d.toISOString().split('T')[0];
+                }
+            }
+            if (!tradeDate) return true; // 如果無法解析日期，預設顯示
+
+            if (startDate && tradeDate < startDate) return false;
+            if (endDate && tradeDate > endDate) return false;
+            return true;
+        });
+    }
+
+    // === 渲染統計面板 ===
+    function renderDashboard() {
+        const filteredTrades = getFilteredTrades();
+        
+        // 更新篩選提示
+        const filterInfo = document.getElementById('filterInfo');
+        const startDate = document.getElementById('filterStartDate').value;
+        const endDate = document.getElementById('filterEndDate').value;
+        if (startDate || endDate) {
+            filterInfo.textContent = `(已篩選: ${startDate || '起始'} ~ ${endDate || '結束'})`;
+        } else {
+            filterInfo.textContent = '';
+        }
+
+        if (filteredTrades.length === 0) {
+            document.getElementById('historyList').innerHTML = '<p style="color:var(--text-secondary); text-align:center;">此日期範圍內無交易紀錄</p>';
+            // 重置所有統計數據
+            const ids = ['statTotalR', 'statWinRate', 'statTotalTrades', 'statAvgR', 'statWins', 'statLosses', 'statMaxDrawdown', 'statTotalPL', 'longCount', 'shortCount', 'longWinRate', 'shortWinRate'];
+            ids.forEach(id => document.getElementById(id).textContent = id.includes('Rate') ? '0%' : '0');
+            return;
+        }
+
+        let totalPL = 0;
+        let totalR = 0;
+        let wins = 0;
+        let losses = 0;
+        let maxDrawdown = 0;
+        let currentDrawdown = 0;
+        
+        let longTrades = 0, longWins = 0;
+        let shortTrades = 0, shortWins = 0;
+
+        filteredTrades.forEach(t => {
+            totalPL += t.pl || 0;
+            totalR += t.rMultiple || 0;
+
+            if (t.exitPrice > 0) { // 只有平倉的才算勝率
+                if (t.pl > 0) {
+                    wins++;
+                    currentDrawdown = 0; // 獲利時重置回撤
+                } else if (t.pl < 0) {
+                    losses++;
+                    currentDrawdown += Math.abs(t.rMultiple || 0);
+                    if (currentDrawdown > maxDrawdown) {
+                        maxDrawdown = currentDrawdown;
+                    }
+                }
+
+                // 多空統計
+                if (t.direction === 'long') {
+                    longTrades++;
+                    if (t.pl > 0) longWins++;
+                } else {
+                    shortTrades++;
+                    if (t.pl > 0) shortWins++;
+                }
+            }
+        });
+
+        const winRate = (wins + losses) > 0 ? (wins / (wins + losses)) * 100 : 0;
+        const avgR = (wins + losses) > 0 ? totalR / (wins + losses) : 0;
+        const longWinRate = longTrades > 0 ? (longWins / longTrades) * 100 : 0;
+        const shortWinRate = shortTrades > 0 ? (shortWins / shortTrades) * 100 : 0;
+
+        // 更新 UI
+        document.getElementById('statTotalR').textContent = totalR.toFixed(2);
+        document.getElementById('statTotalR').style.color = totalR >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
+        
+        document.getElementById('statWinRate').textContent = winRate.toFixed(1) + '%';
+        document.getElementById('statTotalTrades').textContent = filteredTrades.length;
+        document.getElementById('statAvgR').textContent = avgR.toFixed(2);
+        document.getElementById('statWins').textContent = wins;
+        document.getElementById('statLosses').textContent = losses;
+        document.getElementById('statMaxDrawdown').textContent = maxDrawdown.toFixed(2);
+        
+        const plEl = document.getElementById('statTotalPL');
+        plEl.textContent = totalPL.toFixed(2);
+        plEl.style.color = totalPL >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
+
+        document.getElementById('longCount').textContent = longTrades;
+        document.getElementById('longWinRate').textContent = longWinRate.toFixed(1) + '%';
+        document.getElementById('shortCount').textContent = shortTrades;
+        document.getElementById('shortWinRate').textContent = shortWinRate.toFixed(1) + '%';
+
+        // 渲染歷史列表
+        const historyList = document.getElementById('historyList');
+        historyList.innerHTML = '';
+        
+        // 反轉陣列讓最新的在上面
+        [...filteredTrades].reverse().forEach(t => {
+            const item = document.createElement('div');
+            item.className = 'history-item';
+            
+            const isWin = t.pl > 0;
+            const plClass = isWin ? 'green' : (t.pl < 0 ? 'red' : '');
+            const plText = t.pl > 0 ? `+${t.pl.toFixed(2)}` : t.pl.toFixed(2);
+            const rText = t.rMultiple > 0 ? `+${t.rMultiple.toFixed(2)}R` : `${t.rMultiple.toFixed(2)}R`;
+
+            // 顯示日期
+            let displayDate = t.date;
+            if (t.openTime) {
+                displayDate = t.openTime.replace('T', ' ');
+            }
+
+            // 如果有圖片網址，顯示查看按鈕
+            const imageBtnHtml = t.imageUrl ? `<button class="view-img-btn" onclick="openModal('${t.imageUrl}')"><i class="fas fa-image"></i> 截圖</button>` : '';
+
+            item.innerHTML = `
+                <div class="info">
+                    <h4>${t.symbol} <span style="font-size:0.8rem; padding:2px 6px; border-radius:4px; background:${t.direction === 'long' ? 'rgba(46,204,113,0.2)' : 'rgba(231,76,60,0.2)'}; color:${t.direction === 'long' ? 'var(--accent-green)' : 'var(--accent-red)'}">${t.directionText}</span> <span style="font-size:0.8rem; color: var(--text-secondary);">x${t.leverage || 1}</span></h4>
+                    <p>${displayDate} | 策略: ${t.strategy || '無'} | 狀態: ${t.status}</p>
+                    <p style="font-size:0.75rem; color:#666;">進: ${t.entryPrice} | 止: ${t.stopLoss} | 出: ${t.exitPrice || '未平倉'}</p>
+                </div>
+                <div class="result ${plClass}">
+                    ${plText} <br>
+                    <span style="font-size:0.8rem;">${rText}</span>
+                </div>
+                <div class="actions">
+                    ${imageBtnHtml}
+                    <button class="edit-btn" onclick="editTrade(${t.id})"><i class="fas fa-edit"></i></button>
+                    <button class="copy-excel-btn" onclick="copySingleTradeToExcel(${t.id})"><i class="fas fa-copy"></i> 複製 EX</button>
+                    <button class="delete-btn" onclick="deleteTrade(${t.id})"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            `;
+            historyList.appendChild(item);
+        });
+    }
+
+    // === 複製單筆交易為 Excel 格式 (不含標題列) ===
+    function copySingleTradeToExcel(id) {
+        const t = trades.find(trade => trade.id === id);
+        if (!t) return;
+
+        // 計算基本數值
+        const tradeAmount = t.entryPrice * t.size;
+        const riskPerTrade = t.riskAmount;
+        const pl = t.pl || 0;
+        const plPercent = riskPerTrade > 0 ? (pl / riskPerTrade) * 100 : 0;
+        
+        // 計算時長
+        let duration = '';
+        if (t.openTime && t.closeTime) {
+            const start = new Date(t.openTime);
+            const end = new Date(t.closeTime);
+            const diffMs = end - start;
+            const diffMins = Math.floor(diffMs / 60000);
+            if (diffMins < 60) duration = `${diffMins}分`;
+            else duration = `${Math.floor(diffMins/60)}時${diffMins%60}分`;
+        }
+
+        const direction = t.direction === 'long' ? '多' : '空';
+        
+        // 判斷止盈或止損
+        let slTpText = '平倉';
+        if (pl > 0) slTpText = '止盈';
+        else if (pl < 0) slTpText = '止損';
+
+        let plColor = '#000';
+        if (pl > 0) plColor = '#008000';
+        else if (pl < 0) plColor = '#FF0000';
+
+        let plPctColor = '#000';
+        if (plPercent > 0) plPctColor = '#008000';
+        else if (plPercent < 0) plPctColor = '#FF0000';
+
+        // 建立單筆表格 (不含標題列)
+        const html = `
+        <table style="border-collapse: collapse; font-family: Arial, sans-serif; font-size: 10pt; text-align: center; white-space: nowrap;">
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 3px;">1</td>
+                    <td style="border: 1px solid #000; padding: 3px;">${t.strategy || ''}</td>
+                    <td style="border: 1px solid #000; padding: 3px;">${t.symbol}</td>
+                    <td style="border: 1px solid #000; padding: 3px;">${t.leverage || 1}</td>
+                    <td style="border: 1px solid #000; padding: 3px;">1000</td>
+                    <td style="border: 1px solid #000; padding: 3px;">${tradeAmount.toFixed(2)}</td>
+                    <td style="border: 1px solid #000; padding: 3px;">${riskPerTrade.toFixed(2)}</td>
+                    <td style="border: 1px solid #000; padding: 3px;">${t.rMultiple ? t.rMultiple.toFixed(2) : '0.00'}</td>
+                    <td style="border: 1px solid #000; padding: 3px;">${t.openTime ? t.openTime.replace('T', ' ') : ''}</td>
+                    <td style="border: 1px solid #000; padding: 3px;">${t.closeTime ? t.closeTime.replace('T', ' ') : ''}</td>
+                    <td style="border: 1px solid #000; padding: 3px;">${duration}</td>
+                    <td style="border: 1px solid #000; padding: 3px; background-color: #FF9999;">${direction}</td>
+                    <td style="border: 1px solid #000; padding: 3px;">${t.status}</td>
+                    <td style="border: 1px solid #000; padding: 3px; font-size: 8pt;">${slTpText}</td>
+                    <td style="border: 1px solid #000; padding: 3px; background-color: #C6E0B4; color: ${plColor}; font-weight: bold;">${pl.toFixed(2)}</td>
+                    <td style="border: 1px solid #000; padding: 3px; background-color: #C6E0B4; color: ${plPctColor}; font-weight: bold;">${plPercent.toFixed(2)}%</td>
+                    <td style="border: 1px solid #000; padding: 3px; background-color: #C6E0B4;">${t.imageUrl || ''}</td>
+                    <td style="border: 1px solid #000; padding: 3px; background-color: #C6E0B4;">${t.personalReview || ''}</td>
+                </tr>
+            </tbody>
+        </table>
+        `;
+
+        // 將 HTML 字串複製到剪貼簿
+        const blob = new Blob([html], { type: 'text/html' });
+        const data = [new ClipboardItem({ 'text/html': blob })];
+
+        navigator.clipboard.write(data).then(() => {
+            alert('✅ 已複製這筆交易！\n請打開 Excel，直接按 Ctrl+V 貼上即可。');
+        }).catch(err => {
+            console.error('複製失敗: ', err);
+            alert('複製失敗，請確認瀏覽器支援剪貼簿功能。');
+        });
+    }
+
+    // === 刪除紀錄 ===
+    function deleteTrade(id) {
+        if(confirm('確定要刪除這筆交易紀錄嗎？')) {
+            trades = trades.filter(t => t.id !== id);
+            saveData();
+            renderDashboard();
+        }
+    }
+</script>
+
+</body>
+</html>
