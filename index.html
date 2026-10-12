@@ -81,17 +81,15 @@
         .history-item .actions .edit-btn { color: var(--accent-color); }
         .history-item .actions .delete-btn { color: var(--accent-red); }
         .history-item .actions .copy-excel-btn { color: var(--accent-green); font-size: 0.75rem; background: rgba(46, 204, 113, 0.1); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--accent-green); display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
-        .history-item .actions .view-img-btn { color: var(--accent-color); font-size: 0.75rem; background: rgba(240, 185, 11, 0.1); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--accent-color); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+        .history-item .actions .view-img-btn { color: var(--accent-color); font-size: 0.75rem; background: rgba(240, 185, 11, 0.1); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--accent-color); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
         .date-filter-container { display: flex; gap: 10px; align-items: center; background: var(--input-bg); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; flex-wrap: wrap; }
         .date-filter-container input { width: auto; flex: 1; min-width: 130px; padding: 6px 10px; }
-        .date-filter-container button { padding: 6px 12px; background: var(--accent-color); color: #121212; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
-        .date-filter-container .clear-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); }
         .image-link-container { display: flex; gap: 10px; margin-top: 10px; }
         .image-link-container input { flex: 1; }
         .image-preview-container { display: none; margin-top: 15px; position: relative; text-align: center; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; background: #1a1a1a; min-height: 100px; justify-content: center; align-items: center; }
         .image-preview-container img { max-width: 100%; max-height: 250px; border-radius: 4px; display: none; }
         .image-error-msg { color: var(--accent-red); font-size: 0.9rem; display: none; }
-        .open-link-btn { display: none; margin-top: 10px; padding: 8px 15px; background: var(--accent-color); color: #121212; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+        .open-link-btn { display: none; margin-top: 10px; padding: 8px 15px; background: var(--accent-color); color: #121212; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
         .modal img { max-width: 90%; max-height: 90%; border-radius: 8px; }
         .modal .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
@@ -102,6 +100,24 @@
         #shareViewPage { display: none; padding: 20px; }
         #shareViewPage h1 { font-size: 1.5rem; margin-bottom: 10px; }
         #shareViewPage p { color: var(--text-secondary); margin-bottom: 20px; }
+
+        /* 高質感按鈕樣式 */
+        .btn-primary { padding: 16px; font-size: 1.1rem; background: linear-gradient(135deg, #f0b90b 0%, #f8d33a 100%); color: #121212; border: none; border-radius: 10px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(240, 185, 11, 0.25); transition: all 0.25s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(240, 185, 11, 0.45); }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-secondary { padding: 12px 22px; background: transparent; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; transition: all 0.25s ease; }
+        .btn-secondary:hover { transform: translateY(-2px); }
+        .btn-yellow { color: var(--accent-color); border: 1px solid var(--accent-color); }
+        .btn-yellow:hover { background: rgba(240, 185, 11, 0.15); }
+        .btn-red { color: var(--accent-red); border: 1px solid var(--accent-red); }
+        .btn-red:hover { background: rgba(231, 76, 60, 0.15); }
+        .btn-green { color: var(--accent-green); border: 1px solid var(--accent-green); }
+        .btn-green:hover { background: rgba(46, 204, 113, 0.15); }
+        .btn-full { width: 100%; padding: 14px; font-size: 1rem; border-radius: 10px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.25s ease; }
+        .btn-full:hover { transform: translateY(-2px); }
+        .btn-solid-yellow { padding: 10px 18px; background: linear-gradient(135deg, #f0b90b 0%, #f8d33a 100%); color: #121212; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.9rem; box-shadow: 0 3px 10px rgba(240, 185, 11, 0.25); transition: all 0.25s ease; }
+        .btn-solid-yellow:hover { transform: translateY(-2px); }
+
         @media (max-width: 600px) {
             .form-row > .form-group { min-width: 100%; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -109,7 +125,9 @@
         }
     </style>
 </head>
-<body><!-- ================= 登入頁面 ================= -->
+<body>
+
+<!-- ================= 登入頁面 ================= -->
 <div id="loginPage" class="container">
     <h1><i class="fas fa-coins"></i> 交易日誌</h1>
     <p>歡迎使用，請先登入</p>
@@ -269,8 +287,8 @@
                 <div class="card-title"><i class="fas fa-clipboard-check"></i> 5. 個人檢討 / 覆盤筆記</div>
                 <div class="form-group"><textarea id="personalReview" placeholder="記錄這筆交易學到了什麼？"></textarea></div>
             </div>
-            <button type="submit" id="submitBtn" style="width:100%; padding:16px; font-size:1.1rem; margin-top:15px; background: #f0b90b; c"><i class="fas fa-save"></i> 儲存交易紀錄</button>
-            <button type="button" id="cancelEditBtn" class="tab-btn" style="width:100%; padding:15px; font-size:1.1rem; margin-top:10px; border-color: var(--accent-red); color: var(--accent-red); display: none;" onclick="cancelEdit()"><i class="fas fa-times"></i> 取消編輯</button>
+            <button type="submit" id="submitBtn" class="btn-primary"><i class="fas fa-save"></i> 儲存交易紀錄</button>
+            <button type="button" id="cancelEditBtn" class="btn-secondary btn-red btn-full" style="display: none; margin-top: 10px;" onclick="cancelEdit()"><i class="fas fa-times"></i> 取消編輯</button>
         </form>
     </div>
 
@@ -282,7 +300,7 @@
                 <input type="date" id="filterStartDate" onchange="renderDashboard()">
                 <span style="color: var(--text-secondary);">至</span>
                 <input type="date" id="filterEndDate" onchange="renderDashboard()">
-                <button class="clear-btn" onclick="clearDateFilter()"><i class="fas fa-times"></i> 清除</button>
+                <button onclick="clearDateFilter()" class="btn-secondary btn-yellow" style="padding: 8px 16px; font-size: 0.85rem;"><i class="fas fa-times"></i> 清除</button>
             </div>
         </div>
         <div class="card">
@@ -310,24 +328,24 @@
             <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px;">產生一個分享連結，別人打開就能看到您的交易紀錄（隱藏個人檢討與心理狀態）。</p>
             <div id="shareStatus" style="margin-bottom: 10px; font-size: 0.9rem; color: var(--text-secondary);">目前尚未分享</div>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <button onclick="generateShareLink()" style="padding: 10px 20px; background: #f0b90b; color: #121212; border: none; border-radiborder-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;"><i class="fas fa-link"></i> 產生分享連結</button>
-                <button onclick="copyShareLink()" id="copyShareBtn" style="padding: 8px 15px; background: transparent; color: var(--accent-color); border: 1px solid var(--accent-color); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: none;"><i class="fas fa-copy"></i> 複製連結</button>
-                <button onclick="closeShareLink()" id="closeShareBtn" style="padding: 8px 15px; background: transparent; color: var(--accent-red); border: 1px solid var(--accent-red); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: none;"><i class="fas fa-times"></i> 關閉分享</button>
+                <button onclick="generateShareLink()" class="btn-secondary btn-yellow" style="background: linear-gradient(135deg, #f0b90b 0%, #f8d33a 100%); color: #121212; border: none; box-shadow: 0 4px 12px rgba(240, 185, 11, 0.25);"><i class="fas fa-link"></i> 產生分享連結</button>
+                <button onclick="copyShareLink()" id="copyShareBtn" class="btn-secondary btn-yellow" style="display: none;"><i class="fas fa-copy"></i> 複製連結</button>
+                <button onclick="closeShareLink()" id="closeShareBtn" class="btn-secondary btn-red" style="display: none;"><i class="fas fa-times"></i> 關閉分享</button>
             </div>
         </div>
         <div class="card">
             <div class="card-title"><i class="fas fa-file-excel"></i> Excel 表格設定</div>
-            <button onclick="window.open('https://docs.google.com/spreadsheets/d/18xLiHU8R3xe9w8QdFOnBefabKWIEhwXz7weSxSeroO4/copy', '_blank')" class="tab-btn" style="width:100%; padding:12px; font-size:1rem; margin-bottom: 15px; border-color: var(--accent-color); color: var(--accent-color);"><i class="fas fa-copy"></i> 新增 EX 副本</button>
+            <button onclick="window.open('https://docs.google.com/spreadsheets/d/18xLiHU8R3xe9w8QdFOnBefabKWIEhwXz7weSxSeroO4/copy', '_blank')" class="btn-full btn-secondary btn-yellow" style="width:100%; margin-bottom: 15px;"><i class="fas fa-copy"></i> 新增 EX 副本</button>
             <div style="margin-bottom: 15px;">
                 <label style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; display: block;">設定您的 Excel / Google Sheets 網址</label>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <input type="text" id="excelUrlInput" placeholder="請貼上您的 Google Sheets 網址..." style="flex: 1; padding: 8px 12px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.9rem;">
-                    <button onclick="saveExcelUrl()" style="padding: 8px 15px; background: var(--accent-color); color: #121212; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;"><i class="fas fa-save"></i> 儲存</button>
-                    <button onclick="clearExcelUrl()" style="padding: 8px 15px; background: transparent; color: var(--accent-red); border: 1px solid var(--accent-red); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;"><i class="fas fa-times"></i> 清除</button>
+                    <button onclick="saveExcelUrl()" class="btn-solid-yellow"><i class="fas fa-save"></i> 儲存</button>
+                    <button onclick="clearExcelUrl()" class="btn-secondary btn-red" style="padding: 10px 18px; font-size: 0.9rem;"><i class="fas fa-times"></i> 清除</button>
                 </div>
                 <div style="margin-top: 8px; font-size: 0.8rem; color: var(--text-secondary);" id="excelUrlStatus">目前尚未設定網址</div>
             </div>
-            <button onclick="openExcelLink()" class="tab-btn" style="width:100%; padding:12px; font-size:1rem; border-color: var(--accent-green); color: var(--accent-green);"><i class="fas fa-external-link-alt"></i> 開啟 EX 表格</button>
+            <button onclick="openExcelLink()" class="btn-full btn-secondary btn-green" style="width:100%;"><i class="fas fa-external-link-alt"></i> 開啟 EX 表格</button>
         </div>
         <div class="card">
             <div class="card-title"><i class="fas fa-history"></i> 歷史交易紀錄 <span id="filterInfo" style="font-size: 0.8rem; color: var(--text-secondary); font-weight: normal; margin-left: 10px;"></span></div>
@@ -564,9 +582,7 @@
         calculateMetrics();
         isEditing = true;
         document.getElementById('submitBtn').innerHTML = '<i class="fas fa-edit"></i> 更新交易紀錄';
-        document.getElementById('submitBtn').style.borderColor = 'var(--accent-color)';
-        document.getElementById('submitBtn').style.color = 'var(--accent-color)';
-        document.getElementById('cancelEditBtn').style.display = 'block';
+        document.getElementById('cancelEditBtn').style.display = 'flex';
         window.scrollTo({ top: 0, behavior: 'smooth' });
         switchTab('entry');
     };
@@ -575,8 +591,6 @@
         isEditing = false;
         document.getElementById('editId').value = '';
         document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> 儲存交易紀錄';
-        document.getElementById('submitBtn').style.borderColor = '';
-        document.getElementById('submitBtn').style.color = '';
         document.getElementById('cancelEditBtn').style.display = 'none';
         resetForm();
     };
@@ -599,8 +613,8 @@
             const shareUrl = window.location.origin + window.location.pathname + '?share=' + shareId;
             await setDoc(doc(db, 'users', currentUser.uid), { currentShareId: shareId }, { merge: true });
             document.getElementById('shareStatus').innerHTML = `✅ 分享中：<a href="${shareUrl}" target="_blank" style="color: var(--accent-color); word-break: break-all;">${shareUrl}</a>`;
-            document.getElementById('copyShareBtn').style.display = 'inline-block';
-            document.getElementById('closeShareBtn').style.display = 'inline-block';
+            document.getElementById('copyShareBtn').style.display = 'inline-flex';
+            document.getElementById('closeShareBtn').style.display = 'inline-flex';
             document.getElementById('copyShareBtn').dataset.url = shareUrl;
         } catch (err) { alert('產生分享連結失敗：' + err.message); }
     };
