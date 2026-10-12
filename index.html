@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>交易日誌</title>
-    <!-- 引入 Font Awesome 圖示 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -13,7 +12,7 @@
             --border-color: #333;
             --text-primary: #e0e0e0;
             --text-secondary: #a0a0a0;
-            --accent-color: #f0b90b; /* 幣安黃 */
+            --accent-color: #f0b90b;
             --accent-green: #2ecc71;
             --accent-red: #e74c3c;
             --input-bg: #2a2a2a;
@@ -31,6 +30,76 @@
 
         .container { max-width: 900px; margin: 0 auto; }
 
+        /* 登入頁面 */
+        #loginPage {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        #loginPage h1 { font-size: 2rem; margin-bottom: 10px; }
+        #loginPage p { color: var(--text-secondary); margin-bottom: 30px; }
+        .login-btn {
+            width: 100%;
+            max-width: 300px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .google-btn { background: #fff; color: #333; }
+        .google-btn:hover { background: #eee; }
+        .email-btn { background: var(--accent-color); color: #121212; }
+        .email-btn:hover { opacity: 0.9; }
+
+        /* 登入表單 */
+        #emailForm {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            max-width: 300px;
+            margin-top: 20px;
+        }
+        #emailForm input {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        #emailForm button {
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: var(--accent-color);
+            color: #121212;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        #emailForm .toggle-link {
+            color: var(--accent-color);
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+        }
+
+        /* 主頁面 */
+        #mainPage { display: none; }
+
         /* 頂部導航 */
         .header {
             display: flex;
@@ -41,351 +110,35 @@
             border-bottom: 1px solid var(--border-color);
         }
         .header h1 { font-size: 1.5rem; font-weight: 600; }
-        .header .date { color: var(--text-secondary); font-size: 0.9rem; }
-
-        /* 分頁切換 */
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-            text-align: center;
-        }
-        .tab-btn.active {
-            background: var(--accent-color);
-            color: #121212;
-            border-color: var(--accent-color);
-        }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        /* 卡片樣式 */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 15px;
+        .header .user-info {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--text-primary);
-        }
-        .card-title i { color: var(--accent-color); }
-
-        /* 表單元素 */
-        .form-group { margin-bottom: 15px; }
-        .form-row { display: flex; gap: 15px; flex-wrap: wrap; }
-        .form-row > .form-group { flex: 1; min-width: 200px; }
-        
-        label {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 5px;
-        }
-        
-        input[type="text"], input[type="number"], input[type="date"], input[type="datetime-local"], select, textarea {
-            width: 100%;
-            padding: 10px 12px;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            transition: border-color 0.2s;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
-        textarea { resize: vertical; min-height: 60px; }
-
-        /* 按鈕群組 (單選/多選) */
-        .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
-        .chip {
-            padding: 6px 14px;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.2s;
-            user-select: none;
-        }
-        .chip.selected {
-            background: rgba(240, 185, 11, 0.2);
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-        .chip.selected.red {
-            background: rgba(231, 76, 60, 0.2);
-            border-color: var(--accent-red);
-            color: var(--accent-red);
-        }
-        .chip.selected.green {
-            background: rgba(46, 204, 113, 0.2);
-            border-color: var(--accent-green);
-            color: var(--accent-green);
-        }
-
-        /* 自動計算顯示區 */
-        .calc-box {
-            background: #1a1a1a;
-            border: 1px dashed var(--accent-color);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 10px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 10px;
-        }
-        .calc-item { text-align: center; }
-        .calc-item .label { font-size: 0.75rem; color: var(--text-secondary); }
-        .calc-item .value { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); }
-
-        /* 統計數據面板 */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-        }
-        .stat-card .label { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 5px; }
-        .stat-card .value { font-size: 1.4rem; font-weight: bold; }
-        .stat-card .value.green { color: var(--accent-green); }
-        .stat-card .value.red { color: var(--accent-red); }
-
-        /* 歷史紀錄列表 */
-        .history-list { display: flex; flex-direction: column; gap: 10px; }
-        .history-item {
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .history-item .info { flex: 2; min-width: 200px; }
-        .history-item .info h4 { font-size: 1rem; margin-bottom: 5px; }
-        .history-item .info p { font-size: 0.8rem; color: var(--text-secondary); }
-        .history-item .result { font-weight: bold; font-size: 1.1rem; text-align: right; }
-        .history-item .result.green { color: var(--accent-green); }
-        .history-item .result.red { color: var(--accent-red); }
-        
-        .history-item .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-        .history-item .actions button {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 5px;
-            font-size: 1.1rem;
-            transition: color 0.2s;
-        }
-        .history-item .actions .edit-btn { color: var(--accent-color); }
-        .history-item .actions .delete-btn { color: var(--accent-red); }
-        .history-item .actions .copy-excel-btn {
-            color: var(--accent-green);
-            font-size: 0.75rem;
-            background: rgba(46, 204, 113, 0.1);
-            padding: 4px 8px;
-            border-radius: 4px;
-            border: 1px solid var(--accent-green);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-        }
-        .history-item .actions .view-img-btn {
-            color: var(--accent-color);
-            font-size: 0.75rem;
-            background: rgba(240, 185, 11, 0.1);
-            padding: 4px 8px;
-            border-radius: 4px;
-            border: 1px solid var(--accent-color);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        /* 日期篩選器 */
-        .date-filter-container {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            background: var(--input-bg);
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        .date-filter-container input {
-            width: auto;
-            flex: 1;
-            min-width: 130px;
-            padding: 6px 10px;
-        }
-        .date-filter-container button {
-            padding: 6px 12px;
-            background: var(--accent-color);
-            color: #121212;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-        .date-filter-container .clear-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        /* 圖片連結輸入區 */
-        .image-link-container {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .image-link-container input {
-            flex: 1;
-        }
-        .image-link-container button {
-            padding: 0 15px;
-            background: var(--accent-color);
-            color: #121212;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .image-preview-container {
-            display: none;
-            margin-top: 15px;
-            position: relative;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 10px;
-            background: #1a1a1a;
-            min-height: 100px;
-            justify-content: center;
-            align-items: center;
-        }
-        .image-preview-container img {
-            max-width: 100%;
-            max-height: 250px;
-            border-radius: 4px;
-            display: none;
-        }
-        .image-error-msg {
-            color: var(--accent-red);
             font-size: 0.9rem;
-            display: none;
         }
-        .open-link-btn {
-            display: none;
-            margin-top: 10px;
-            padding: 8px 15px;
-            background: var(--accent-color);
-            color: #121212;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
+        .header .user-info img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
         }
-
-        /* 圖片彈窗 (Modal) */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 8px;
-        }
-        .modal .close {
-            position: absolute;
-            top: 20px; right: 30px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-        }
-
-        /* 底部導航 (模擬 APP) */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 100;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .header .user-info button {
+            background: transparent;
+            border: 1px solid var(--border-color);
             color: var(--text-secondary);
-            font-size: 0.75rem;
+            padding: 5px 10px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: color 0.2s;
-        }
-        .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
-        .nav-item.active { color: var(--accent-color); }
-
-        /* 響應式 */
-        @media (max-width: 600px) {
-            .form-row > .form-group { min-width: 100%; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .date-filter-container { flex-direction: column; align-items: stretch; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
+            font-size: 0.8rem;
+        }<!-- ================= 主頁面 ================= -->
+<div id="mainPage" class="container">
     <!-- 頂部 -->
     <div class="header">
         <h1><i class="fas fa-coins"></i> 交易日誌</h1>
-        <div class="date" id="currentDate"></div>
+        <div class="user-info">
+            <img id="userAvatar" src="" alt="頭像">
+            <span id="userName"></span>
+            <button onclick="logout()">登出</button>
+        </div>
     </div>
 
     <!-- 分頁切換 -->
@@ -397,9 +150,9 @@
     <!-- ================= 頁面 1: 記錄交易 ================= -->
     <div id="tab-entry" class="tab-content active">
         <form id="tradeForm">
-            <input type="hidden" id="editId" value=""> <!-- 隱藏欄位，用於編輯時記錄 ID -->
+            <input type="hidden" id="editId" value="">
             
-            <!-- 區塊 1: 進場與風控計算 (已移至第一) -->
+            <!-- 區塊 1: 進場與風控計算 -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-calculator"></i> 1. 交易設定與風控計算</div>
                 
@@ -464,7 +217,7 @@
                     </div>
                     <div class="form-group">
                         <label>出場手續費 (%)</label>
-                        <input type="number" id="exitFee" step="0.001" placeholder="請輸出入場手續費">
+                        <input type="number" id="exitFee" step="0.001" placeholder="請輸入出場手續費">
                     </div>
                     <div class="form-group">
                         <label>出場價 (Exit Price) - 平倉後填寫</label>
@@ -524,9 +277,7 @@
                         <div class="value" id="rMultiple">0</div>
                     </div>
                 </div>
-            </div>
-
-            <!-- 區塊 2: 開單前觀察 -->
+            </div>            <!-- 區塊 2: 開單前觀察 -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-eye"></i> 2. 開單前，你看見了什麼？</div>
                 <div class="form-group">
@@ -538,7 +289,6 @@
                     <textarea id="trigger" placeholder="什麼條件讓你決定進場？"></textarea>
                 </div>
                 
-                <!-- TV 截圖連結輸入區 -->
                 <div class="form-group" style="margin-top: 20px;">
                     <label><i class="fas fa-link"></i> TradingView 截圖連結 (選填)</label>
                     <div class="image-link-container">
@@ -563,7 +313,6 @@
                         <option value="衝動交易：無計畫">衝動交易：無計畫</option>
                         <option value="自行輸入">--- 自行輸入 ---</option>
                     </select>
-                    <!-- 自行輸入的隱藏文字框 -->
                     <input type="text" id="customSystemType" placeholder="請輸入您的決策類型..." style="display:none; margin-top:10px;">
                 </div>
                 <div class="form-group">
@@ -628,19 +377,15 @@
                 </div>
             </div>
 
-            <!-- 提交按鈕 -->
             <button type="submit" id="submitBtn" class="tab-btn active" style="width:100%; padding:15px; font-size:1.1rem; margin-top:10px;">
                 <i class="fas fa-save"></i> 儲存交易紀錄
             </button>
             
-            <!-- 取消編輯按鈕 (預設隱藏) -->
             <button type="button" id="cancelEditBtn" class="tab-btn" style="width:100%; padding:15px; font-size:1.1rem; margin-top:10px; border-color: var(--accent-red); color: var(--accent-red); display: none;" onclick="cancelEdit()">
                 <i class="fas fa-times"></i> 取消編輯
             </button>
         </form>
-    </div>
-
-    <!-- ================= 頁面 2: 數據統計 ================= -->
+    </div>    <!-- ================= 頁面 2: 數據統計 ================= -->
     <div id="tab-dashboard" class="tab-content">
         <!-- 日期篩選器 -->
         <div class="card" style="padding: 15px;">
@@ -707,11 +452,34 @@
             </div>
         </div>
 
+        <!-- 分享管理 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-share-alt"></i> 分享管理</div>
+            <div style="margin-bottom: 15px;">
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px;">
+                    產生一個分享連結，別人打開就能看到您的交易紀錄（隱藏個人檢討與心理狀態）。
+                </p>
+                <div id="shareStatus" style="margin-bottom: 10px; font-size: 0.9rem; color: var(--text-secondary);">
+                    目前尚未分享
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="generateShareLink()" style="padding: 8px 15px; background: var(--accent-color); color: #121212; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+                        <i class="fas fa-link"></i> 產生分享連結
+                    </button>
+                    <button onclick="copyShareLink()" id="copyShareBtn" style="padding: 8px 15px; background: transparent; color: var(--accent-color); border: 1px solid var(--accent-color); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: none;">
+                        <i class="fas fa-copy"></i> 複製連結
+                    </button>
+                    <button onclick="closeShareLink()" id="closeShareBtn" style="padding: 8px 15px; background: transparent; color: var(--accent-red); border: 1px solid var(--accent-red); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: none;">
+                        <i class="fas fa-times"></i> 關閉分享
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Excel 網址設定與開啟 -->
         <div class="card">
             <div class="card-title"><i class="fas fa-file-excel"></i> Excel 表格設定</div>
             
-            <!-- 新增 EX 副本按鈕 -->
             <button onclick="window.open('https://docs.google.com/spreadsheets/d/18xLiHU8R3xe9w8QdFOnBefabKWIEhwXz7weSxSeroO4/copy', '_blank')" class="tab-btn" style="width:100%; padding:12px; font-size:1rem; margin-bottom: 15px; border-color: var(--accent-color); color: var(--accent-color);">
                 <i class="fas fa-copy"></i> 新增 EX 副本
             </button>
@@ -742,336 +510,159 @@
         <div class="card">
             <div class="card-title"><i class="fas fa-history"></i> 歷史交易紀錄 <span id="filterInfo" style="font-size: 0.8rem; color: var(--text-secondary); font-weight: normal; margin-left: 10px;"></span></div>
             <div class="history-list" id="historyList">
-                <!-- 動態生成 -->
-                <p style="color:var(--text-secondary); text-align:center;">尚無交易紀錄</p>
+                <p style="color:var(--text-secondary); text-align:center;">載入中...</p>
             </div>
         </div>
     </div>
-</div>
-
-<!-- 圖片預覽彈窗 -->
+</div><!-- 圖片預覽彈窗 -->
 <div id="imageModal" class="modal" onclick="closeModal()">
     <span class="close">&times;</span>
     <img id="modalImage" src="" alt="截圖">
 </div>
 
-<!-- 底部導航 -->
-<div class="bottom-nav">
-    <div class="nav-item active" onclick="switchTab('entry')">
-        <i class="fas fa-pen"></i>
-        <span>紀錄</span>
-    </div>
-    <div class="nav-item" onclick="switchTab('dashboard')">
-        <i class="fas fa-chart-pie"></i>
-        <span>統計</span>
-    </div>
-</div>
+<!-- Firebase SDK -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+    import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, getDocs, getDoc, setDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-<script>
+    // === Firebase 設定 ===
+    const firebaseConfig = {
+        apiKey: "AIzaSyDRZ3OaE4fIFg_PDZOBcsJFh1yyt72R4ow",
+        authDomain: "trading-journal-69200.firebaseapp.com",
+        projectId: "trading-journal-69200",
+        storageBucket: "trading-journal-69200.firebasestorage.app",
+        messagingSenderId: "974288975468",
+        appId: "1:974288975468:web:723d85773d398ce434ca49"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
     // === 狀態管理 ===
-    let trades = JSON.parse(localStorage.getItem('tradingJournalData')) || [];
-    let currentImageUrl = ""; // 暫存當前輸入的圖片網址
-    let isEditing = false; // 是否正在編輯模式
-    let isSyncing = false; // 防止數量與USDT金額互相觸發無限循環
+    let trades = [];
+    let currentUser = null;
+    let isEmailMode = false; // false = 登入模式, true = 註冊模式
+    let currentImageUrl = "";
+    let isEditing = false;
+    let isSyncing = false;
+    let currentShareId = null;
 
-    // === 初始化 ===
-    document.addEventListener('DOMContentLoaded', () => {
-        // 設定當前日期
-        const now = new Date();
-        document.getElementById('currentDate').textContent = now.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
-        
-        // 綁定表單事件
-        document.getElementById('tradeForm').addEventListener('submit', handleFormSubmit);
-        
-        // 綁定即時計算事件
-        ['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'size', 'entryFee', 'exitFee', 'leverage', 'usdtAmount'].forEach(id => {
-            document.getElementById(id).addEventListener('input', calculateMetrics);
+    // === 登入頁面控制 ===
+    window.toggleEmailForm = function() {
+        const form = document.getElementById('emailForm');
+        form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
+    };
+
+    window.toggleEmailMode = function() {
+        isEmailMode = !isEmailMode;
+        const btn = document.getElementById('emailSubmitBtn');
+        const link = document.getElementById('emailToggleLink');
+        if (isEmailMode) {
+            btn.textContent = '註冊';
+            link.textContent = '已經有帳號？點此登入';
+        } else {
+            btn.textContent = '登入';
+            link.textContent = '還沒有帳號？點此註冊';
+        }
+    };
+
+    // === Google 登入 ===
+    window.loginWithGoogle = function() {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider).catch(err => {
+            alert('Google 登入失敗：' + err.message);
         });
+    };
 
-        // 綁定數量與USDT金額的雙向連動
-        document.getElementById('size').addEventListener('input', function() {
-            if (isSyncing) return;
-            isSyncing = true;
-            const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
-            const size = parseFloat(this.value) || 0;
-            if (entry > 0) {
-                document.getElementById('usdtAmount').value = (entry * size).toFixed(2);
+    // === Email 登入/註冊 ===
+    window.loginWithEmail = function() {
+        const email = document.getElementById('emailInput').value.trim();
+        const password = document.getElementById('passwordInput').value;
+        if (!email || !password) {
+            alert('請輸入 Email 和密碼');
+            return;
+        }
+        if (isEmailMode) {
+            createUserWithEmailAndPassword(auth, email, password).catch(err => {
+                alert('註冊失敗：' + err.message);
+            });
+        } else {
+            signInWithEmailAndPassword(auth, email, password).catch(err => {
+                alert('登入失敗：' + err.message);
+            });
+        }
+    };
+
+    // === 登出 ===
+    window.logout = function() {
+        signOut(auth).then(() => {
+            location.reload();
+        });
+    };
+
+    // === 監聽登入狀態 ===
+    onAuthStateChanged(auth, async (user) => {
+        currentUser = user;
+        if (user) {
+            // 已登入
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainPage').style.display = 'block';
+            
+            // 顯示使用者資訊
+            const avatar = document.getElementById('userAvatar');
+            const name = document.getElementById('userName');
+            if (user.photoURL) {
+                avatar.src = user.photoURL;
+                avatar.style.display = 'block';
+            } else {
+                avatar.style.display = 'none';
             }
-            isSyncing = false;
-        });
+            name.textContent = user.displayName || user.email || '使用者';
 
-        document.getElementById('usdtAmount').addEventListener('input', function() {
-            if (isSyncing) return;
-            isSyncing = true;
-            const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
-            const usdt = parseFloat(this.value) || 0;
-            if (entry > 0) {
-                document.getElementById('size').value = (usdt / entry).toFixed(4);
-            }
-            isSyncing = false;
-        });
-
-        // 綁定信心 slider
-        document.getElementById('confidence').addEventListener('input', (e) => {
-            document.getElementById('confidenceVal').textContent = e.target.value;
-        });
-
-        // 初始化 Chip 選擇
-        initChips('checklistGroup');
-        initChips('biasGroup');
-
-        // 載入已儲存的 Excel 網址
-        loadExcelUrl();
-
-        // 載入上次使用的交易參數
-        loadDefaultParams();
-
-        // 渲染統計
-        renderDashboard();
+            // 載入交易紀錄
+            await loadTrades();
+            renderDashboard();
+        } else {
+            // 未登入
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('shareViewPage').style.display = 'none';
+        }
     });
 
-    // === 載入上次使用的參數 ===
-    function loadDefaultParams() {
-        const savedLeverage = localStorage.getItem('defaultLeverage');
-        const savedEntryFee = localStorage.getItem('defaultEntryFee');
-        const savedExitFee = localStorage.getItem('defaultExitFee');
-
-        if (savedLeverage) document.getElementById('leverage').value = savedLeverage;
-        if (savedEntryFee) document.getElementById('entryFee').value = savedEntryFee;
-        if (savedExitFee) document.getElementById('exitFee').value = savedExitFee;
-    }
-
-    // === 儲存當前使用的參數 ===
-    function saveDefaultParams() {
-        localStorage.setItem('defaultLeverage', document.getElementById('leverage').value);
-        localStorage.setItem('defaultEntryFee', document.getElementById('entryFee').value);
-        localStorage.setItem('defaultExitFee', document.getElementById('exitFee').value);
-    }
-
-    // === 自行輸入切換邏輯 ===
-    function toggleCustomInput(selectElement) {
-        const customInput = document.getElementById('customSystemType');
-        if (selectElement.value === '自行輸入') {
-            customInput.style.display = 'block';
-            customInput.focus();
-        } else {
-            customInput.style.display = 'none';
-            customInput.value = ''; // 隱藏時清空
+    // === 檢查分享連結 ===
+    window.addEventListener('load', async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const shareId = urlParams.get('share');
+        if (shareId) {
+            // 進入分享檢視模式
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('shareViewPage').style.display = 'block';
+            await loadSharedData(shareId);
         }
-    }
-
-    // === Excel 網址管理 ===
-    function saveExcelUrl() {
-        const url = document.getElementById('excelUrlInput').value.trim();
-        if (!url) {
-            alert('請先輸入網址！');
-            return;
-        }
-        localStorage.setItem('excelUrl', url);
-        document.getElementById('excelUrlStatus').innerHTML = `<i class="fas fa-check-circle" style="color: var(--accent-green);"></i> 已儲存: <a href="${url}" target="_blank" style="color: var(--accent-color); word-break: break-all;">${url}</a>`;
-        alert('✅ 網址已儲存！');
-    }
-
-    function clearExcelUrl() {
-        if (confirm('確定要清除已儲存的網址嗎？')) {
-            localStorage.removeItem('excelUrl');
-            document.getElementById('excelUrlInput').value = '';
-            document.getElementById('excelUrlStatus').textContent = '目前尚未設定網址';
-            alert('已清除網址。');
-        }
-    }
-
-    function loadExcelUrl() {
-        const savedUrl = localStorage.getItem('excelUrl');
-        if (savedUrl) {
-            document.getElementById('excelUrlInput').value = savedUrl;
-            document.getElementById('excelUrlStatus').innerHTML = `<i class="fas fa-check-circle" style="color: var(--accent-green);"></i> 已儲存: <a href="${savedUrl}" target="_blank" style="color: var(--accent-color); word-break: break-all;">${savedUrl}</a>`;
-        }
-    }
-
-    function openExcelLink() {
-        const savedUrl = localStorage.getItem('excelUrl');
-        if (!savedUrl) {
-            alert('您尚未設定 Excel 網址！請先在上方輸入並儲存。');
-            return;
-        }
-        window.open(savedUrl, '_blank');
-    }
-
-    // === 圖片連結處理邏輯 ===
-    function handleImageUrlChange() {
-        const url = document.getElementById('imageUrlInput').value.trim();
-        const previewContainer = document.getElementById('imagePreviewContainer');
-        const previewImg = document.getElementById('imagePreview');
-        const errorMsg = document.getElementById('imageErrorMsg');
-        const openLinkBtn = document.getElementById('openLinkBtn');
-
-        if (url) {
-            currentImageUrl = url;
-            previewContainer.style.display = 'flex';
-            previewImg.style.display = 'none';
-            errorMsg.style.display = 'none';
-            openLinkBtn.style.display = 'none';
-            
-            // 設定圖片來源，並在載入成功/失敗時切換顯示
-            previewImg.src = url;
-            previewImg.onload = function() {
-                previewImg.style.display = 'block';
-                errorMsg.style.display = 'none';
-                openLinkBtn.style.display = 'none';
-            };
-            previewImg.onerror = function() {
-                previewImg.style.display = 'none';
-                errorMsg.style.display = 'block';
-                openLinkBtn.style.display = 'inline-block';
-                openLinkBtn.href = url; // 設定開啟連結的網址
-            };
-        } else {
-            currentImageUrl = "";
-            previewContainer.style.display = 'none';
-            previewImg.src = "";
-        }
-    }
-
-    // === 圖片彈窗邏輯 ===
-    function openModal(imageSrc) {
-        if (!imageSrc) return;
-        document.getElementById('modalImage').src = imageSrc;
-        document.getElementById('imageModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('imageModal').style.display = 'none';
-    }
-
-    // === 分頁切換 ===
-    function switchTab(tabName) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-
-        document.getElementById(`tab-${tabName}`).classList.add('active');
-        
-        // 更新頂部與底部按鈕狀態
-        if(tabName === 'entry') {
-            document.querySelector('.tabs .tab-btn:first-child').classList.add('active');
-            document.querySelector('.bottom-nav .nav-item:first-child').classList.add('active');
-        } else {
-            document.querySelector('.tabs .tab-btn:last-child').classList.add('active');
-            document.querySelector('.bottom-nav .nav-item:last-child').classList.add('active');
-            renderDashboard(); // 切換到統計頁時重新計算
-        }
-    }
-
-    // === Chip 點擊邏輯 ===
-    function initChips(containerId) {
-        const container = document.getElementById(containerId);
-        if(!container) return;
-        container.querySelectorAll('.chip').forEach(chip => {
-            chip.addEventListener('click', () => {
-                chip.classList.toggle('selected');
-                // 根據內容給予不同顏色
-                if(chip.classList.contains('selected')) {
-                    const val = chip.dataset.val;
-                    if(['想凹單', '逆勢硬扛', '虧損後放大風險', '追價 / FOMO', '報復性交易'].includes(val)) {
-                        chip.classList.add('red');
-                    } else {
-                        chip.classList.add('green');
-                    }
-                } else {
-                    chip.classList.remove('red', 'green');
-                }
+    });    // === 載入交易紀錄 ===
+    async function loadTrades() {
+        if (!currentUser) return;
+        try {
+            const q = query(collection(db, 'users', currentUser.uid, 'trades'), orderBy('createdAt', 'desc'));
+            const snapshot = await getDocs(q);
+            trades = [];
+            snapshot.forEach(doc => {
+                trades.push({ id: doc.id, ...doc.data() });
             });
-        });
-    }
-
-    // 取得 Chip 選中的值
-    function getSelectedChips(containerId) {
-        const container = document.getElementById(containerId);
-        const selected = [];
-        container.querySelectorAll('.chip.selected').forEach(chip => {
-            selected.push(chip.dataset.val);
-        });
-        return selected;
-    }
-
-    // === 自動計算核心邏輯 (已加入手續費扣除) ===
-    function calculateMetrics() {
-        const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
-        const stop = parseFloat(document.getElementById('stopLoss').value) || 0;
-        const target = parseFloat(document.getElementById('takeProfit').value) || 0;
-        const exit = parseFloat(document.getElementById('exitPrice').value) || 0;
-        const size = parseFloat(document.getElementById('size').value) || 0;
-        const entryFeePercent = parseFloat(document.getElementById('entryFee').value) || 0;
-        const exitFeePercent = parseFloat(document.getElementById('exitFee').value) || 0;
-        const direction = document.getElementById('direction').value; // 'long' or 'short'
-
-        let riskAmount = 0;
-        let rewardAmount = 0;
-        let rr = 0;
-        let pl = 0; // 實際盈虧 (含手續費)
-        let rMultiple = 0;
-
-        if(entry && stop && size) {
-            // 計算 1R 風險
-            if (direction === 'long') {
-                riskAmount = (entry - stop) * size;
-                rewardAmount = target ? (target - entry) * size : 0;
-            } else {
-                riskAmount = (stop - entry) * size;
-                rewardAmount = target ? (entry - target) * size : 0;
-            }
-            
-            // 避免除以零
-            if (riskAmount > 0) {
-                rr = rewardAmount / riskAmount;
-            }
+        } catch (err) {
+            console.error('載入失敗：', err);
+            trades = [];
         }
-
-        if(exit && entry && size) {
-            // 計算原始盈虧 (未扣手續費)
-            let rawPl = 0;
-            if (direction === 'long') {
-                rawPl = (exit - entry) * size;
-            } else {
-                rawPl = (entry - exit) * size;
-            }
-
-            // 計算手續費
-            const entryFeeAmount = entry * size * (entryFeePercent / 100);
-            const exitFeeAmount = exit * size * (exitFeePercent / 100);
-
-            // 實際盈虧 = 原始盈虧 - 進場手續費 - 出場手續費
-            pl = rawPl - entryFeeAmount - exitFeeAmount;
-
-            // 計算 R 數 (使用原始盈虧，不扣手續費)
-            if (riskAmount > 0) {
-                rMultiple = rawPl / riskAmount;
-            }
-        }
-
-        // 更新 UI
-        document.getElementById('riskAmount').textContent = riskAmount.toFixed(2);
-        document.getElementById('riskReward').textContent = rr.toFixed(2);
-        document.getElementById('profitLoss').textContent = pl.toFixed(2);
-        document.getElementById('rMultiple').textContent = rMultiple.toFixed(2);
-
-        // 顏色變化
-        const plEl = document.getElementById('profitLoss');
-        const rEl = document.getElementById('rMultiple');
-        
-        if(pl > 0) { plEl.style.color = 'var(--accent-green)'; } 
-        else if (pl < 0) { plEl.style.color = 'var(--accent-red)'; } 
-        else { plEl.style.color = 'var(--accent-color)'; }
-
-        if(rMultiple > 0) { rEl.style.color = 'var(--accent-green)'; } 
-        else if (rMultiple < 0) { rEl.style.color = 'var(--accent-red)'; } 
-        else { rEl.style.color = 'var(--accent-color)'; }
     }
 
-    // === 表單提交 ===
-    function handleFormSubmit(e) {
+    // === 儲存交易紀錄 ===
+    window.handleFormSubmit = async function(e) {
         e.preventDefault();
+        if (!currentUser) return;
 
         const entry = parseFloat(document.getElementById('entryPrice').value);
         const stop = parseFloat(document.getElementById('stopLoss').value);
@@ -1084,15 +675,12 @@
         const entryFeePercent = parseFloat(document.getElementById('entryFee').value) || 0;
         const exitFeePercent = parseFloat(document.getElementById('exitFee').value) || 0;
 
-        // 儲存此次使用的參數
         saveDefaultParams();
 
-        // 取得系統類型 (判斷是否自行輸入)
         const systemTypeSelect = document.getElementById('systemType').value;
         const customSystemType = document.getElementById('customSystemType').value;
         const finalSystemType = systemTypeSelect === '自行輸入' ? customSystemType : systemTypeSelect;
 
-        // 計算最終數據
         let riskAmount = 0, pl = 0, rMultiple = 0;
         if (direction === 'long') {
             riskAmount = (entry - stop) * size;
@@ -1101,22 +689,15 @@
         }
 
         if (exit && entry && size) {
-            // 原始盈虧
             let rawPl = 0;
             if (direction === 'long') {
                 rawPl = (exit - entry) * size;
             } else {
                 rawPl = (entry - exit) * size;
             }
-
-            // 手續費
             const entryFeeAmount = entry * size * (entryFeePercent / 100);
             const exitFeeAmount = exit * size * (exitFeePercent / 100);
-
-            // 實際盈虧 (扣手續費)
             pl = rawPl - entryFeeAmount - exitFeeAmount;
-
-            // R 數 (用原始盈虧)
             if (riskAmount > 0) {
                 rMultiple = rawPl / riskAmount;
             }
@@ -1125,8 +706,8 @@
         const editId = document.getElementById('editId').value;
 
         const tradeData = {
-            id: editId ? parseInt(editId) : Date.now(), // 如果是編輯，保留原本 ID
             date: new Date().toLocaleString('zh-TW'),
+            createdAt: Date.now(),
             symbol: document.getElementById('symbol').value,
             direction: direction,
             directionText: direction === 'long' ? '做多' : '做空',
@@ -1139,8 +720,8 @@
             exitFee: exitFeePercent,
             marketView: document.getElementById('marketView').value,
             trigger: document.getElementById('trigger').value,
-            imageUrl: currentImageUrl, // 儲存圖片的網址
-            systemType: finalSystemType, // 使用最終的系統類型
+            imageUrl: currentImageUrl,
+            systemType: finalSystemType,
             checklist: getSelectedChips('checklistGroup'),
             emotion: document.getElementById('emotion').value,
             confidence: document.getElementById('confidence').value,
@@ -1160,48 +741,41 @@
             rMultiple: rMultiple
         };
 
-        if (editId) {
-            // 編輯模式：更新陣列中的資料
-            const index = trades.findIndex(t => t.id === parseInt(editId));
-            if (index !== -1) {
-                trades[index] = tradeData;
+        try {
+            if (editId) {
+                await updateDoc(doc(db, 'users', currentUser.uid, 'trades', editId), tradeData);
+                alert('交易紀錄已更新！');
+                cancelEdit();
+            } else {
+                await addDoc(collection(db, 'users', currentUser.uid, 'trades'), tradeData);
+                alert('交易紀錄已儲存！');
             }
-            alert('交易紀錄已更新！');
-            cancelEdit(); // 重置編輯狀態
-        } else {
-            // 新增模式
-            trades.push(tradeData);
-            alert('交易紀錄已儲存！');
+            await loadTrades();
+            renderDashboard();
+            resetForm();
+            switchTab('dashboard');
+        } catch (err) {
+            alert('儲存失敗：' + err.message);
         }
+    };
 
-        saveData();
-        
-        // 重置表單 (但保留槓桿與手續費)
+    // === 重設表單 ===
+    function resetForm() {
         document.getElementById('tradeForm').reset();
         document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected', 'red', 'green'));
         document.getElementById('confidenceVal').textContent = '5';
-        document.getElementById('customSystemType').style.display = 'none'; // 重置隱藏輸入框
-        
-        // 重新載入預設參數
-        loadDefaultParams();
-        
-        // 重置圖片預覽
+        document.getElementById('customSystemType').style.display = 'none';
         currentImageUrl = "";
         document.getElementById('imageUrlInput').value = "";
         document.getElementById('imagePreviewContainer').style.display = 'none';
         document.getElementById('imagePreview').src = "";
-        
-        calculateMetrics(); // 重置計算框
-        
-        switchTab('dashboard'); // 自動跳轉到統計頁
-    }
-
-    // === 編輯模式 ===
-    function editTrade(id) {
+        loadDefaultParams();
+        calculateMetrics();
+    }    // === 編輯模式 ===
+    window.editTrade = function(id) {
         const trade = trades.find(t => t.id === id);
         if (!trade) return;
 
-        // 填寫表單
         document.getElementById('editId').value = trade.id;
         document.getElementById('symbol').value = trade.symbol;
         document.getElementById('direction').value = trade.direction;
@@ -1215,9 +789,8 @@
         document.getElementById('marketView').value = trade.marketView;
         document.getElementById('trigger').value = trade.trigger;
         document.getElementById('imageUrlInput').value = trade.imageUrl || '';
-        handleImageUrlChange(); // 觸發圖片預覽
-        
-        // 系統類型
+        handleImageUrlChange();
+
         const systemTypeSelect = document.getElementById('systemType');
         const customInput = document.getElementById('customSystemType');
         const standardTypes = ['系統交易：符合既定策略', '主觀交易：偏離系統', '衝動交易：無計畫'];
@@ -1232,7 +805,6 @@
             customInput.value = trade.systemType;
         }
 
-        // 一致性檢查 (Chips)
         document.querySelectorAll('#checklistGroup .chip').forEach(chip => {
             chip.classList.toggle('selected', trade.checklist.includes(chip.dataset.val));
         });
@@ -1242,7 +814,6 @@
         document.getElementById('confidenceVal').textContent = trade.confidence;
         document.getElementById('mindset').value = trade.mindset;
 
-        // 偏誤 (Chips)
         document.querySelectorAll('#biasGroup .chip').forEach(chip => {
             chip.classList.toggle('selected', trade.biases.includes(chip.dataset.val));
         });
@@ -1257,87 +828,161 @@
         document.getElementById('openTime').value = trade.openTime || '';
         document.getElementById('closeTime').value = trade.closeTime || '';
 
-        calculateMetrics(); // 重新計算
+        calculateMetrics();
 
-        // 切換按鈕狀態
         isEditing = true;
         document.getElementById('submitBtn').innerHTML = '<i class="fas fa-edit"></i> 更新交易紀錄';
         document.getElementById('submitBtn').style.borderColor = 'var(--accent-color)';
         document.getElementById('submitBtn').style.color = 'var(--accent-color)';
         document.getElementById('cancelEditBtn').style.display = 'block';
 
-        // 滾動到頂部
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        switchTab('entry'); // 確保切換到記錄頁面
-    }
+        switchTab('entry');
+    };
 
-    function cancelEdit() {
+    window.cancelEdit = function() {
         isEditing = false;
         document.getElementById('editId').value = '';
         document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> 儲存交易紀錄';
         document.getElementById('submitBtn').style.borderColor = '';
         document.getElementById('submitBtn').style.color = '';
         document.getElementById('cancelEditBtn').style.display = 'none';
-        
-        // 重置表單 (但保留槓桿與手續費)
-        document.getElementById('tradeForm').reset();
-        document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected', 'red', 'green'));
-        document.getElementById('confidenceVal').textContent = '5';
-        document.getElementById('customSystemType').style.display = 'none';
-        currentImageUrl = "";
-        document.getElementById('imageUrlInput').value = "";
-        document.getElementById('imagePreviewContainer').style.display = 'none';
-        document.getElementById('imagePreview').src = "";
-        
-        // 重新載入預設參數
-        loadDefaultParams();
-        
-        calculateMetrics();
-    }
+        resetForm();
+    };
 
-    // === 儲存資料 ===
-    function saveData() {
-        localStorage.setItem('tradingJournalData', JSON.stringify(trades));
-    }
+    // === 刪除紀錄 ===
+    window.deleteTrade = async function(id) {
+        if (!confirm('確定要刪除這筆交易紀錄嗎？')) return;
+        try {
+            await deleteDoc(doc(db, 'users', currentUser.uid, 'trades', id));
+            await loadTrades();
+            renderDashboard();
+        } catch (err) {
+            alert('刪除失敗：' + err.message);
+        }
+    };
 
-    // === 日期篩選功能 ===
-    function clearDateFilter() {
-        document.getElementById('filterStartDate').value = '';
-        document.getElementById('filterEndDate').value = '';
-        renderDashboard();
-    }
+    // === 產生分享連結 ===
+    window.generateShareLink = async function() {
+        if (!currentUser || trades.length === 0) {
+            alert('目前沒有交易紀錄可以分享！');
+            return;
+        }
+        try {
+            const shareId = currentUser.uid + '_' + Date.now();
+            await setDoc(doc(db, 'shared', shareId), {
+                userId: currentUser.uid,
+                createdAt: Date.now(),
+                trades: trades
+            });
+            currentShareId = shareId;
+            const shareUrl = window.location.origin + window.location.pathname + '?share=' + shareId;
+            
+            // 儲存到使用者的個人資料中
+            await setDoc(doc(db, 'users', currentUser.uid), { currentShareId: shareId }, { merge: true });
+            
+            document.getElementById('shareStatus').innerHTML = `✅ 分享中：<a href="${shareUrl}" target="_blank" style="color: var(--accent-color); word-break: break-all;">${shareUrl}</a>`;
+            document.getElementById('copyShareBtn').style.display = 'inline-block';
+            document.getElementById('closeShareBtn').style.display = 'inline-block';
+            document.getElementById('copyShareBtn').dataset.url = shareUrl;
+        } catch (err) {
+            alert('產生分享連結失敗：' + err.message);
+        }
+    };
 
-    function getFilteredTrades() {
-        const startDate = document.getElementById('filterStartDate').value;
-        const endDate = document.getElementById('filterEndDate').value;
-
-        if (!startDate && !endDate) return trades;
-
-        return trades.filter(t => {
-            // 將交易時間轉換為 YYYY-MM-DD 格式進行比較
-            let tradeDate = '';
-            if (t.openTime) {
-                tradeDate = t.openTime.split('T')[0];
-            } else {
-                // 如果沒有開單時間，嘗試從 date 欄位解析
-                const d = new Date(t.date);
-                if (!isNaN(d)) {
-                    tradeDate = d.toISOString().split('T')[0];
-                }
-            }
-            if (!tradeDate) return true; // 如果無法解析日期，預設顯示
-
-            if (startDate && tradeDate < startDate) return false;
-            if (endDate && tradeDate > endDate) return false;
-            return true;
+    // === 複製分享連結 ===
+    window.copyShareLink = function() {
+        const url = document.getElementById('copyShareBtn').dataset.url;
+        if (!url) return;
+        navigator.clipboard.writeText(url).then(() => {
+            alert('✅ 分享連結已複製！');
+        }).catch(() => {
+            alert('複製失敗，請手動複製。');
         });
+    };
+
+    // === 關閉分享 ===
+    window.closeShareLink = async function() {
+        if (!currentShareId) {
+            alert('目前沒有分享連結可以關閉。');
+            return;
+        }
+        if (!confirm('確定要關閉分享嗎？關閉後，原本的連結將無法使用。')) return;
+        try {
+            await deleteDoc(doc(db, 'shared', currentShareId));
+            await setDoc(doc(db, 'users', currentUser.uid), { currentShareId: null }, { merge: true });
+            currentShareId = null;
+            document.getElementById('shareStatus').textContent = '目前尚未分享';
+            document.getElementById('copyShareBtn').style.display = 'none';
+            document.getElementById('closeShareBtn').style.display = 'none';
+            alert('✅ 已關閉分享。');
+        } catch (err) {
+            alert('關閉分享失敗：' + err.message);
+        }
+    };
+
+    // === 載入分享資料 ===
+    async function loadSharedData(shareId) {
+        try {
+            const docRef = doc(db, 'shared', shareId);
+            const docSnap = await getDoc(docRef);
+            if (!docSnap.exists()) {
+                document.getElementById('shareHistoryList').innerHTML = '<p style="color:var(--accent-red); text-align:center;">此分享連結已失效或不存在。</p>';
+                return;
+            }
+            const data = docSnap.data();
+            const sharedTrades = data.trades || [];
+            
+            // 計算統計
+            let totalPL = 0, totalR = 0, wins = 0, losses = 0;
+            sharedTrades.forEach(t => {
+                totalPL += t.pl || 0;
+                totalR += t.rMultiple || 0;
+                if (t.exitPrice > 0) {
+                    if (t.pl > 0) wins++;
+                    else if (t.pl < 0) losses++;
+                }
+            });
+            const winRate = (wins + losses) > 0 ? (wins / (wins + losses)) * 100 : 0;
+            
+            document.getElementById('shareStatTotalR').textContent = totalR.toFixed(2);
+            document.getElementById('shareStatWinRate').textContent = winRate.toFixed(1) + '%';
+            document.getElementById('shareStatTotalTrades').textContent = sharedTrades.length;
+            document.getElementById('shareStatTotalPL').textContent = totalPL.toFixed(2);
+
+            // 渲染歷史列表
+            const list = document.getElementById('shareHistoryList');
+            list.innerHTML = '';
+            [...sharedTrades].reverse().forEach(t => {
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                const isWin = t.pl > 0;
+                const plClass = isWin ? 'green' : (t.pl < 0 ? 'red' : '');
+                const plText = t.pl > 0 ? `+${t.pl.toFixed(2)}` : t.pl.toFixed(2);
+                const rText = t.rMultiple > 0 ? `+${t.rMultiple.toFixed(2)}R` : `${t.rMultiple.toFixed(2)}R`;
+                
+                item.innerHTML = `
+                    <div class="info">
+                        <h4>${t.symbol} <span style="font-size:0.8rem; padding:2px 6px; border-radius:4px; background:${t.direction === 'long' ? 'rgba(46,204,113,0.2)' : 'rgba(231,76,60,0.2)'}; color:${t.direction === 'long' ? 'var(--accent-green)' : 'var(--accent-red)'}">${t.directionText}</span> <span style="font-size:0.8rem; color: var(--text-secondary);">x${t.leverage || 1}</span></h4>
+                        <p>${t.openTime ? t.openTime.replace('T', ' ') : t.date} | 策略: ${t.strategy || '無'}</p>
+                    </div>
+                    <div class="result ${plClass}">
+                        ${plText} <br>
+                        <span style="font-size:0.8rem;">${rText}</span>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        } catch (err) {
+            console.error('載入分享資料失敗：', err);
+            document.getElementById('shareHistoryList').innerHTML = '<p style="color:var(--accent-red); text-align:center;">載入失敗。</p>';
+        }
     }
 
     // === 渲染統計面板 ===
-    function renderDashboard() {
+    window.renderDashboard = function() {
         const filteredTrades = getFilteredTrades();
         
-        // 更新篩選提示
         const filterInfo = document.getElementById('filterInfo');
         const startDate = document.getElementById('filterStartDate').value;
         const endDate = document.getElementById('filterEndDate').value;
@@ -1349,46 +994,28 @@
 
         if (filteredTrades.length === 0) {
             document.getElementById('historyList').innerHTML = '<p style="color:var(--text-secondary); text-align:center;">此日期範圍內無交易紀錄</p>';
-            // 重置所有統計數據
             const ids = ['statTotalR', 'statWinRate', 'statTotalTrades', 'statAvgR', 'statWins', 'statLosses', 'statMaxDrawdown', 'statTotalPL', 'longCount', 'shortCount', 'longWinRate', 'shortWinRate'];
             ids.forEach(id => document.getElementById(id).textContent = id.includes('Rate') ? '0%' : '0');
             return;
         }
 
-        let totalPL = 0;
-        let totalR = 0;
-        let wins = 0;
-        let losses = 0;
-        let maxDrawdown = 0;
-        let currentDrawdown = 0;
-        
-        let longTrades = 0, longWins = 0;
-        let shortTrades = 0, shortWins = 0;
+        let totalPL = 0, totalR = 0, wins = 0, losses = 0, maxDrawdown = 0, currentDrawdown = 0;
+        let longTrades = 0, longWins = 0, shortTrades = 0, shortWins = 0;
 
         filteredTrades.forEach(t => {
             totalPL += t.pl || 0;
             totalR += t.rMultiple || 0;
-
-            if (t.exitPrice > 0) { // 只有平倉的才算勝率
+            if (t.exitPrice > 0) {
                 if (t.pl > 0) {
                     wins++;
-                    currentDrawdown = 0; // 獲利時重置回撤
+                    currentDrawdown = 0;
                 } else if (t.pl < 0) {
                     losses++;
                     currentDrawdown += Math.abs(t.rMultiple || 0);
-                    if (currentDrawdown > maxDrawdown) {
-                        maxDrawdown = currentDrawdown;
-                    }
+                    if (currentDrawdown > maxDrawdown) maxDrawdown = currentDrawdown;
                 }
-
-                // 多空統計
-                if (t.direction === 'long') {
-                    longTrades++;
-                    if (t.pl > 0) longWins++;
-                } else {
-                    shortTrades++;
-                    if (t.pl > 0) shortWins++;
-                }
+                if (t.direction === 'long') { longTrades++; if (t.pl > 0) longWins++; }
+                else { shortTrades++; if (t.pl > 0) shortWins++; }
             }
         });
 
@@ -1397,10 +1024,8 @@
         const longWinRate = longTrades > 0 ? (longWins / longTrades) * 100 : 0;
         const shortWinRate = shortTrades > 0 ? (shortWins / shortTrades) * 100 : 0;
 
-        // 更新 UI
         document.getElementById('statTotalR').textContent = totalR.toFixed(2);
         document.getElementById('statTotalR').style.color = totalR >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
-        
         document.getElementById('statWinRate').textContent = winRate.toFixed(1) + '%';
         document.getElementById('statTotalTrades').textContent = filteredTrades.length;
         document.getElementById('statAvgR').textContent = avgR.toFixed(2);
@@ -1417,27 +1042,18 @@
         document.getElementById('shortCount').textContent = shortTrades;
         document.getElementById('shortWinRate').textContent = shortWinRate.toFixed(1) + '%';
 
-        // 渲染歷史列表
         const historyList = document.getElementById('historyList');
         historyList.innerHTML = '';
         
-        // 反轉陣列讓最新的在上面
         [...filteredTrades].reverse().forEach(t => {
             const item = document.createElement('div');
             item.className = 'history-item';
-            
             const isWin = t.pl > 0;
             const plClass = isWin ? 'green' : (t.pl < 0 ? 'red' : '');
             const plText = t.pl > 0 ? `+${t.pl.toFixed(2)}` : t.pl.toFixed(2);
             const rText = t.rMultiple > 0 ? `+${t.rMultiple.toFixed(2)}R` : `${t.rMultiple.toFixed(2)}R`;
-
-            // 顯示日期
             let displayDate = t.date;
-            if (t.openTime) {
-                displayDate = t.openTime.replace('T', ' ');
-            }
-
-            // 如果有圖片網址，顯示查看按鈕
+            if (t.openTime) displayDate = t.openTime.replace('T', ' ');
             const imageBtnHtml = t.imageUrl ? `<button class="view-img-btn" onclick="openModal('${t.imageUrl}')"><i class="fas fa-image"></i> 截圖</button>` : '';
 
             item.innerHTML = `
@@ -1452,27 +1068,23 @@
                 </div>
                 <div class="actions">
                     ${imageBtnHtml}
-                    <button class="edit-btn" onclick="editTrade(${t.id})"><i class="fas fa-edit"></i></button>
-                    <button class="copy-excel-btn" onclick="copySingleTradeToExcel(${t.id})"><i class="fas fa-copy"></i> 複製 EX</button>
-                    <button class="delete-btn" onclick="deleteTrade(${t.id})"><i class="fas fa-trash-alt"></i></button>
+                    <button class="edit-btn" onclick="editTrade('${t.id}')"><i class="fas fa-edit"></i></button>
+                    <button class="copy-excel-btn" onclick="copySingleTradeToExcel('${t.id}')"><i class="fas fa-copy"></i> 複製 EX</button>
+                    <button class="delete-btn" onclick="deleteTrade('${t.id}')"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
             historyList.appendChild(item);
         });
-    }
-
-    // === 複製單筆交易為 Excel 格式 (不含標題列) ===
-    function copySingleTradeToExcel(id) {
+    };    // === 複製單筆交易為 Excel 格式 ===
+    window.copySingleTradeToExcel = function(id) {
         const t = trades.find(trade => trade.id === id);
         if (!t) return;
 
-        // 計算基本數值
         const tradeAmount = t.entryPrice * t.size;
         const riskPerTrade = t.riskAmount;
         const pl = t.pl || 0;
         const plPercent = riskPerTrade > 0 ? (pl / riskPerTrade) * 100 : 0;
         
-        // 計算時長
         let duration = '';
         if (t.openTime && t.closeTime) {
             const start = new Date(t.openTime);
@@ -1484,8 +1096,6 @@
         }
 
         const direction = t.direction === 'long' ? '多' : '空';
-        
-        // 判斷止盈或止損
         let slTpText = '平倉';
         if (pl > 0) slTpText = '止盈';
         else if (pl < 0) slTpText = '止損';
@@ -1493,12 +1103,10 @@
         let plColor = '#000';
         if (pl > 0) plColor = '#008000';
         else if (pl < 0) plColor = '#FF0000';
-
         let plPctColor = '#000';
         if (plPercent > 0) plPctColor = '#008000';
         else if (plPercent < 0) plPctColor = '#FF0000';
 
-        // 建立單筆表格 (不含標題列)
         const html = `
         <table style="border-collapse: collapse; font-family: Arial, sans-serif; font-size: 10pt; text-align: center; white-space: nowrap;">
             <tbody>
@@ -1526,7 +1134,6 @@
         </table>
         `;
 
-        // 將 HTML 字串複製到剪貼簿
         const blob = new Blob([html], { type: 'text/html' });
         const data = [new ClipboardItem({ 'text/html': blob })];
 
@@ -1536,16 +1143,268 @@
             console.error('複製失敗: ', err);
             alert('複製失敗，請確認瀏覽器支援剪貼簿功能。');
         });
+    };
+
+    // === 日期篩選功能 ===
+    window.clearDateFilter = function() {
+        document.getElementById('filterStartDate').value = '';
+        document.getElementById('filterEndDate').value = '';
+        renderDashboard();
+    };
+
+    function getFilteredTrades() {
+        const startDate = document.getElementById('filterStartDate').value;
+        const endDate = document.getElementById('filterEndDate').value;
+        if (!startDate && !endDate) return trades;
+        return trades.filter(t => {
+            let tradeDate = '';
+            if (t.openTime) {
+                tradeDate = t.openTime.split('T')[0];
+            } else {
+                const d = new Date(t.date);
+                if (!isNaN(d)) tradeDate = d.toISOString().split('T')[0];
+            }
+            if (!tradeDate) return true;
+            if (startDate && tradeDate < startDate) return false;
+            if (endDate && tradeDate > endDate) return false;
+            return true;
+        });
     }
 
-    // === 刪除紀錄 ===
-    function deleteTrade(id) {
-        if(confirm('確定要刪除這筆交易紀錄嗎？')) {
-            trades = trades.filter(t => t.id !== id);
-            saveData();
+    // === 圖片連結處理 ===
+    window.handleImageUrlChange = function() {
+        const url = document.getElementById('imageUrlInput').value.trim();
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        const previewImg = document.getElementById('imagePreview');
+        const errorMsg = document.getElementById('imageErrorMsg');
+        const openLinkBtn = document.getElementById('openLinkBtn');
+
+        if (url) {
+            currentImageUrl = url;
+            previewContainer.style.display = 'flex';
+            previewImg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            openLinkBtn.style.display = 'none';
+            previewImg.src = url;
+            previewImg.onload = function() {
+                previewImg.style.display = 'block';
+                errorMsg.style.display = 'none';
+                openLinkBtn.style.display = 'none';
+            };
+            previewImg.onerror = function() {
+                previewImg.style.display = 'none';
+                errorMsg.style.display = 'block';
+                openLinkBtn.style.display = 'inline-block';
+                openLinkBtn.href = url;
+            };
+        } else {
+            currentImageUrl = "";
+            previewContainer.style.display = 'none';
+            previewImg.src = "";
+        }
+    };
+
+    // === 圖片彈窗 ===
+    window.openModal = function(imageSrc) {
+        if (!imageSrc) return;
+        document.getElementById('modalImage').src = imageSrc;
+        document.getElementById('imageModal').style.display = 'flex';
+    };
+    window.closeModal = function() {
+        document.getElementById('imageModal').style.display = 'none';
+    };
+
+    // === 分頁切換 ===
+    window.switchTab = function(tabName) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+        if(tabName === 'entry') {
+            document.querySelector('.tabs .tab-btn:first-child').classList.add('active');
+            document.querySelector('.bottom-nav .nav-item:first-child').classList.add('active');
+        } else {
+            document.querySelector('.tabs .tab-btn:last-child').classList.add('active');
+            document.querySelector('.bottom-nav .nav-item:last-child').classList.add('active');
             renderDashboard();
         }
+    };
+
+    // === Chip 點擊邏輯 ===
+    function initChips(containerId) {
+        const container = document.getElementById(containerId);
+        if(!container) return;
+        container.querySelectorAll('.chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                chip.classList.toggle('selected');
+                if(chip.classList.contains('selected')) {
+                    const val = chip.dataset.val;
+                    if(['想凹單', '逆勢硬扛', '虧損後放大風險', '追價 / FOMO', '報復性交易'].includes(val)) {
+                        chip.classList.add('red');
+                    } else {
+                        chip.classList.add('green');
+                    }
+                } else {
+                    chip.classList.remove('red', 'green');
+                }
+            });
+        });
     }
+
+    function getSelectedChips(containerId) {
+        const container = document.getElementById(containerId);
+        const selected = [];
+        container.querySelectorAll('.chip.selected').forEach(chip => {
+            selected.push(chip.dataset.val);
+        });
+        return selected;
+    }
+
+    // === 自動計算核心邏輯 ===
+    function calculateMetrics() {
+        const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
+        const stop = parseFloat(document.getElementById('stopLoss').value) || 0;
+        const target = parseFloat(document.getElementById('takeProfit').value) || 0;
+        const exit = parseFloat(document.getElementById('exitPrice').value) || 0;
+        const size = parseFloat(document.getElementById('size').value) || 0;
+        const entryFeePercent = parseFloat(document.getElementById('entryFee').value) || 0;
+        const exitFeePercent = parseFloat(document.getElementById('exitFee').value) || 0;
+        const direction = document.getElementById('direction').value;
+
+        let riskAmount = 0, rewardAmount = 0, rr = 0, pl = 0, rMultiple = 0;
+
+        if(entry && stop && size) {
+            if (direction === 'long') {
+                riskAmount = (entry - stop) * size;
+                rewardAmount = target ? (target - entry) * size : 0;
+            } else {
+                riskAmount = (stop - entry) * size;
+                rewardAmount = target ? (entry - target) * size : 0;
+            }
+            if (riskAmount > 0) rr = rewardAmount / riskAmount;
+        }
+
+        if(exit && entry && size) {
+            let rawPl = 0;
+            if (direction === 'long') rawPl = (exit - entry) * size;
+            else rawPl = (entry - exit) * size;
+            const entryFeeAmount = entry * size * (entryFeePercent / 100);
+            const exitFeeAmount = exit * size * (exitFeePercent / 100);
+            pl = rawPl - entryFeeAmount - exitFeeAmount;
+            if (riskAmount > 0) rMultiple = rawPl / riskAmount;
+        }
+
+        document.getElementById('riskAmount').textContent = riskAmount.toFixed(2);
+        document.getElementById('riskReward').textContent = rr.toFixed(2);
+        document.getElementById('profitLoss').textContent = pl.toFixed(2);
+        document.getElementById('rMultiple').textContent = rMultiple.toFixed(2);
+
+        const plEl = document.getElementById('profitLoss');
+        const rEl = document.getElementById('rMultiple');
+        if(pl > 0) plEl.style.color = 'var(--accent-green)';
+        else if (pl < 0) plEl.style.color = 'var(--accent-red)';
+        else plEl.style.color = 'var(--accent-color)';
+        if(rMultiple > 0) rEl.style.color = 'var(--accent-green)';
+        else if (rMultiple < 0) rEl.style.color = 'var(--accent-red)';
+        else rEl.style.color = 'var(--accent-color)';
+    }
+
+    // === 載入與儲存預設參數 ===
+    function loadDefaultParams() {
+        const savedLeverage = localStorage.getItem('defaultLeverage');
+        const savedEntryFee = localStorage.getItem('defaultEntryFee');
+        const savedExitFee = localStorage.getItem('defaultExitFee');
+        if (savedLeverage) document.getElementById('leverage').value = savedLeverage;
+        if (savedEntryFee) document.getElementById('entryFee').value = savedEntryFee;
+        if (savedExitFee) document.getElementById('exitFee').value = savedExitFee;
+    }
+    function saveDefaultParams() {
+        localStorage.setItem('defaultLeverage', document.getElementById('leverage').value);
+        localStorage.setItem('defaultEntryFee', document.getElementById('entryFee').value);
+        localStorage.setItem('defaultExitFee', document.getElementById('exitFee').value);
+    }
+
+    // === 自行輸入切換 ===
+    window.toggleCustomInput = function(selectElement) {
+        const customInput = document.getElementById('customSystemType');
+        if (selectElement.value === '自行輸入') {
+            customInput.style.display = 'block';
+            customInput.focus();
+        } else {
+            customInput.style.display = 'none';
+            customInput.value = '';
+        }
+    };
+
+    // === Excel 網址管理 ===
+    window.saveExcelUrl = function() {
+        const url = document.getElementById('excelUrlInput').value.trim();
+        if (!url) { alert('請先輸入網址！'); return; }
+        localStorage.setItem('excelUrl', url);
+        document.getElementById('excelUrlStatus').innerHTML = `<i class="fas fa-check-circle" style="color: var(--accent-green);"></i> 已儲存: <a href="${url}" target="_blank" style="color: var(--accent-color); word-break: break-all;">${url}</a>`;
+        alert('✅ 網址已儲存！');
+    };
+    window.clearExcelUrl = function() {
+        if (confirm('確定要清除已儲存的網址嗎？')) {
+            localStorage.removeItem('excelUrl');
+            document.getElementById('excelUrlInput').value = '';
+            document.getElementById('excelUrlStatus').textContent = '目前尚未設定網址';
+            alert('已清除網址。');
+        }
+    };
+    window.openExcelLink = function() {
+        const savedUrl = localStorage.getItem('excelUrl');
+        if (!savedUrl) { alert('您尚未設定 Excel 網址！請先在上方輸入並儲存。'); return; }
+        window.open(savedUrl, '_blank');
+    };
+    function loadExcelUrl() {
+        const savedUrl = localStorage.getItem('excelUrl');
+        if (savedUrl) {
+            document.getElementById('excelUrlInput').value = savedUrl;
+            document.getElementById('excelUrlStatus').innerHTML = `<i class="fas fa-check-circle" style="color: var(--accent-green);"></i> 已儲存: <a href="${savedUrl}" target="_blank" style="color: var(--accent-color); word-break: break-all;">${savedUrl}</a>`;
+        }
+    }
+
+    // === 初始化 ===
+    document.addEventListener('DOMContentLoaded', () => {
+        const now = new Date();
+        document.getElementById('currentDate').textContent = now.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
+        
+        document.getElementById('tradeForm').addEventListener('submit', handleFormSubmit);
+        
+        ['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'size', 'entryFee', 'exitFee', 'leverage', 'usdtAmount'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', calculateMetrics);
+        });
+
+        document.getElementById('size').addEventListener('input', function() {
+            if (isSyncing) return;
+            isSyncing = true;
+            const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
+            const size = parseFloat(this.value) || 0;
+            if (entry > 0) document.getElementById('usdtAmount').value = (entry * size).toFixed(2);
+            isSyncing = false;
+        });
+
+        document.getElementById('usdtAmount').addEventListener('input', function() {
+            if (isSyncing) return;
+            isSyncing = true;
+            const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
+            const usdt = parseFloat(this.value) || 0;
+            if (entry > 0) document.getElementById('size').value = (usdt / entry).toFixed(4);
+            isSyncing = false;
+        });
+
+        document.getElementById('confidence').addEventListener('input', (e) => {
+            document.getElementById('confidenceVal').textContent = e.target.value;
+        });
+
+        initChips('checklistGroup');
+        initChips('biasGroup');
+
+        loadExcelUrl();
+        loadDefaultParams();
+    });
 </script>
 
 </body>
