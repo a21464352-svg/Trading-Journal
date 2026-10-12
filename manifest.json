@@ -1,7 +1,7 @@
 {
-  "name": "虛擬貨幣交易日誌",
+  "name": "交易日誌",
   "short_name": "交易日誌",
-  "description": "虛擬貨幣交易決策日誌",
+  "description": "交易日誌",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#121212",
