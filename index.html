@@ -26,7 +26,6 @@
         .fade-in { animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 登入頁面 */
         #loginPage { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; text-align: center; }
         #loginPage h1 { font-size: 2rem; margin-bottom: 10px; }
         #loginPage p { color: var(--text-secondary); margin-bottom: 30px; }
@@ -40,7 +39,6 @@
         #emailForm button { padding: 12px; border: none; border-radius: 6px; background: var(--accent-color); color: #121212; font-weight: 600; cursor: pointer; font-size: 1rem; }
         #emailForm .toggle-link { color: var(--accent-color); margin-top: 10px; cursor: pointer; font-size: 0.9rem; text-decoration: underline; }
 
-        /* 主頁面 */
         #mainPage { display: none; }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
         .header h1 { font-size: 1.5rem; font-weight: 600; }
@@ -48,19 +46,16 @@
         .header .user-info img { width: 32px; height: 32px; border-radius: 50%; }
         .header .user-info button { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
 
-        /* 分頁切換 */
         .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
         .tab-btn { flex: 1; padding: 12px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-secondary); border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; text-align: center; }
         .tab-btn.active { background: var(--accent-color); color: #121212; border-color: var(--accent-color); }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
 
-        /* 卡片樣式 */
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; color: var(--text-primary); }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px; margin-bottom: 25px; }
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: var(--text-primary); letter-spacing: 0.3px; }
         .card-title i { color: var(--accent-color); }
 
-        /* 表單元素 */
         .form-group { margin-bottom: 15px; }
         .form-row { display: flex; gap: 15px; flex-wrap: wrap; }
         .form-row > .form-group { flex: 1; min-width: 200px; }
@@ -69,7 +64,6 @@
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent-color); }
         textarea { resize: vertical; min-height: 60px; }
 
-        /* 收合區塊 */
         .collapsible { display: none; }
         .collapsible.open { display: block; animation: fadeIn 0.3s ease; }
         .collapse-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 10px 0; color: var(--text-secondary); font-size: 0.9rem; border-bottom: 1px solid var(--border-color); margin-bottom: 15px; user-select: none; }
@@ -77,34 +71,32 @@
         .collapse-toggle i { transition: transform 0.2s; }
         .collapse-toggle.open i { transform: rotate(180deg); }
 
-        /* Chip */
         .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
         .chip { padding: 6px 14px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; user-select: none; }
         .chip.selected { background: rgba(240, 185, 11, 0.2); border-color: var(--accent-color); color: var(--accent-color); }
         .chip.selected.red { background: rgba(231, 76, 60, 0.2); border-color: var(--accent-red); color: var(--accent-red); }
         .chip.selected.green { background: rgba(46, 204, 113, 0.2); border-color: var(--accent-green); color: var(--accent-green); }
 
-        /* 計算框 */
         .calc-box { background: #1a1a1a; border: 1px dashed var(--accent-color); border-radius: 8px; padding: 15px; margin-top: 10px; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
         .calc-item { text-align: center; }
         .calc-item .label { font-size: 0.75rem; color: var(--text-secondary); }
         .calc-item .value { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); }
 
-        /* 統計數據 */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .stat-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; text-align: center; }
-        .stat-card .label { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 5px; }
-        .stat-card .value { font-size: 1.4rem; font-weight: bold; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-bottom: 25px; }
+        .stat-card { background: #252525; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px 15px; text-align: center; transition: all 0.2s ease; }
+        .stat-card:hover { border-color: var(--accent-color); transform: translateY(-2px); }
+        .stat-card .label { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 8px; letter-spacing: 0.3px; }
+        .stat-card .value { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
         .stat-card .value.green { color: var(--accent-green); }
         .stat-card .value.red { color: var(--accent-red); }
 
-        /* 歷史紀錄 */
         .history-list { display: flex; flex-direction: column; gap: 10px; }
-        .history-item { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .history-item { background: #252525; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; transition: all 0.2s ease; }
+        .history-item:hover { border-color: var(--accent-color); background: #2a2a2a; }
         .history-item .info { flex: 2; min-width: 200px; }
-        .history-item .info h4 { font-size: 1rem; margin-bottom: 5px; }
-        .history-item .info p { font-size: 0.8rem; color: var(--text-secondary); }
-        .history-item .result { font-weight: bold; font-size: 1.1rem; text-align: right; }
+        .history-item .info h4 { font-size: 1.05rem; margin-bottom: 8px; font-weight: 600; }
+        .history-item .info p { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 3px; line-height: 1.5; }
+        .history-item .result { font-weight: 700; font-size: 1.2rem; text-align: right; line-height: 1.4; }
         .history-item .result.green { color: var(--accent-green); }
         .history-item .result.red { color: var(--accent-red); }
         .history-item .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -114,11 +106,9 @@
         .history-item .actions .copy-excel-btn { color: var(--accent-green); font-size: 0.75rem; background: rgba(46, 204, 113, 0.1); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--accent-green); display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
         .history-item .actions .view-img-btn { color: var(--accent-color); font-size: 0.75rem; background: rgba(240, 185, 11, 0.1); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--accent-color); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
 
-        /* 日期篩選 */
-        .date-filter-container { display: flex; gap: 10px; align-items: center; background: var(--input-bg); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; flex-wrap: wrap; }
+        .date-filter-container { display: flex; gap: 12px; align-items: center; background: var(--input-bg); padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); margin-bottom: 15px; flex-wrap: wrap; }
         .date-filter-container input, .date-filter-container select { width: auto; flex: 1; min-width: 120px; padding: 6px 10px; }
 
-        /* 圖片連結 */
         .image-link-container { display: flex; gap: 10px; margin-top: 10px; }
         .image-link-container input { flex: 1; }
         .image-preview-container { display: none; margin-top: 15px; position: relative; text-align: center; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; background: #1a1a1a; min-height: 100px; justify-content: center; align-items: center; }
@@ -126,25 +116,22 @@
         .image-error-msg { color: var(--accent-red); font-size: 0.9rem; display: none; }
         .open-link-btn { display: none; margin-top: 10px; padding: 8px 15px; background: var(--accent-color); color: #121212; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
 
-        /* Modal */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
         .modal img { max-width: 90%; max-height: 90%; border-radius: 8px; }
         .modal .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
 
-        /* 底部導航 */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--card-bg); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-secondary); font-size: 0.75rem; cursor: pointer; transition: color 0.2s; }
         .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
         .nav-item.active { color: var(--accent-color); }
 
-        /* 分享檢視頁面 */
         #shareViewPage { display: none; padding: 20px; }
         #shareViewPage h1 { font-size: 1.5rem; margin-bottom: 10px; }
         #shareViewPage p { color: var(--text-secondary); margin-bottom: 20px; }
 
-        /* 高質感按鈕 */
         .btn-primary { padding: 16px; font-size: 1.1rem; background: linear-gradient(135deg, #f0b90b 0%, #f8d33a 100%); color: #121212; border: none; border-radius: 10px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(240, 185, 11, 0.25); transition: all 0.25s ease; width: 100%; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(240, 185, 11, 0.45); }
+        .btn-primary:active { transform: translateY(0); }
         .btn-secondary { padding: 12px 22px; background: transparent; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; transition: all 0.25s ease; }
         .btn-secondary:hover { transform: translateY(-2px); }
         .btn-yellow { color: var(--accent-color); border: 1px solid var(--accent-color); }
@@ -158,14 +145,12 @@
         .btn-solid-yellow { padding: 10px 18px; background: linear-gradient(135deg, #f0b90b 0%, #f8d33a 100%); color: #121212; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.9rem; box-shadow: 0 3px 10px rgba(240, 185, 11, 0.25); transition: all 0.25s ease; }
         .btn-solid-yellow:hover { transform: translateY(-2px); }
 
-        /* 載入中轉圈圈 */
         .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3000; justify-content: center; align-items: center; flex-direction: column; gap: 15px; }
         .loading-overlay.active { display: flex; }
         .spinner { width: 50px; height: 50px; border: 4px solid rgba(240, 185, 11, 0.2); border-top: 4px solid var(--accent-color); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .loading-text { color: var(--accent-color); font-weight: 600; font-size: 1rem; }
 
-        /* Toast 通知 */
         .toast-container { position: fixed; top: 20px; right: 20px; z-index: 4000; display: flex; flex-direction: column; gap: 10px; }
         .toast { background: var(--card-bg); border-left: 4px solid var(--accent-color); padding: 12px 18px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.4); color: var(--text-primary); display: flex; align-items: center; gap: 10px; min-width: 250px; animation: slideIn 0.3s ease; }
         .toast.success { border-left-color: var(--accent-green); }
@@ -175,62 +160,79 @@
         .toast.error i { color: var(--accent-red); }
         @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
 
-        /* 浮動新增按鈕 */
         .fab { position: fixed; bottom: 90px; right: 20px; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #f0b90b 0%, #f8d33a 100%); color: #121212; border: none; cursor: pointer; font-size: 1.5rem; box-shadow: 0 6px 20px rgba(240, 185, 11, 0.5); display: flex; align-items: center; justify-content: center; z-index: 500; transition: all 0.3s ease; }
-        .fab:hover { transform: scale(1.1) rotate(90deg); box-shadow: 0 8px 25px rgba(240, 185, 11, 0.7); }
+        .fab:hover { transform: scale(1.1) translateY(-3px); box-shadow: 0 8px 25px rgba(240, 185, 11, 0.7); }
 
-        /* 撤銷刪除通知 */
-        .undo-toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--card-bg); border: 1px solid var(--accent-red); color: var(--text-primary); padding: 15px 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; box-shadow: 0 6px 20px rgba(0,0,0,0.5); z-index: 2500; transition: transform 0.3s ease; }
-        .undo-toast.active { transform: translateX(-50%) translateY(0); }
-        .undo-toast button { background: var(--accent-color); color: #121212; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.9rem; }
-        .undo-toast button:hover { background: #f8d33a; }
+        .undo-toast-inline { display: none; background: #2a1a1a; border: 1px solid var(--accent-red); color: var(--text-primary); padding: 12px 18px; border-radius: 8px; margin-bottom: 15px; align-items: center; justify-content: space-between; gap: 15px; }
+        .undo-toast-inline.active { display: flex; animation: fadeIn 0.3s ease; }
+        .undo-toast-inline button { background: var(--accent-color); color: #121212; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem; }
+        .undo-toast-inline button:hover { background: #f8d33a; }
 
-        /* 圖表 */
+        .asset-summary { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 0; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px 24px; margin-bottom: 20px; align-items: center; }
+        .asset-summary .asset-item { padding: 0 15px; border-left: 1px solid var(--border-color); }
+        .asset-summary .asset-item:first-child { border-left: none; padding-left: 0; }
+        .asset-summary .asset-label { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+        .asset-summary .asset-value { font-size: 1.6rem; font-weight: 700; letter-spacing: 0.5px; }
+        .asset-summary .asset-value.green { color: var(--accent-green); }
+        .asset-summary .asset-value.red { color: var(--accent-red); }
+        .asset-summary .asset-sub { font-size: 0.8rem; margin-top: 4px; }
+        .asset-summary .asset-sub.green { color: var(--accent-green); }
+        .asset-summary .asset-sub.red { color: var(--accent-red); }
+        .asset-summary .asset-value-small { font-size: 1.3rem; font-weight: 700; }
+        .capital-input-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+        .capital-input-row input { width: 100px; padding: 4px 8px; font-size: 0.85rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); }
+        .capital-input-row button { padding: 4px 10px; font-size: 0.8rem; background: var(--accent-color); color: #121212; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; }
+
+        .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .charts-grid .card { margin-bottom: 0; }
+        .charts-grid .chart-full { grid-column: 1 / -1; }
         .chart-container { position: relative; height: 280px; margin-top: 10px; }
+        .chart-container-lg { position: relative; height: 320px; margin-top: 10px; }
+        .chart-select { padding: 6px 10px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; margin-left: auto; }
 
-        /* 語言切換 */
-        .lang-select { padding: 6px 10px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .calendar-header button { background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); padding: 5px 12px; border-radius: 6px; cursor: pointer; }
+        .calendar-header button:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+        .calendar-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 6px; font-size: 0.75rem; padding: 4px; }
+        .calendar-cell.empty { background: transparent; }
+        .calendar-cell.day { background: #252525; border: 1px solid var(--border-color); }
+        .calendar-cell.win { background: rgba(46, 204, 113, 0.25); border: 1px solid var(--accent-green); }
+        .calendar-cell.loss { background: rgba(231, 76, 60, 0.25); border: 1px solid var(--accent-red); }
+        .calendar-cell .day-num { font-weight: 700; color: var(--text-primary); }
+        .calendar-cell .day-pl { font-size: 0.7rem; margin-top: 2px; font-weight: 700; }
+        .calendar-cell.win .day-pl { color: var(--accent-green); }
+        .calendar-cell.loss .day-pl { color: var(--accent-red); }
+        .calendar-weekday { text-align: center; font-size: 0.75rem; color: var(--text-secondary); padding: 5px 0; }
 
-        /* 響應式 */
         @media (max-width: 600px) {
             .form-row > .form-group { min-width: 100%; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .date-filter-container { flex-direction: column; align-items: stretch; }
             .fab { bottom: 80px; right: 15px; width: 55px; height: 55px; font-size: 1.3rem; }
-            .undo-toast { bottom: 80px; width: 90%; }
             .toast-container { left: 20px; right: 20px; }
+            .asset-summary { grid-template-columns: 1fr 1fr; gap: 15px; }
+            .asset-summary .asset-item { border-left: none; padding: 0; }
+            .charts-grid { grid-template-columns: 1fr; }
         }
     </style>
-</head><body>
+</head>
+<body>
 
-<!-- Toast 通知容器 -->
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- 載入中動畫 -->
 <div id="loadingOverlay" class="loading-overlay">
     <div class="spinner"></div>
     <div class="loading-text" id="loadingText">載入中...</div>
 </div>
 
-<!-- 撤銷刪除通知 -->
-<div id="undoToast" class="undo-toast">
-    <span><i class="fas fa-trash-alt"></i> 已刪除交易紀錄</span>
-    <button onclick="undoDelete()">復原</button>
-</div>
+<button class="fab" id="fabBtn" onclick="quickAdd()" title="新增交易"><i class="fas fa-arrow-up"></i></button>
 
-<!-- 浮動新增按鈕 -->
-<button class="fab" id="fabBtn" onclick="quickAdd()" title="新增交易"><i class="fas fa-plus"></i></button>
-
-<!-- ================= 登入頁面 ================= -->
 <div id="loginPage" class="container">
     <h1><i class="fas fa-coins"></i> 交易日誌</h1>
     <p>歡迎使用，請先登入</p>
-    <button class="login-btn google-btn" onclick="loginWithGoogle()">
-        <i class="fab fa-google"></i> Google 登入
-    </button>
-    <button class="login-btn email-btn" onclick="toggleEmailForm()">
-        <i class="fas fa-envelope"></i> Email 註冊 / 登入
-    </button>
+    <button class="login-btn google-btn" onclick="loginWithGoogle()"><i class="fab fa-google"></i> Google 登入</button>
+    <button class="login-btn email-btn" onclick="toggleEmailForm()"><i class="fas fa-envelope"></i> Email 註冊 / 登入</button>
     <div id="emailForm">
         <input type="email" id="emailInput" placeholder="請輸入 Email">
         <input type="password" id="passwordInput" placeholder="請輸入密碼">
@@ -239,7 +241,6 @@
     </div>
 </div>
 
-<!-- ================= 分享密碼輸入頁面 ================= -->
 <div id="sharePasswordPage" class="container" style="display:none; padding-top: 100px; text-align: center;">
     <h1><i class="fas fa-lock"></i> 此分享需要密碼</h1>
     <p style="color: var(--text-secondary); margin-bottom: 20px;">請輸入密碼以查看交易紀錄</p>
@@ -248,7 +249,6 @@
     <p id="sharePasswordError" style="color: var(--accent-red); margin-top: 15px; display: none;">密碼錯誤，請重新輸入</p>
 </div>
 
-<!-- ================= 分享檢視頁面 ================= -->
 <div id="shareViewPage" class="container">
     <h1><i class="fas fa-share-alt"></i> 分享的交易紀錄</h1>
     <p>這是別人分享給您的交易紀錄（唯讀模式）</p>
@@ -267,7 +267,6 @@
     </div>
 </div>
 
-<!-- ================= 主頁面 ================= -->
 <div id="mainPage" class="container">
     <div class="header">
         <h1><i class="fas fa-coins"></i> <span data-i18n="app_title">虛擬貨幣交易日誌</span></h1>
@@ -285,14 +284,13 @@
     <div class="tabs">
         <div class="tab-btn active" onclick="switchTab('entry')"><i class="fas fa-pen"></i> <span data-i18n="tab_entry">記錄交易</span></div>
         <div class="tab-btn" onclick="switchTab('dashboard')"><i class="fas fa-chart-pie"></i> <span data-i18n="tab_dashboard">數據統計</span></div>
+        <div class="tab-btn" onclick="switchTab('analysis')"><i class="fas fa-chart-line"></i> <span data-i18n="tab_analysis">盈虧分析</span></div>
     </div>
 
-    <!-- ================= 頁面 1: 記錄交易 ================= -->
+    <!-- 頁面 1: 記錄交易 -->
     <div id="tab-entry" class="tab-content active">
         <form id="tradeForm">
             <input type="hidden" id="editId" value="">
-
-            <!-- 卡片 1: 交易設定 -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-coins"></i> <span data-i18n="card_trade_setting">交易設定</span></div>
                 <div class="form-row">
@@ -306,7 +304,6 @@
                 </div>
             </div>
 
-            <!-- 卡片 2: 風控計算 -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-calculator"></i> <span data-i18n="card_risk">風控計算</span></div>
                 <div class="form-row">
@@ -327,8 +324,6 @@
                     <div class="form-group"><label data-i18n="size">數量 / 倉位大小 (Size)</label><input type="number" id="size" step="0.0001" placeholder="例如: 0.1" required></div>
                     <div class="form-group"><label data-i18n="usdtAmount">USDT 金額 (進場總額)</label><input type="number" id="usdtAmount" step="0.01" placeholder="例如: 6000"></div>
                 </div>
-
-                <!-- 收合：時間設定 -->
                 <div class="collapse-toggle" onclick="toggleCollapse('timeCollapse', this)">
                     <span><i class="fas fa-clock"></i> <span data-i18n="time_toggle">開單 / 平倉時間（點擊展開）</span></span>
                     <i class="fas fa-chevron-down"></i>
@@ -339,7 +334,6 @@
                         <div class="form-group"><label data-i18n="closeTime">平倉時間</label><input type="datetime-local" id="closeTime"></div>
                     </div>
                 </div>
-
                 <div class="calc-box">
                     <div class="calc-item"><div class="label" data-i18n="riskAmount">風險金額 (1R)</div><div class="value" id="riskAmount">0</div></div>
                     <div class="calc-item"><div class="label" data-i18n="riskReward">預期盈虧比 (RR)</div><div class="value" id="riskReward">0</div></div>
@@ -348,7 +342,6 @@
                 </div>
             </div>
 
-            <!-- 卡片 3: 開單前觀察 -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-eye"></i> <span data-i18n="card_observation">開單前，你看見了什麼？</span></div>
                 <div class="form-group"><label data-i18n="marketView">市場觀察與策略假設</label><textarea id="marketView" placeholder="描述當時的市場結構..."></textarea></div>
@@ -364,35 +357,8 @@
                 </div>
             </div>
 
-            <!-- 卡片 4: 系統遵循度 -->
             <div class="card">
-                <div class="card-title"><i class="fas fa-check-double"></i> <span data-i18n="card_system">這筆交易符合系統嗎？</span></div>
-                <div class="form-group">
-                    <label data-i18n="systemType">交易決策類型</label>
-                    <select id="systemType" onchange="toggleCustomInput(this)">
-                        <option value="系統交易：符合既定策略" data-i18n="sys_trade">系統交易：符合既定策略</option>
-                        <option value="主觀交易：偏離系統" data-i18n="sys_subjective">主觀交易：偏離系統</option>
-                        <option value="衝動交易：無計畫" data-i18n="sys_impulsive">衝動交易：無計畫</option>
-                        <option value="自行輸入" data-i18n="sys_custom">--- 自行輸入 ---</option>
-                    </select>
-                    <input type="text" id="customSystemType" placeholder="請輸入您的決策類型..." style="display:none; margin-top:10px;">
-                </div>
-                <div class="form-group">
-                    <label data-i18n="checklist">開單前一致性檢查 (可多選)</label>
-                    <div class="chip-group" id="checklistGroup">
-                        <div class="chip" data-val="符合市場環境" data-i18n="chk_market">符合市場環境</div>
-                        <div class="chip" data-val="符合策略型態" data-i18n="chk_pattern">符合策略型態</div>
-                        <div class="chip" data-val="出現明確進場訊號" data-i18n="chk_signal">出現明確進場訊號</div>
-                        <div class="chip" data-val="進場前已設定止損" data-i18n="chk_sl">進場前已設定止損</div>
-                        <div class="chip" data-val="進場前已設定目標" data-i18n="chk_tp">進場前已設定目標</div>
-                        <div class="chip" data-val="風險符合原定規則" data-i18n="chk_risk">風險符合原定規則</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 卡片 5: 心理狀態 -->
-            <div class="card">
-                <div class="card-title"><i class="fas fa-brain"></i> <span data-i18n="card_mindset">當下的心理狀態</span></div>
+                <div class="card-title"><i class="fas fa-brain"></i> <span data-i18n="card_mindset">心理狀態與檢討</span></div>
                 <div class="form-row">
                     <div class="form-group"><label data-i18n="emotion">進場時的主要情緒</label><select id="emotion"><option value="冷靜" data-i18n="emo_calm">冷靜</option><option value="興奮" data-i18n="emo_excited">興奮</option><option value="焦慮" data-i18n="emo_anxious">焦慮</option><option value="恐懼" data-i18n="emo_fear">恐懼</option><option value="貪婪" data-i18n="emo_greed">貪婪</option><option value="報復性" data-i18n="emo_revenge">報復性</option></select></div>
                     <div class="form-group"><label data-i18n="confidence">做單信心 (1-10)</label><input type="range" id="confidence" min="1" max="10" value="5" style="width:100%;"><div style="text-align:center; font-size:0.8rem;" id="confidenceVal">5</div></div>
@@ -412,12 +378,7 @@
                         <div class="chip" data-val="提前出場" data-i18n="bias_early_exit">提前出場</div>
                     </div>
                 </div>
-            </div>
-
-            <!-- 卡片 6: 個人檢討 -->
-            <div class="card">
-                <div class="card-title"><i class="fas fa-clipboard-check"></i> <span data-i18n="card_review">個人檢討 / 覆盤筆記</span></div>
-                <div class="form-group"><textarea id="personalReview" placeholder="記錄這筆交易學到了什麼？"></textarea></div>
+                <div class="form-group"><label data-i18n="card_review">個人檢討 / 覆盤筆記</label><textarea id="personalReview" placeholder="記錄這筆交易學到了什麼？"></textarea></div>
             </div>
 
             <button type="submit" id="submitBtn" class="btn-primary"><i class="fas fa-save"></i> <span data-i18n="save">儲存交易紀錄</span></button>
@@ -425,61 +386,8 @@
         </form>
     </div>
 
-    <!-- ================= 頁面 2: 數據統計 ================= -->
+    <!-- 頁面 2: 數據統計 -->
     <div id="tab-dashboard" class="tab-content">
-        <!-- 篩選條件 -->
-        <div class="card" style="padding: 15px;">
-            <div class="card-title" style="margin-bottom: 10px;"><i class="fas fa-filter"></i> <span data-i18n="filter">篩選條件</span></div>
-            <div class="date-filter-container">
-                <input type="date" id="filterStartDate" onchange="renderDashboard()">
-                <span style="color: var(--text-secondary);">至</span>
-                <input type="date" id="filterEndDate" onchange="renderDashboard()">
-                <select id="filterSymbol" onchange="renderDashboard()"><option value="">所有幣種</option></select>
-                <select id="filterDirection" onchange="renderDashboard()"><option value="">所有方向</option><option value="long">做多</option><option value="short">做空</option></select>
-                <input type="text" id="filterStrategy" placeholder="策略關鍵字" oninput="renderDashboard()">
-                <button onclick="clearAllFilters()" class="btn-secondary btn-yellow" style="padding: 8px 16px; font-size: 0.85rem;"><i class="fas fa-times"></i> <span data-i18n="clear_filter">清除</span></button>
-            </div>
-        </div>
-
-        <!-- 核心數據 -->
-        <div class="card">
-            <div class="card-title"><i class="fas fa-chart-bar"></i> <span data-i18n="core_data">核心數據</span></div>
-            <div class="stats-grid">
-                <div class="stat-card"><div class="label" data-i18n="totalR">總 R 數</div><div class="value" id="statTotalR">0.00</div></div>
-                <div class="stat-card"><div class="label" data-i18n="winRate">勝率</div><div class="value" id="statWinRate">0%</div></div>
-                <div class="stat-card"><div class="label" data-i18n="totalTrades">總交易數</div><div class="value" id="statTotalTrades">0</div></div>
-                <div class="stat-card"><div class="label" data-i18n="avgR">平均 R</div><div class="value" id="statAvgR">0.00</div></div>
-                <div class="stat-card"><div class="label" data-i18n="wins">獲利交易</div><div class="value green" id="statWins">0</div></div>
-                <div class="stat-card"><div class="label" data-i18n="losses">虧損交易</div><div class="value red" id="statLosses">0</div></div>
-                <div class="stat-card"><div class="label" data-i18n="maxDrawdown">最大 R 回撤</div><div class="value red" id="statMaxDrawdown">0.00</div></div>
-                <div class="stat-card"><div class="label" data-i18n="totalPL">總盈虧 (USDT)</div><div class="value" id="statTotalPL">0</div></div>
-            </div>
-        </div>
-
-        <!-- 多空比較 -->
-        <div class="card">
-            <div class="card-title"><i class="fas fa-balance-scale"></i> <span data-i18n="long_short">多空比較</span></div>
-            <div class="form-row">
-                <div class="form-group"><label data-i18n="long">做多 (Long)</label><div><span data-i18n="trades_count">交易數</span>: <span id="longCount">0</span> | <span data-i18n="winRate">勝率</span>: <span id="longWinRate">0%</span></div></div>
-                <div class="form-group"><label data-i18n="short">做空 (Short)</label><div><span data-i18n="trades_count">交易數</span>: <span id="shortCount">0</span> | <span data-i18n="winRate">勝率</span>: <span id="shortWinRate">0%</span></div></div>
-            </div>
-        </div>
-
-        <!-- 圖表分析 -->
-        <div class="card">
-            <div class="card-title"><i class="fas fa-chart-line"></i> <span data-i18n="chart_equity">資金曲線</span></div>
-            <div class="chart-container"><canvas id="equityChart"></canvas></div>
-        </div>
-        <div class="card">
-            <div class="card-title"><i class="fas fa-chart-pie"></i> <span data-i18n="chart_winrate">勝率圓餅圖</span></div>
-            <div class="chart-container"><canvas id="winRateChart"></canvas></div>
-        </div>
-        <div class="card">
-            <div class="card-title"><i class="fas fa-chart-bar"></i> <span data-i18n="chart_monthly">每月盈虧</span></div>
-            <div class="chart-container"><canvas id="monthlyChart"></canvas></div>
-        </div>
-
-        <!-- 分享管理 -->
         <div class="card">
             <div class="card-title"><i class="fas fa-share-alt"></i> <span data-i18n="share_manage">分享管理</span></div>
             <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px;" data-i18n="share_desc">產生一個分享連結，別人打開就能看到您的交易紀錄（隱藏個人檢討與心理狀態）。</p>
@@ -495,16 +403,9 @@
             </div>
         </div>
 
-        <!-- Excel 設定 -->
         <div class="card">
             <div class="card-title"><i class="fas fa-file-excel"></i> <span data-i18n="excel_setting">Excel 表格設定</span></div>
             <button onclick="window.open('https://docs.google.com/spreadsheets/d/18xLiHU8R3xe9w8QdFOnBefabKWIEhwXz7weSxSeroO4/copy', '_blank')" class="btn-full btn-secondary btn-yellow" style="width:100%; margin-bottom: 15px;"><i class="fas fa-copy"></i> <span data-i18n="new_copy">新增 EX 副本</span></button>
-            <button onclick="exportAllToCSV()" class="btn-full btn-secondary btn-green" style="width:100%; margin-bottom: 15px;"><i class="fas fa-file-export"></i> <span data-i18n="export_all">匯出全部交易紀錄 (CSV)</span></button>
-            <button onclick="document.getElementById('importFileInput').click()" class="btn-full btn-secondary btn-yellow" style="width:100%; margin-bottom: 15px;"><i class="fas fa-file-import"></i> <span data-i18n="import_csv">匯入交易紀錄 (CSV)</span></button>
-            <input type="file" id="importFileInput" accept=".csv" style="display: none;" onchange="importFromCSV(event)">
-            <button onclick="exportAllToJSON()" class="btn-full btn-secondary btn-green" style="width:100%; margin-bottom: 15px;"><i class="fas fa-database"></i> <span data-i18n="export_json">備份所有資料 (JSON)</span></button>
-            <button onclick="document.getElementById('importJsonInput').click()" class="btn-full btn-secondary btn-yellow" style="width:100%; margin-bottom: 15px;"><i class="fas fa-upload"></i> <span data-i18n="import_json">還原備份 (JSON)</span></button>
-            <input type="file" id="importJsonInput" accept=".json" style="display: none;" onchange="importFromJSON(event)">
             <div style="margin-bottom: 15px;">
                 <label style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; display: block;" data-i18n="excel_url">設定您的 Excel / Google Sheets 網址</label>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
@@ -517,19 +418,144 @@
             <button onclick="openExcelLink()" class="btn-full btn-secondary btn-green" style="width:100%;"><i class="fas fa-external-link-alt"></i> <span data-i18n="open_excel">開啟 EX 表格</span></button>
         </div>
 
-        <!-- 歷史交易紀錄 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-database"></i> <span data-i18n="data_backup">資料備份與匯入</span></div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <button onclick="exportAllToCSV()" class="btn-secondary btn-green" style="justify-content: center; padding: 12px 10px; font-size: 0.85rem;"><i class="fas fa-file-export"></i> 匯出 CSV</button>
+                <button onclick="document.getElementById('importFileInput').click()" class="btn-secondary btn-yellow" style="justify-content: center; padding: 12px 10px; font-size: 0.85rem;"><i class="fas fa-file-import"></i> 匯入 CSV</button>
+                <button onclick="exportAllToJSON()" class="btn-secondary btn-green" style="justify-content: center; padding: 12px 10px; font-size: 0.85rem;"><i class="fas fa-database"></i> 備份 JSON</button>
+                <button onclick="document.getElementById('importJsonInput').click()" class="btn-secondary btn-yellow" style="justify-content: center; padding: 12px 10px; font-size: 0.85rem;"><i class="fas fa-upload"></i> 還原 JSON</button>
+            </div>
+            <input type="file" id="importFileInput" accept=".csv" style="display: none;" onchange="importFromCSV(event)">
+            <input type="file" id="importJsonInput" accept=".json" style="display: none;" onchange="importFromJSON(event)">
+        </div>
+
         <div class="card">
             <div class="card-title"><i class="fas fa-history"></i> <span data-i18n="history">歷史交易紀錄</span> <span id="filterInfo" style="font-size: 0.8rem; color: var(--text-secondary); font-weight: normal; margin-left: 10px;"></span></div>
+            <div id="undoToast" class="undo-toast-inline">
+                <span><i class="fas fa-trash-alt"></i> 已刪除交易紀錄</span>
+                <button onclick="undoDelete()">復原</button>
+            </div>
+            <div class="date-filter-container" style="margin-bottom: 15px;">
+                <input type="date" id="filterStartDate" onchange="renderDashboard()">
+                <span style="color: var(--text-secondary);">至</span>
+                <input type="date" id="filterEndDate" onchange="renderDashboard()">
+                <select id="filterSymbol" onchange="renderDashboard()"><option value="">所有幣種</option></select>
+                <select id="filterDirection" onchange="renderDashboard()"><option value="">所有方向</option><option value="long">做多</option><option value="short">做空</option></select>
+                <input type="text" id="filterStrategy" placeholder="策略關鍵字" oninput="renderDashboard()">
+                <button onclick="clearAllFilters()" class="btn-secondary btn-yellow" style="padding: 8px 16px; font-size: 0.85rem;"><i class="fas fa-times"></i> 清除</button>
+            </div>
             <div class="history-list" id="historyList"><p style="color:var(--text-secondary); text-align:center;">載入中...</p></div>
+        </div>
+    </div>
+
+    <!-- 頁面 3: 盈虧分析 -->
+    <div id="tab-analysis" class="tab-content">
+        <div class="asset-summary">
+            <div class="asset-item">
+                <div class="asset-label"><i class="fas fa-wallet"></i> <span data-i18n="total_asset">資產總值 (USDT)</span></div>
+                <div class="asset-value" id="assetTotalValue">0.00</div>
+                <div class="capital-input-row">
+                    <input type="number" id="initialCapitalInput" placeholder="初始本金" step="0.01">
+                    <button onclick="saveInitialCapital()">儲存</button>
+                </div>
+            </div>
+            <div class="asset-item">
+                <div class="asset-label"><i class="fas fa-sun"></i> <span data-i18n="today_pl">今日盈虧</span></div>
+                <div class="asset-value-small" id="todayPL">+$0.00</div>
+                <div class="asset-sub" id="todayPLPct">+0.00%</div>
+            </div>
+            <div class="asset-item">
+                <div class="asset-label"><i class="fas fa-calendar-week"></i> <span data-i18n="week_pl">7日累計盈虧</span></div>
+                <div class="asset-value-small" id="weekPL">+$0.00</div>
+                <div class="asset-sub" id="weekPLPct">+0.00%</div>
+            </div>
+            <div class="asset-item">
+                <div class="asset-label"><i class="fas fa-calendar-alt"></i> <span data-i18n="month_pl">30日累計盈虧</span></div>
+                <div class="asset-value-small" id="monthPL">+$0.00</div>
+                <div class="asset-sub" id="monthPLPct">+0.00%</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-chart-bar"></i> <span data-i18n="core_data">核心數據</span></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="label" data-i18n="totalR">總 R 數</div><div class="value" id="statTotalR">0.00</div></div>
+                <div class="stat-card"><div class="label" data-i18n="winRate">勝率</div><div class="value" id="statWinRate">0%</div></div>
+                <div class="stat-card"><div class="label" data-i18n="totalTrades">總交易數</div><div class="value" id="statTotalTrades">0</div></div>
+                <div class="stat-card"><div class="label" data-i18n="avgR">平均 R</div><div class="value" id="statAvgR">0.00</div></div>
+                <div class="stat-card"><div class="label" data-i18n="wins">獲利交易</div><div class="value green" id="statWins">0</div></div>
+                <div class="stat-card"><div class="label" data-i18n="losses">虧損交易</div><div class="value red" id="statLosses">0</div></div>
+                <div class="stat-card"><div class="label" data-i18n="maxDrawdown">最大 R 回撤</div><div class="value red" id="statMaxDrawdown">0.00</div></div>
+                <div class="stat-card"><div class="label" data-i18n="totalPL">總盈虧 (USDT)</div><div class="value" id="statTotalPL">0</div></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-balance-scale"></i> <span data-i18n="long_short">多空比較</span></div>
+            <div class="form-row">
+                <div class="form-group"><label data-i18n="long">做多 (Long)</label><div><span data-i18n="trades_count">交易數</span>: <span id="longCount">0</span> | <span data-i18n="winRate">勝率</span>: <span id="longWinRate">0%</span></div></div>
+                <div class="form-group"><label data-i18n="short">做空 (Short)</label><div><span data-i18n="trades_count">交易數</span>: <span id="shortCount">0</span> | <span data-i18n="winRate">勝率</span>: <span id="shortWinRate">0%</span></div></div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="card chart-full">
+                <div class="card-title"><i class="fas fa-chart-line"></i> <span data-i18n="chart_equity">資產走勢</span>
+                    <select class="chart-select" id="equityRange" onchange="renderDashboard()">
+                        <option value="today">今日</option>
+                        <option value="7d">累積 7 日</option>
+                        <option value="30d">累積 30 日</option>
+                        <option value="all" selected>ALL</option>
+                    </select>
+                </div>
+                <div class="chart-container-lg"><canvas id="equityChart"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-bar"></i> <span data-i18n="chart_daily">每日盈虧額</span>
+                    <select class="chart-select" id="dailyRange" onchange="renderDashboard()">
+                        <option value="today">今日</option>
+                        <option value="7d" selected>累積 7 日</option>
+                        <option value="30d">累積 30 日</option>
+                        <option value="all">ALL</option>
+                    </select>
+                </div>
+                <div class="chart-container"><canvas id="dailyChart"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-pie"></i> <span data-i18n="chart_winrate">勝率圓餅圖</span></div>
+                <div class="chart-container"><canvas id="winRateChart"></canvas></div>
+            </div>
+            <div class="card chart-full">
+                <div class="card-title"><i class="fas fa-calendar-alt"></i> <span data-i18n="chart_calendar">盈虧日曆</span></div>
+                <div class="calendar-header">
+                    <button onclick="changeCalendarMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+                    <span id="calendarTitle" style="font-weight: 700; font-size: 1rem;"></span>
+                    <button onclick="changeCalendarMonth(1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+            <div class="card chart-full">
+                <div class="card-title"><i class="fas fa-chart-bar"></i> <span data-i18n="chart_cumulative">累計盈虧額</span>
+                    <select class="chart-select" id="cumulativeRange" onchange="renderDashboard()">
+                        <option value="today">今日</option>
+                        <option value="7d">累積 7 日</option>
+                        <option value="30d">累積 30 日</option>
+                        <option value="all" selected>ALL</option>
+                    </select>
+                </div>
+                <div class="chart-container"><canvas id="cumulativeChart"></canvas></div>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- 圖片預覽彈窗 -->
 <div id="imageModal" class="modal" onclick="closeModal()">
     <span class="close">&times;</span>
     <img id="modalImage" src="" alt="截圖">
-</div><script type="module">
+</div>
+
+<script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
     import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, getDocs, getDoc, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
@@ -554,20 +580,22 @@
     let isEditing = false;
     let isSyncing = false;
     let currentShareId = null;
-    let currentSharePassword = "";
     let pendingShareData = null;
     let pendingDeleteId = null;
     let undoTimer = null;
     let equityChartInstance = null;
+    let dailyChartInstance = null;
     let winRateChartInstance = null;
     let monthlyChartInstance = null;
+    let cumulativeChartInstance = null;
     let currentLang = localStorage.getItem('lang') || 'zh-TW';
+    let initialCapital = parseFloat(localStorage.getItem('initialCapital')) || 0;
+    let calendarDate = new Date();
 
-    // === 多語系 ===
     const translations = {
-        'zh-TW': { app_title:'虛擬貨幣交易日誌', tab_entry:'記錄交易', tab_dashboard:'數據統計', card_trade_setting:'交易設定', card_risk:'風控計算', card_observation:'開單前，你看見了什麼？', card_system:'這筆交易符合系統嗎？', card_mindset:'當下的心理狀態', card_review:'個人檢討 / 覆盤筆記', symbol:'交易對 (幣種)', direction:'交易方向', long:'做多 (Long)', short:'做空 (Short)', status:'交易狀態', plan:'計劃 (Plan)', open:'持倉 (Open)', closed:'已平倉 (Closed)', strategy:'策略名稱', leverage:'倉位倍數 (槓桿)', entryType:'進場選擇', exitType:'出場選擇', market:'市價', limit:'限價', entryFee:'進場手續費 (%)', exitFee:'出場手續費 (%)', entryPrice:'進場價 (Entry)', exitPrice:'出場價 (Exit Price)', stopLoss:'止損價 (Stop Loss)', takeProfit:'目標價 (Take Profit)', size:'數量 / 倉位大小 (Size)', usdtAmount:'USDT 金額 (進場總額)', openTime:'開單時間', closeTime:'平倉時間', time_toggle:'開單 / 平倉時間（點擊展開）', riskAmount:'風險金額 (1R)', riskReward:'預期盈虧比 (RR)', profitLoss:'實際盈虧 (含手續費)', rMultiple:'實際 R 數', marketView:'市場觀察與策略假設', trigger:'進場觸發條件', imageUrl:'TradingView 截圖連結 (選填)', systemType:'交易決策類型', sys_trade:'系統交易：符合既定策略', sys_subjective:'主觀交易：偏離系統', sys_impulsive:'衝動交易：無計畫', sys_custom:'--- 自行輸入 ---', checklist:'開單前一致性檢查 (可多選)', chk_market:'符合市場環境', chk_pattern:'符合策略型態', chk_signal:'出現明確進場訊號', chk_sl:'進場前已設定止損', chk_tp:'進場前已設定目標', chk_risk:'風險符合原定規則', emotion:'進場時的主要情緒', emo_calm:'冷靜', emo_excited:'興奮', emo_anxious:'焦慮', emo_fear:'恐懼', emo_greed:'貪婪', emo_revenge:'報復性', confidence:'做單信心 (1-10)', mindset:'當時內心在想什麼？', bias:'出現哪些念頭或行為？ (可多選)', bias_hold:'想凹單', bias_counter:'逆勢硬扛', bias_move_sl:'移動止損', bias_after_loss:'虧損後放大風險', bias_after_streak:'連續後放大風險', bias_fomo:'追價 / FOMO', bias_revenge:'報復性交易', bias_overtrade:'過度交易', bias_early_exit:'提前出場', save:'儲存交易紀錄', cancel_edit:'取消編輯', filter:'篩選條件', clear_filter:'清除', core_data:'核心數據', totalR:'總 R 數', winRate:'勝率', totalTrades:'總交易數', avgR:'平均 R', wins:'獲利交易', losses:'虧損交易', maxDrawdown:'最大 R 回撤', totalPL:'總盈虧 (USDT)', long_short:'多空比較', trades_count:'交易數', chart_equity:'資金曲線', chart_winrate:'勝率圓餅圖', chart_monthly:'每月盈虧', share_manage:'分享管理', share_desc:'產生一個分享連結，別人打開就能看到您的交易紀錄（隱藏個人檢討與心理狀態）。', share_password_label:'設定分享密碼（選填，留空則無密碼）', not_shared:'目前尚未分享', gen_share:'產生分享連結', copy_link:'複製連結', close_share:'關閉分享', excel_setting:'Excel 表格設定', new_copy:'新增 EX 副本', export_all:'匯出全部交易紀錄 (CSV)', import_csv:'匯入交易紀錄 (CSV)', export_json:'備份所有資料 (JSON)', import_json:'還原備份 (JSON)', excel_url:'設定您的 Excel / Google Sheets 網址', open_excel:'開啟 EX 表格', history:'歷史交易紀錄', logout:'登出', clear:'清除' },
-        'zh-CN': { app_title:'虚拟货币交易日志', tab_entry:'记录交易', tab_dashboard:'数据统计', card_trade_setting:'交易设置', card_risk:'风控计算', card_observation:'开单前，你看见了什么？', card_system:'这笔交易符合系统吗？', card_mindset:'当下的心理状态', card_review:'个人检讨 / 复盘笔记', symbol:'交易对 (币种)', direction:'交易方向', long:'做多 (Long)', short:'做空 (Short)', status:'交易状态', plan:'计划 (Plan)', open:'持仓 (Open)', closed:'已平仓 (Closed)', strategy:'策略名称', leverage:'仓位倍数 (杠杆)', entryType:'进场选择', exitType:'出场选择', market:'市价', limit:'限价', entryFee:'进场手续费 (%)', exitFee:'出场手续费 (%)', entryPrice:'进场价 (Entry)', exitPrice:'出场价 (Exit Price)', stopLoss:'止损价 (Stop Loss)', takeProfit:'目标价 (Take Profit)', size:'数量 / 仓位大小 (Size)', usdtAmount:'USDT 金额 (进场总额)', openTime:'开单时间', closeTime:'平仓时间', time_toggle:'开单 / 平仓时间（点击展开）', riskAmount:'风险金额 (1R)', riskReward:'预期盈亏比 (RR)', profitLoss:'实际盈亏 (含手续费)', rMultiple:'实际 R 数', marketView:'市场观察与策略假设', trigger:'进场触发条件', imageUrl:'TradingView 截图链接 (选填)', systemType:'交易决策类型', sys_trade:'系统交易：符合既定策略', sys_subjective:'主观交易：偏离系统', sys_impulsive:'冲动交易：无计划', sys_custom:'--- 自行输入 ---', checklist:'开单前一致性检查 (可多选)', chk_market:'符合市场环境', chk_pattern:'符合策略型态', chk_signal:'出现明确进场讯号', chk_sl:'进场前已设定止损', chk_tp:'进场前已设定目标', chk_risk:'风险符合原定规则', emotion:'进场时的主要情绪', emo_calm:'冷静', emo_excited:'兴奋', emo_anxious:'焦虑', emo_fear:'恐惧', emo_greed:'贪婪', emo_revenge:'报复性', confidence:'做单信心 (1-10)', mindset:'当时内心在想什么？', bias:'出现哪些念头或行为？ (可多选)', bias_hold:'想凹单', bias_counter:'逆势硬扛', bias_move_sl:'移动止损', bias_after_loss:'亏损后放大风险', bias_after_streak:'连续后放大风险', bias_fomo:'追价 / FOMO', bias_revenge:'报复性交易', bias_overtrade:'过度交易', bias_early_exit:'提前出场', save:'储存交易纪录', cancel_edit:'取消编辑', filter:'筛选条件', clear_filter:'清除', core_data:'核心数据', totalR:'总 R 数', winRate:'胜率', totalTrades:'总交易数', avgR:'平均 R', wins:'获利交易', losses:'亏损交易', maxDrawdown:'最大 R 回撤', totalPL:'总盈亏 (USDT)', long_short:'多空比较', trades_count:'交易数', chart_equity:'资金曲线', chart_winrate:'胜率圆饼图', chart_monthly:'每月盈亏', share_manage:'分享管理', share_desc:'产生一个分享链接，别人打开就能看到您的交易纪录（隐藏个人检讨与心理状态）。', share_password_label:'设定分享密码（选填，留空则无密码）', not_shared:'目前尚未分享', gen_share:'产生分享链接', copy_link:'复制链接', close_share:'关闭分享', excel_setting:'Excel 表格设定', new_copy:'新增 EX 副本', export_all:'汇出全部交易纪录 (CSV)', import_csv:'汇入交易纪录 (CSV)', export_json:'备份所有数据 (JSON)', import_json:'还原备份 (JSON)', excel_url:'设定您的 Excel / Google Sheets 网址', open_excel:'开启 EX 表格', history:'历史交易纪录', logout:'登出', clear:'清除' },
-        'en': { app_title:'Crypto Trading Journal', tab_entry:'Record', tab_dashboard:'Statistics', card_trade_setting:'Trade Settings', card_risk:'Risk Calculator', card_observation:'What did you see before entry?', card_system:'Does this trade follow your system?', card_mindset:'Mental State', card_review:'Review / Notes', symbol:'Symbol', direction:'Direction', long:'Long', short:'Short', status:'Status', plan:'Plan', open:'Open', closed:'Closed', strategy:'Strategy', leverage:'Leverage', entryType:'Entry Type', exitType:'Exit Type', market:'Market', limit:'Limit', entryFee:'Entry Fee (%)', exitFee:'Exit Fee (%)', entryPrice:'Entry Price', exitPrice:'Exit Price', stopLoss:'Stop Loss', takeProfit:'Take Profit', size:'Size', usdtAmount:'USDT Amount', openTime:'Open Time', closeTime:'Close Time', time_toggle:'Open / Close Time (click to expand)', riskAmount:'Risk (1R)', riskReward:'R:R Ratio', profitLoss:'P/L (incl. fees)', rMultiple:'R Multiple', marketView:'Market Observation', trigger:'Entry Trigger', imageUrl:'TradingView Screenshot (optional)', systemType:'Decision Type', sys_trade:'System Trade', sys_subjective:'Subjective Trade', sys_impulsive:'Impulsive Trade', sys_custom:'--- Custom ---', checklist:'Pre-trade Checklist', chk_market:'Market condition matches', chk_pattern:'Pattern matches', chk_signal:'Clear entry signal', chk_sl:'Stop loss set', chk_tp:'Target set', chk_risk:'Risk within rules', emotion:'Emotion', emo_calm:'Calm', emo_excited:'Excited', emo_anxious:'Anxious', emo_fear:'Fear', emo_greed:'Greed', emo_revenge:'Revenge', confidence:'Confidence (1-10)', mindset:'What were you thinking?', bias:'Biases / Behaviors', bias_hold:'Holding losers', bias_counter:'Counter-trend', bias_move_sl:'Moving stop loss', bias_after_loss:'Risk after loss', bias_after_streak:'Risk after streak', bias_fomo:'FOMO', bias_revenge:'Revenge trading', bias_overtrade:'Overtrading', bias_early_exit:'Early exit', save:'Save Trade', cancel_edit:'Cancel Edit', filter:'Filters', clear_filter:'Clear', core_data:'Core Stats', totalR:'Total R', winRate:'Win Rate', totalTrades:'Total Trades', avgR:'Avg R', wins:'Wins', losses:'Losses', maxDrawdown:'Max Drawdown', totalPL:'Total P/L (USDT)', long_short:'Long vs Short', trades_count:'Trades', chart_equity:'Equity Curve', chart_winrate:'Win Rate Pie', chart_monthly:'Monthly P/L', share_manage:'Share Management', share_desc:'Generate a share link to show your trades (hides review & mindset).', share_password_label:'Share Password (optional)', not_shared:'Not shared yet', gen_share:'Generate Link', copy_link:'Copy Link', close_share:'Close Share', excel_setting:'Excel Settings', new_copy:'New EX Copy', export_all:'Export All (CSV)', import_csv:'Import (CSV)', export_json:'Backup All (JSON)', import_json:'Restore (JSON)', excel_url:'Your Excel / Google Sheets URL', open_excel:'Open EX Sheet', history:'Trade History', logout:'Logout', clear:'Clear' }
+        'zh-TW': { app_title:'虛擬貨幣交易日誌', tab_entry:'記錄交易', tab_dashboard:'數據統計', tab_analysis:'盈虧分析', card_trade_setting:'交易設定', card_risk:'風控計算', card_observation:'開單前，你看見了什麼？', card_mindset:'心理狀態與檢討', card_review:'個人檢討 / 覆盤筆記', symbol:'交易對 (幣種)', direction:'交易方向', long:'做多 (Long)', short:'做空 (Short)', status:'交易狀態', plan:'計劃 (Plan)', open:'持倉 (Open)', closed:'已平倉 (Closed)', strategy:'策略名稱', leverage:'倉位倍數 (槓桿)', entryType:'進場選擇', exitType:'出場選擇', market:'市價', limit:'限價', entryFee:'進場手續費 (%)', exitFee:'出場手續費 (%)', entryPrice:'進場價 (Entry)', exitPrice:'出場價 (Exit Price)', stopLoss:'止損價 (Stop Loss)', takeProfit:'目標價 (Take Profit)', size:'數量 / 倉位大小 (Size)', usdtAmount:'USDT 金額 (進場總額)', openTime:'開單時間', closeTime:'平倉時間', time_toggle:'開單 / 平倉時間（點擊展開）', riskAmount:'風險金額 (1R)', riskReward:'預期盈虧比 (RR)', profitLoss:'實際盈虧 (含手續費)', rMultiple:'實際 R 數', marketView:'市場觀察與策略假設', trigger:'進場觸發條件', imageUrl:'TradingView 截圖連結 (選填)', emotion:'進場時的主要情緒', emo_calm:'冷靜', emo_excited:'興奮', emo_anxious:'焦慮', emo_fear:'恐懼', emo_greed:'貪婪', emo_revenge:'報復性', confidence:'做單信心 (1-10)', mindset:'當時內心在想什麼？', bias:'出現哪些念頭或行為？ (可多選)', bias_hold:'想凹單', bias_counter:'逆勢硬扛', bias_move_sl:'移動止損', bias_after_loss:'虧損後放大風險', bias_after_streak:'連續後放大風險', bias_fomo:'追價 / FOMO', bias_revenge:'報復性交易', bias_overtrade:'過度交易', bias_early_exit:'提前出場', save:'儲存交易紀錄', cancel_edit:'取消編輯', core_data:'核心數據', totalR:'總 R 數', winRate:'勝率', totalTrades:'總交易數', avgR:'平均 R', wins:'獲利交易', losses:'虧損交易', maxDrawdown:'最大 R 回撤', totalPL:'總盈虧 (USDT)', long_short:'多空比較', trades_count:'交易數', chart_equity:'資產走勢', chart_daily:'每日盈虧額', chart_winrate:'勝率圓餅圖', chart_calendar:'盈虧日曆', chart_cumulative:'累計盈虧額', share_manage:'分享管理', share_desc:'產生一個分享連結，別人打開就能看到您的交易紀錄（隱藏個人檢討與心理狀態）。', share_password_label:'設定分享密碼（選填，留空則無密碼）', not_shared:'目前尚未分享', gen_share:'產生分享連結', copy_link:'複製連結', close_share:'關閉分享', excel_setting:'Excel 表格設定', new_copy:'新增 EX 副本', data_backup:'資料備份與匯入', excel_url:'設定您的 Excel / Google Sheets 網址', open_excel:'開啟 EX 表格', history:'歷史交易紀錄', logout:'登出', clear:'清除', total_asset:'資產總值 (USDT)', today_pl:'今日盈虧', week_pl:'7日累計盈虧', month_pl:'30日累計盈虧' },
+        'zh-CN': { app_title:'虚拟货币交易日志', tab_entry:'记录交易', tab_dashboard:'数据统计', tab_analysis:'盈亏分析', card_trade_setting:'交易设置', card_risk:'风控计算', card_observation:'开单前，你看见了什么？', card_mindset:'心理状态与检讨', card_review:'个人检讨 / 复盘笔记', symbol:'交易对 (币种)', direction:'交易方向', long:'做多 (Long)', short:'做空 (Short)', status:'交易状态', plan:'计划 (Plan)', open:'持仓 (Open)', closed:'已平仓 (Closed)', strategy:'策略名称', leverage:'仓位倍数 (杠杆)', entryType:'进场选择', exitType:'出场选择', market:'市价', limit:'限价', entryFee:'进场手续费 (%)', exitFee:'出场手续费 (%)', entryPrice:'进场价 (Entry)', exitPrice:'出场价 (Exit Price)', stopLoss:'止损价 (Stop Loss)', takeProfit:'目标价 (Take Profit)', size:'数量 / 仓位大小 (Size)', usdtAmount:'USDT 金额 (进场总额)', openTime:'开单时间', closeTime:'平仓时间', time_toggle:'开单 / 平仓时间（点击展开）', riskAmount:'风险金额 (1R)', riskReward:'预期盈亏比 (RR)', profitLoss:'实际盈亏 (含手续费)', rMultiple:'实际 R 数', marketView:'市场观察与策略假设', trigger:'进场触发条件', imageUrl:'TradingView 截图链接 (选填)', emotion:'进场时的主要情绪', emo_calm:'冷静', emo_excited:'兴奋', emo_anxious:'焦虑', emo_fear:'恐惧', emo_greed:'贪婪', emo_revenge:'报复性', confidence:'做单信心 (1-10)', mindset:'当时内心在想什么？', bias:'出现哪些念头或行为？ (可多选)', bias_hold:'想凹单', bias_counter:'逆势硬扛', bias_move_sl:'移动止损', bias_after_loss:'亏损后放大风险', bias_after_streak:'连续后放大风险', bias_fomo:'追价 / FOMO', bias_revenge:'报复性交易', bias_overtrade:'过度交易', bias_early_exit:'提前出场', save:'储存交易纪录', cancel_edit:'取消编辑', core_data:'核心数据', totalR:'总 R 数', winRate:'胜率', totalTrades:'总交易数', avgR:'平均 R', wins:'获利交易', losses:'亏损交易', maxDrawdown:'最大 R 回撤', totalPL:'总盈亏 (USDT)', long_short:'多空比较', trades_count:'交易数', chart_equity:'资金曲线', chart_daily:'每日盈亏额', chart_winrate:'胜率圆饼图', chart_calendar:'盈亏日历', chart_cumulative:'累计盈亏额', share_manage:'分享管理', share_desc:'产生一个分享链接，别人打开就能看到您的交易纪录（隐藏个人检讨与心理状态）。', share_password_label:'设定分享密码（选填，留空则无密码）', not_shared:'目前尚未分享', gen_share:'产生分享链接', copy_link:'复制链接', close_share:'关闭分享', excel_setting:'Excel 表格设定', new_copy:'新增 EX 副本', data_backup:'数据备份与导入', excel_url:'设定您的 Excel / Google Sheets 网址', open_excel:'开启 EX 表格', history:'历史交易纪录', logout:'登出', clear:'清除', total_asset:'资产总值 (USDT)', today_pl:'今日盈亏', week_pl:'7日累计盈亏', month_pl:'30日累计盈亏' },
+        'en': { app_title:'Crypto Trading Journal', tab_entry:'Record', tab_dashboard:'Statistics', tab_analysis:'Analysis', card_trade_setting:'Trade Settings', card_risk:'Risk Calculator', card_observation:'What did you see before entry?', card_mindset:'Mental State & Review', card_review:'Review / Notes', symbol:'Symbol', direction:'Direction', long:'Long', short:'Short', status:'Status', plan:'Plan', open:'Open', closed:'Closed', strategy:'Strategy', leverage:'Leverage', entryType:'Entry Type', exitType:'Exit Type', market:'Market', limit:'Limit', entryFee:'Entry Fee (%)', exitFee:'Exit Fee (%)', entryPrice:'Entry Price', exitPrice:'Exit Price', stopLoss:'Stop Loss', takeProfit:'Take Profit', size:'Size', usdtAmount:'USDT Amount', openTime:'Open Time', closeTime:'Close Time', time_toggle:'Open / Close Time (click to expand)', riskAmount:'Risk (1R)', riskReward:'R:R Ratio', profitLoss:'P/L (incl. fees)', rMultiple:'R Multiple', marketView:'Market Observation', trigger:'Entry Trigger', imageUrl:'TradingView Screenshot (optional)', emotion:'Emotion', emo_calm:'Calm', emo_excited:'Excited', emo_anxious:'Anxious', emo_fear:'Fear', emo_greed:'Greed', emo_revenge:'Revenge', confidence:'Confidence (1-10)', mindset:'What were you thinking?', bias:'Biases / Behaviors', bias_hold:'Holding losers', bias_counter:'Counter-trend', bias_move_sl:'Moving stop loss', bias_after_loss:'Risk after loss', bias_after_streak:'Risk after streak', bias_fomo:'FOMO', bias_revenge:'Revenge trading', bias_overtrade:'Overtrading', bias_early_exit:'Early exit', save:'Save Trade', cancel_edit:'Cancel Edit', core_data:'Core Stats', totalR:'Total R', winRate:'Win Rate', totalTrades:'Total Trades', avgR:'Avg R', wins:'Wins', losses:'Losses', maxDrawdown:'Max Drawdown', totalPL:'Total P/L (USDT)', long_short:'Long vs Short', trades_count:'Trades', chart_equity:'Equity Curve', chart_daily:'Daily P/L', chart_winrate:'Win Rate Pie', chart_calendar:'P/L Calendar', chart_cumulative:'Cumulative P/L', share_manage:'Share Management', share_desc:'Generate a share link to show your trades.', share_password_label:'Share Password (optional)', not_shared:'Not shared yet', gen_share:'Generate Link', copy_link:'Copy Link', close_share:'Close Share', excel_setting:'Excel Settings', new_copy:'New EX Copy', data_backup:'Backup & Import', excel_url:'Your Excel / Google Sheets URL', open_excel:'Open EX Sheet', history:'Trade History', logout:'Logout', clear:'Clear', total_asset:'Total Asset (USDT)', today_pl:'Today P/L', week_pl:'7-Day P/L', month_pl:'30-Day P/L' }
     };
 
     function applyLanguage(lang) {
@@ -575,14 +603,11 @@
         localStorage.setItem('lang', lang);
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            if (translations[lang] && translations[lang][key]) {
-                el.textContent = translations[lang][key];
-            }
+            if (translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
         });
     }
     window.changeLanguage = function(lang) { applyLanguage(lang); renderDashboard(); };
 
-    // === Toast 通知 ===
     function showToast(message, type = 'success') {
         const container = document.getElementById('toastContainer');
         const toast = document.createElement('div');
@@ -593,20 +618,17 @@
         setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(50px)'; setTimeout(() => toast.remove(), 300); }, 3000);
     }
 
-    // === 載入中 ===
     function showLoading(text = '載入中...') {
         document.getElementById('loadingText').textContent = text;
         document.getElementById('loadingOverlay').classList.add('active');
     }
     function hideLoading() { document.getElementById('loadingOverlay').classList.remove('active'); }
 
-    // === 收合 ===
     window.toggleCollapse = function(id, el) {
         document.getElementById(id).classList.toggle('open');
         el.classList.toggle('open');
     };
 
-    // === 登入 ===
     window.toggleEmailForm = function() {
         const form = document.getElementById('emailForm');
         form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
@@ -642,6 +664,7 @@
             if (user.photoURL) { avatar.src = user.photoURL; avatar.style.display = 'block'; }
             else { avatar.style.display = 'none'; }
             name.textContent = user.displayName || user.email || '使用者';
+            document.getElementById('initialCapitalInput').placeholder = '初始本金: ' + initialCapital;
             await loadTrades();
             updateFilterOptions();
             renderDashboard();
@@ -653,7 +676,6 @@
         }
     });
 
-    // === 分享連結檢查 ===
     window.addEventListener('load', async () => {
         applyLanguage(currentLang);
         const urlParams = new URLSearchParams(window.location.search);
@@ -727,7 +749,6 @@
         });
     }
 
-    // === 載入交易紀錄 ===
     async function loadTrades() {
         if (!currentUser) return;
         showLoading('載入交易紀錄...');
@@ -746,7 +767,6 @@
         symbolSelect.innerHTML = '<option value="">所有幣種</option>' + symbols.map(s => `<option value="${s}">${s}</option>`).join('');
     }
 
-    // === 表單提交 ===
     window.handleFormSubmit = async function(e) {
         e.preventDefault();
         if (!currentUser) return;
@@ -761,9 +781,6 @@
         const entryFeePercent = parseFloat(document.getElementById('entryFee').value) || 0;
         const exitFeePercent = parseFloat(document.getElementById('exitFee').value) || 0;
         saveDefaultParams();
-        const systemTypeSelect = document.getElementById('systemType').value;
-        const customSystemType = document.getElementById('customSystemType').value;
-        const finalSystemType = systemTypeSelect === '自行輸入' ? customSystemType : systemTypeSelect;
         let riskAmount = 0, pl = 0, rMultiple = 0;
         if (direction === 'long') riskAmount = (entry - stop) * size;
         else riskAmount = (stop - entry) * size;
@@ -791,8 +808,6 @@
             marketView: document.getElementById('marketView').value,
             trigger: document.getElementById('trigger').value,
             imageUrl: currentImageUrl,
-            systemType: finalSystemType,
-            checklist: getSelectedChips('checklistGroup'),
             emotion: document.getElementById('emotion').value,
             confidence: document.getElementById('confidence').value,
             mindset: document.getElementById('mindset').value,
@@ -818,7 +833,7 @@
             updateFilterOptions();
             renderDashboard();
             resetForm();
-            switchTab('dashboard');
+            switchTab('analysis');
         } catch (err) { showToast('儲存失敗：' + err.message, 'error'); }
         hideLoading();
     };
@@ -827,7 +842,6 @@
         document.getElementById('tradeForm').reset();
         document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected', 'red', 'green'));
         document.getElementById('confidenceVal').textContent = '5';
-        document.getElementById('customSystemType').style.display = 'none';
         currentImageUrl = "";
         document.getElementById('imageUrlInput').value = "";
         document.getElementById('imagePreviewContainer').style.display = 'none';
@@ -836,7 +850,6 @@
         calculateMetrics();
     }
 
-    // === 編輯 ===
     window.editTrade = function(id) {
         const trade = trades.find(t => t.id === id);
         if (!trade) return;
@@ -854,22 +867,11 @@
         document.getElementById('trigger').value = trade.trigger;
         document.getElementById('imageUrlInput').value = trade.imageUrl || '';
         handleImageUrlChange();
-        const systemTypeSelect = document.getElementById('systemType');
-        const customInput = document.getElementById('customSystemType');
-        const standardTypes = ['系統交易：符合既定策略', '主觀交易：偏離系統', '衝動交易：無計畫'];
-        if (standardTypes.includes(trade.systemType)) {
-            systemTypeSelect.value = trade.systemType;
-            customInput.style.display = 'none'; customInput.value = '';
-        } else {
-            systemTypeSelect.value = '自行輸入';
-            customInput.style.display = 'block'; customInput.value = trade.systemType;
-        }
-        document.querySelectorAll('#checklistGroup .chip').forEach(chip => chip.classList.toggle('selected', trade.checklist.includes(chip.dataset.val)));
         document.getElementById('emotion').value = trade.emotion;
         document.getElementById('confidence').value = trade.confidence;
         document.getElementById('confidenceVal').textContent = trade.confidence;
         document.getElementById('mindset').value = trade.mindset;
-        document.querySelectorAll('#biasGroup .chip').forEach(chip => chip.classList.toggle('selected', trade.biases.includes(chip.dataset.val)));
+        document.querySelectorAll('#biasGroup .chip').forEach(chip => chip.classList.toggle('selected', (trade.biases || []).includes(chip.dataset.val)));
         document.getElementById('personalReview').value = trade.personalReview || '';
         document.getElementById('entryPrice').value = trade.entryPrice;
         document.getElementById('stopLoss').value = trade.stopLoss;
@@ -895,11 +897,8 @@
         resetForm();
     };
 
-    // === 刪除 + 撤銷 ===
     window.deleteTrade = async function(id) {
         if (!confirm('確定要刪除這筆交易紀錄嗎？')) return;
-        const trade = trades.find(t => t.id === id);
-        if (!trade) return;
         pendingDeleteId = id;
         try {
             await deleteDoc(doc(db, 'users', currentUser.uid, 'trades', id));
@@ -920,17 +919,15 @@
         document.getElementById('undoToast').classList.remove('active');
         if (undoTimer) clearTimeout(undoTimer);
         pendingDeleteId = null;
-        showToast('已刪除，無法復原。請聯絡客服或從備份還原。', 'error');
+        showToast('已刪除，無法復原。請從備份還原。', 'error');
     };
 
-    // === 快速新增 ===
     window.quickAdd = function() {
         switchTab('entry');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setTimeout(() => document.getElementById('symbol').focus(), 300);
     };
 
-    // === 分享 ===
     window.generateShareLink = async function() {
         if (!currentUser || trades.length === 0) { showToast('目前沒有交易紀錄可以分享！', 'error'); return; }
         showLoading('產生分享連結...');
@@ -939,9 +936,7 @@
             const password = document.getElementById('sharePasswordInput').value.trim();
             await setDoc(doc(db, 'shared', shareId), { userId: currentUser.uid, createdAt: Date.now(), trades: trades, password: password });
             currentShareId = shareId;
-            currentSharePassword = password;
             const shareUrl = window.location.origin + window.location.pathname + '?share=' + shareId;
-            await setDoc(doc(db, 'users', currentUser.uid), { currentShareId: shareId }, { merge: true });
             document.getElementById('shareStatus').innerHTML = `✅ 分享中${password ? '（有密碼）' : ''}：<a href="${shareUrl}" target="_blank" style="color: var(--accent-color); word-break: break-all;">${shareUrl}</a>`;
             document.getElementById('copyShareBtn').style.display = 'inline-flex';
             document.getElementById('closeShareBtn').style.display = 'inline-flex';
@@ -960,7 +955,6 @@
         if (!confirm('確定要關閉分享嗎？')) return;
         try {
             await deleteDoc(doc(db, 'shared', currentShareId));
-            await setDoc(doc(db, 'users', currentUser.uid), { currentShareId: null }, { merge: true });
             currentShareId = null;
             document.getElementById('shareStatus').textContent = '目前尚未分享';
             document.getElementById('copyShareBtn').style.display = 'none';
@@ -969,7 +963,6 @@
         } catch (err) { showToast('關閉分享失敗：' + err.message, 'error'); }
     };
 
-    // === 匯出 CSV ===
     window.exportAllToCSV = function() {
         const filtered = getFilteredTrades();
         if (filtered.length === 0) { showToast('沒有交易紀錄可以匯出！', 'error'); return; }
@@ -985,7 +978,6 @@
         showToast('已匯出 ' + filtered.length + ' 筆交易紀錄', 'success');
     };
 
-    // === 匯入 CSV ===
     window.importFromCSV = async function(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -996,7 +988,6 @@
             try {
                 const text = e.target.result.replace(/^\uFEFF/, '');
                 const lines = text.split('\n').filter(l => l.trim());
-                const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
                 let count = 0;
                 for (let i = 1; i < lines.length; i++) {
                     const values = lines[i].match(/(".*?"|[^,]+)(?=\s*,|\s*$)/g) || [];
@@ -1018,21 +1009,15 @@
                         date: row[0] || new Date().toLocaleString('zh-TW'),
                         createdAt: Date.now() + i,
                         symbol: row[1] || '',
-                        direction: dir,
-                        directionText: row[2] || '做多',
+                        direction: dir, directionText: row[2] || '做多',
                         leverage: parseFloat(row[3]) || 0,
-                        entryPrice: entry,
-                        stopLoss: stop,
+                        entryPrice: entry, stopLoss: stop,
                         takeProfit: parseFloat(row[6]) || 0,
-                        exitPrice: exit,
-                        size: size,
+                        exitPrice: exit, size: size,
                         usdtAmount: parseFloat(row[9]) || 0,
-                        riskAmount: riskAmount,
-                        pl: pl,
-                        rMultiple: rMultiple,
-                        strategy: row[13] || '',
-                        status: row[14] || '已平倉',
-                        checklist: [], biases: [], emotion: '', confidence: 5, mindset: '', personalReview: '', imageUrl: '', systemType: '', entryType: '市價', exitType: '市價', entryFee: 0, exitFee: 0, marketView: '', trigger: '', openTime: '', closeTime: ''
+                        riskAmount: riskAmount, pl: pl, rMultiple: rMultiple,
+                        strategy: row[13] || '', status: row[14] || '已平倉',
+                        biases: [], emotion: '', confidence: 5, mindset: '', personalReview: '', imageUrl: '', entryType: '市價', exitType: '市價', entryFee: 0, exitFee: 0, marketView: '', trigger: '', openTime: '', closeTime: ''
                     };
                     await addDoc(collection(db, 'users', currentUser.uid, 'trades'), tradeData);
                     count++;
@@ -1048,7 +1033,6 @@
         reader.readAsText(file);
     };
 
-    // === 匯出 JSON ===
     window.exportAllToJSON = function() {
         if (trades.length === 0) { showToast('沒有交易紀錄可以備份！', 'error'); return; }
         const json = JSON.stringify(trades, null, 2);
@@ -1060,7 +1044,6 @@
         showToast('已備份 ' + trades.length + ' 筆交易紀錄', 'success');
     };
 
-    // === 匯入 JSON ===
     window.importFromJSON = async function(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -1089,7 +1072,6 @@
         reader.readAsText(file);
     };
 
-    // === Excel 網址 ===
     window.saveExcelUrl = function() {
         const url = document.getElementById('excelUrlInput').value.trim();
         if (!url) { showToast('請先輸入網址！', 'error'); return; }
@@ -1117,7 +1099,6 @@
         }
     }
 
-    // === 篩選 ===
     window.clearAllFilters = function() {
         document.getElementById('filterStartDate').value = '';
         document.getElementById('filterEndDate').value = '';
@@ -1146,7 +1127,6 @@
         });
     }
 
-    // === Chip ===
     function initChips(containerId) {
         const container = document.getElementById(containerId);
         if(!container) return;
@@ -1168,7 +1148,6 @@
         return selected;
     }
 
-    // === 圖片處理 ===
     window.handleImageUrlChange = function() {
         const url = document.getElementById('imageUrlInput').value.trim();
         const previewContainer = document.getElementById('imagePreviewContainer');
@@ -1193,21 +1172,17 @@
     window.openModal = function(imageSrc) { if (!imageSrc) return; document.getElementById('modalImage').src = imageSrc; document.getElementById('imageModal').style.display = 'flex'; };
     window.closeModal = function() { document.getElementById('imageModal').style.display = 'none'; };
 
-    // === 分頁切換 ===
     window.switchTab = function(tabName) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         document.getElementById(`tab-${tabName}`).classList.add('active');
-        if(tabName === 'entry') {
-            document.querySelector('.tabs .tab-btn:first-child').classList.add('active');
-        } else {
-            document.querySelector('.tabs .tab-btn:last-child').classList.add('active');
-            renderDashboard();
-        }
+        const tabs = document.querySelectorAll('.tabs .tab-btn');
+        if (tabName === 'entry') tabs[0].classList.add('active');
+        else if (tabName === 'dashboard') tabs[1].classList.add('active');
+        else tabs[2].classList.add('active');
+        if (tabName === 'dashboard' || tabName === 'analysis') renderDashboard();
     };
 
-    // === 計算 ===
     function calculateMetrics() {
         const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
         const stop = parseFloat(document.getElementById('stopLoss').value) || 0;
@@ -1251,18 +1226,79 @@
         localStorage.setItem('defaultExitFee', document.getElementById('exitFee').value);
     }
 
-    window.toggleCustomInput = function(selectElement) {
-        const customInput = document.getElementById('customSystemType');
-        if (selectElement.value === '自行輸入') { customInput.style.display = 'block'; customInput.focus(); }
-        else { customInput.style.display = 'none'; customInput.value = ''; }
+    window.saveInitialCapital = function() {
+        const val = parseFloat(document.getElementById('initialCapitalInput').value) || 0;
+        initialCapital = val;
+        localStorage.setItem('initialCapital', val);
+        document.getElementById('initialCapitalInput').value = '';
+        document.getElementById('initialCapitalInput').placeholder = '初始本金: ' + val;
+        showToast('初始本金已儲存：' + val + ' USDT', 'success');
+        renderDashboard();
     };
 
-    // === 圖表 ===
-    function renderCharts(filteredTrades) {
-        const sorted = [...filteredTrades].sort((a,b) => (a.createdAt || 0) - (b.createdAt || 0));
-        let cum = 0;
+    function getRangeFilteredTrades(range) {
+        const closed = trades.filter(t => t.exitPrice > 0);
+        if (range === 'all') return closed;
+        const now = new Date();
+        let cutoff = new Date();
+        if (range === 'today') { cutoff.setHours(0,0,0,0); }
+        else if (range === '7d') { cutoff.setDate(now.getDate() - 7); }
+        else if (range === '30d') { cutoff.setDate(now.getDate() - 30); }
+        return closed.filter(t => {
+            const d = new Date(t.openTime || t.date);
+            return !isNaN(d) && d >= cutoff;
+        });
+    }
+
+    function renderAssetSummary() {
+        const closed = trades.filter(t => t.exitPrice > 0);
+        const totalPL = closed.reduce((s, t) => s + (t.pl || 0), 0);
+        const totalValue = initialCapital + totalPL;
+        document.getElementById('assetTotalValue').textContent = totalValue.toFixed(2);
+        document.getElementById('assetTotalValue').style.color = totalValue >= initialCapital ? 'var(--accent-green)' : 'var(--accent-red)';
+
+        const today = new Date(); today.setHours(0,0,0,0);
+        const sevenDaysAgo = new Date(today); sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        const thirtyDaysAgo = new Date(today); thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+        let todayPL = 0, weekPL = 0, monthPL = 0;
+        closed.forEach(t => {
+            const d = new Date(t.openTime || t.date);
+            if (isNaN(d)) return;
+            if (d >= today) todayPL += t.pl || 0;
+            if (d >= sevenDaysAgo) weekPL += t.pl || 0;
+            if (d >= thirtyDaysAgo) monthPL += t.pl || 0;
+        });
+
+        const todayPct = initialCapital > 0 ? (todayPL / initialCapital * 100) : 0;
+        const weekPct = initialCapital > 0 ? (weekPL / initialCapital * 100) : 0;
+        const monthPct = initialCapital > 0 ? (monthPL / initialCapital * 100) : 0;
+
+        const fmt = (v) => (v >= 0 ? '+$' : '-$') + Math.abs(v).toFixed(2);
+        const fmtPct = (v) => (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
+
+        document.getElementById('todayPL').textContent = fmt(todayPL);
+        document.getElementById('todayPL').className = 'asset-value-small ' + (todayPL >= 0 ? 'green' : 'red');
+        document.getElementById('todayPLPct').textContent = fmtPct(todayPct);
+        document.getElementById('todayPLPct').className = 'asset-sub ' + (todayPct >= 0 ? 'green' : 'red');
+
+        document.getElementById('weekPL').textContent = fmt(weekPL);
+        document.getElementById('weekPL').className = 'asset-value-small ' + (weekPL >= 0 ? 'green' : 'red');
+        document.getElementById('weekPLPct').textContent = fmtPct(weekPct);
+        document.getElementById('weekPLPct').className = 'asset-sub ' + (weekPct >= 0 ? 'green' : 'red');
+
+        document.getElementById('monthPL').textContent = fmt(monthPL);
+        document.getElementById('monthPL').className = 'asset-value-small ' + (monthPL >= 0 ? 'green' : 'red');
+        document.getElementById('monthPLPct').textContent = fmtPct(monthPct);
+        document.getElementById('monthPLPct').className = 'asset-sub ' + (monthPct >= 0 ? 'green' : 'red');
+    }
+
+    function renderCharts() {
+        const eqRange = document.getElementById('equityRange').value;
+        const eqTrades = getRangeFilteredTrades(eqRange).sort((a,b) => (a.createdAt || 0) - (b.createdAt || 0));
+        let cum = initialCapital;
         const eqLabels = [], eqData = [];
-        sorted.forEach((t, i) => {
+        eqTrades.forEach((t, i) => {
             cum += t.pl || 0;
             eqLabels.push(`#${i+1}`);
             eqData.push(cum.toFixed(2));
@@ -1271,12 +1307,33 @@
         if (equityChartInstance) equityChartInstance.destroy();
         equityChartInstance = new Chart(eqCtx, {
             type: 'line',
-            data: { labels: eqLabels, datasets: [{ label: '累計盈虧 (USDT)', data: eqData, borderColor: '#f0b90b', backgroundColor: 'rgba(240,185,11,0.1)', tension: 0.3, fill: true, pointRadius: 2 }] },
+            data: { labels: eqLabels, datasets: [{ label: '資產總值 (USDT)', data: eqData, borderColor: '#f0b90b', backgroundColor: 'rgba(240,185,11,0.1)', tension: 0.3, fill: true, pointRadius: 2 }] },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#e8e8e8' } } }, scales: { x: { ticks: { color: '#b8b8b8' } }, y: { ticks: { color: '#b8b8b8' } } } }
         });
 
+        const dailyRange = document.getElementById('dailyRange').value;
+        const dailyTrades = getRangeFilteredTrades(dailyRange);
+        const dailyMap = {};
+        dailyTrades.forEach(t => {
+            const d = new Date(t.openTime || t.date);
+            if (isNaN(d)) return;
+            const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+            dailyMap[key] = (dailyMap[key] || 0) + (t.pl || 0);
+        });
+        const dailyKeys = Object.keys(dailyMap).sort();
+        const dailyData = dailyKeys.map(k => dailyMap[k].toFixed(2));
+        const dailyColors = dailyData.map(v => v >= 0 ? '#2ecc71' : '#e74c3c');
+        const dCtx = document.getElementById('dailyChart');
+        if (dailyChartInstance) dailyChartInstance.destroy();
+        dailyChartInstance = new Chart(dCtx, {
+            type: 'bar',
+            data: { labels: dailyKeys, datasets: [{ label: '每日盈虧 (USDT)', data: dailyData, backgroundColor: dailyColors }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#e8e8e8' } } }, scales: { x: { ticks: { color: '#b8b8b8' } }, y: { ticks: { color: '#b8b8b8' } } } }
+        });
+
+        const closed = trades.filter(t => t.exitPrice > 0);
         let wins = 0, losses = 0;
-        filteredTrades.forEach(t => { if (t.exitPrice > 0) { if (t.pl > 0) wins++; else if (t.pl < 0) losses++; } });
+        closed.forEach(t => { if (t.pl > 0) wins++; else if (t.pl < 0) losses++; });
         const wrCtx = document.getElementById('winRateChart');
         if (winRateChartInstance) winRateChartInstance.destroy();
         winRateChartInstance = new Chart(wrCtx, {
@@ -1285,50 +1342,98 @@
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#e8e8e8' } } } }
         });
 
-        const monthlyMap = {};
-        filteredTrades.forEach(t => {
-            let dateStr = t.openTime || t.date;
-            const d = new Date(dateStr);
-            if (isNaN(d)) return;
-            const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-            if (!monthlyMap[key]) monthlyMap[key] = 0;
-            monthlyMap[key] += t.pl || 0;
+        const cumRange = document.getElementById('cumulativeRange').value;
+        const cumTrades = getRangeFilteredTrades(cumRange).sort((a,b) => (a.createdAt || 0) - (b.createdAt || 0));
+        let runningCum = 0;
+        const cumLabels = [], cumData = [];
+        cumTrades.forEach((t, i) => {
+            runningCum += t.pl || 0;
+            cumLabels.push(`#${i+1}`);
+            cumData.push(runningCum.toFixed(2));
         });
-        const monthKeys = Object.keys(monthlyMap).sort();
-        const monthData = monthKeys.map(k => monthlyMap[k].toFixed(2));
-        const mCtx = document.getElementById('monthlyChart');
-        if (monthlyChartInstance) monthlyChartInstance.destroy();
-        monthlyChartInstance = new Chart(mCtx, {
+        const cumCtx = document.getElementById('cumulativeChart');
+        if (cumulativeChartInstance) cumulativeChartInstance.destroy();
+        cumulativeChartInstance = new Chart(cumCtx, {
             type: 'bar',
-            data: { labels: monthKeys, datasets: [{ label: '每月盈虧 (USDT)', data: monthData, backgroundColor: monthData.map(v => v >= 0 ? '#2ecc71' : '#e74c3c') }] },
+            data: { labels: cumLabels, datasets: [{ label: '累計盈虧 (USDT)', data: cumData, backgroundColor: '#f0b90b' }] },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#e8e8e8' } } }, scales: { x: { ticks: { color: '#b8b8b8' } }, y: { ticks: { color: '#b8b8b8' } } } }
         });
+
+        renderCalendar();
     }
 
-    // === 渲染儀表板 ===
+    function renderCalendar() {
+        const year = calendarDate.getFullYear();
+        const month = calendarDate.getMonth();
+        document.getElementById('calendarTitle').textContent = `${year} 年 ${month + 1} 月`;
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const grid = document.getElementById('calendarGrid');
+        grid.innerHTML = '';
+        ['日','一','二','三','四','五','六'].forEach(d => {
+            const el = document.createElement('div');
+            el.className = 'calendar-weekday';
+            el.textContent = d;
+            grid.appendChild(el);
+        });
+        for (let i = 0; i < firstDay; i++) {
+            const el = document.createElement('div');
+            el.className = 'calendar-cell empty';
+            grid.appendChild(el);
+        }
+        const dailyMap = {};
+        trades.filter(t => t.exitPrice > 0).forEach(t => {
+            const d = new Date(t.openTime || t.date);
+            if (isNaN(d)) return;
+            if (d.getFullYear() === year && d.getMonth() === month) {
+                const key = d.getDate();
+                dailyMap[key] = (dailyMap[key] || 0) + (t.pl || 0);
+            }
+        });
+        for (let day = 1; day <= daysInMonth; day++) {
+            const el = document.createElement('div');
+            const pl = dailyMap[day];
+            if (pl === undefined) el.className = 'calendar-cell day';
+            else if (pl > 0) el.className = 'calendar-cell win';
+            else if (pl < 0) el.className = 'calendar-cell loss';
+            else el.className = 'calendar-cell day';
+            el.innerHTML = `<div class="day-num">${day}</div>${pl !== undefined ? `<div class="day-pl">${pl > 0 ? '+' : ''}${pl.toFixed(0)}</div>` : ''}`;
+            grid.appendChild(el);
+        }
+    }
+
+    window.changeCalendarMonth = function(delta) {
+        calendarDate.setMonth(calendarDate.getMonth() + delta);
+        renderCalendar();
+    };
+
     window.renderDashboard = function() {
         const filteredTrades = getFilteredTrades();
+        const closedTrades = filteredTrades.filter(t => t.exitPrice > 0);
         const filterInfo = document.getElementById('filterInfo');
         const hasFilter = document.getElementById('filterStartDate').value || document.getElementById('filterEndDate').value || document.getElementById('filterSymbol').value || document.getElementById('filterDirection').value || document.getElementById('filterStrategy').value;
         filterInfo.textContent = hasFilter ? `(已篩選 ${filteredTrades.length} 筆)` : '';
+
+        renderAssetSummary();
+
         if (filteredTrades.length === 0) {
             document.getElementById('historyList').innerHTML = '<p style="color:var(--text-secondary); text-align:center;">無交易紀錄</p>';
             ['statTotalR','statWinRate','statTotalTrades','statAvgR','statWins','statLosses','statMaxDrawdown','statTotalPL','longCount','shortCount','longWinRate','shortWinRate'].forEach(id => document.getElementById(id).textContent = id.includes('Rate') ? '0%' : '0');
             if (equityChartInstance) { equityChartInstance.destroy(); equityChartInstance = null; }
+            if (dailyChartInstance) { dailyChartInstance.destroy(); dailyChartInstance = null; }
             if (winRateChartInstance) { winRateChartInstance.destroy(); winRateChartInstance = null; }
-            if (monthlyChartInstance) { monthlyChartInstance.destroy(); monthlyChartInstance = null; }
+            if (cumulativeChartInstance) { cumulativeChartInstance.destroy(); cumulativeChartInstance = null; }
             return;
         }
+
         let totalPL = 0, totalR = 0, wins = 0, losses = 0, maxDrawdown = 0, currentDrawdown = 0;
         let longTrades = 0, longWins = 0, shortTrades = 0, shortWins = 0;
-        filteredTrades.forEach(t => {
+        closedTrades.forEach(t => {
             totalPL += t.pl || 0; totalR += t.rMultiple || 0;
-            if (t.exitPrice > 0) {
-                if (t.pl > 0) { wins++; currentDrawdown = 0; }
-                else if (t.pl < 0) { losses++; currentDrawdown += Math.abs(t.rMultiple || 0); if (currentDrawdown > maxDrawdown) maxDrawdown = currentDrawdown; }
-                if (t.direction === 'long') { longTrades++; if (t.pl > 0) longWins++; }
-                else { shortTrades++; if (t.pl > 0) shortWins++; }
-            }
+            if (t.pl > 0) { wins++; currentDrawdown = 0; }
+            else if (t.pl < 0) { losses++; currentDrawdown += Math.abs(t.rMultiple || 0); if (currentDrawdown > maxDrawdown) maxDrawdown = currentDrawdown; }
+            if (t.direction === 'long') { longTrades++; if (t.pl > 0) longWins++; }
+            else { shortTrades++; if (t.pl > 0) shortWins++; }
         });
         const winRate = (wins + losses) > 0 ? (wins / (wins + losses)) * 100 : 0;
         const avgR = (wins + losses) > 0 ? totalR / (wins + losses) : 0;
@@ -1349,6 +1454,7 @@
         document.getElementById('longWinRate').textContent = longWinRate.toFixed(1) + '%';
         document.getElementById('shortCount').textContent = shortTrades;
         document.getElementById('shortWinRate').textContent = shortWinRate.toFixed(1) + '%';
+
         const historyList = document.getElementById('historyList');
         historyList.innerHTML = '';
         [...filteredTrades].reverse().forEach(t => {
@@ -1376,10 +1482,10 @@
                 </div>`;
             historyList.appendChild(item);
         });
-        renderCharts(filteredTrades);
+
+        renderCharts();
     };
 
-    // === 複製單筆 EX ===
     window.copySingleTradeToExcel = function(id) {
         const t = trades.find(trade => trade.id === id);
         if (!t) return;
@@ -1424,7 +1530,6 @@
         navigator.clipboard.write(data).then(() => showToast('已複製這筆交易！', 'success')).catch(() => showToast('複製失敗', 'error'));
     };
 
-    // === 初始化 ===
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('tradeForm').addEventListener('submit', handleFormSubmit);
         ['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'size', 'entryFee', 'exitFee', 'leverage', 'usdtAmount'].forEach(id => {
@@ -1451,13 +1556,12 @@
             document.getElementById('confidenceVal').textContent = e.target.value;
         });
         document.getElementById('langSelect').value = currentLang;
-        initChips('checklistGroup');
+        document.getElementById('initialCapitalInput').placeholder = '初始本金: ' + initialCapital;
         initChips('biasGroup');
         loadExcelUrl();
         loadDefaultParams();
     });
 
-    // === PWA ===
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js').catch(err => console.log('SW 註冊失敗', err));
@@ -1465,6 +1569,4 @@
     }
 </script>
 </body>
-</html><!-- ================= PWA Manifest & Service Worker ================= -->
-<!-- 請在您的專案資料夾中新增以下兩個檔案：manifest.json 與 sw.js -->
-<!-- 這兩個檔案需要與 index.html 放在同一層 -->
+</html>
