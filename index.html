@@ -481,9 +481,16 @@
                         <label>目標價 (Take Profit)</label>
                         <input type="number" id="takeProfit" step="0.0001" placeholder="0.00">
                     </div>
+                </div>
+
+                <div class="form-row">
                     <div class="form-group">
                         <label>數量 / 倉位大小 (Size)</label>
                         <input type="number" id="size" step="0.0001" placeholder="例如: 0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>USDT 金額 (進場總額)</label>
+                        <input type="number" id="usdtAmount" step="0.01" placeholder="例如: 6000">
                     </div>
                 </div>
 
@@ -765,6 +772,7 @@
     let trades = JSON.parse(localStorage.getItem('tradingJournalData')) || [];
     let currentImageUrl = ""; // 暫存當前輸入的圖片網址
     let isEditing = false; // 是否正在編輯模式
+    let isSyncing = false; // 防止數量與USDT金額互相觸發無限循環
 
     // === 初始化 ===
     document.addEventListener('DOMContentLoaded', () => {
@@ -776,8 +784,31 @@
         document.getElementById('tradeForm').addEventListener('submit', handleFormSubmit);
         
         // 綁定即時計算事件
-        ['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'size', 'entryFee', 'exitFee', 'leverage'].forEach(id => {
+        ['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'size', 'entryFee', 'exitFee', 'leverage', 'usdtAmount'].forEach(id => {
             document.getElementById(id).addEventListener('input', calculateMetrics);
+        });
+
+        // 綁定數量與USDT金額的雙向連動
+        document.getElementById('size').addEventListener('input', function() {
+            if (isSyncing) return;
+            isSyncing = true;
+            const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
+            const size = parseFloat(this.value) || 0;
+            if (entry > 0) {
+                document.getElementById('usdtAmount').value = (entry * size).toFixed(2);
+            }
+            isSyncing = false;
+        });
+
+        document.getElementById('usdtAmount').addEventListener('input', function() {
+            if (isSyncing) return;
+            isSyncing = true;
+            const entry = parseFloat(document.getElementById('entryPrice').value) || 0;
+            const usdt = parseFloat(this.value) || 0;
+            if (entry > 0) {
+                document.getElementById('size').value = (usdt / entry).toFixed(4);
+            }
+            isSyncing = false;
         });
 
         // 綁定信心 slider
@@ -1047,6 +1078,7 @@
         const target = parseFloat(document.getElementById('takeProfit').value) || 0;
         const exit = parseFloat(document.getElementById('exitPrice').value) || 0;
         const size = parseFloat(document.getElementById('size').value);
+        const usdtAmount = parseFloat(document.getElementById('usdtAmount').value) || 0;
         const direction = document.getElementById('direction').value;
         const leverage = parseFloat(document.getElementById('leverage').value) || 0;
         const entryFeePercent = parseFloat(document.getElementById('entryFee').value) || 0;
@@ -1120,6 +1152,7 @@
             takeProfit: target,
             exitPrice: exit,
             size: size,
+            usdtAmount: usdtAmount,
             openTime: document.getElementById('openTime').value,
             closeTime: document.getElementById('closeTime').value,
             riskAmount: riskAmount,
@@ -1220,6 +1253,7 @@
         document.getElementById('takeProfit').value = trade.takeProfit;
         document.getElementById('exitPrice').value = trade.exitPrice;
         document.getElementById('size').value = trade.size;
+        document.getElementById('usdtAmount').value = trade.usdtAmount || (trade.entryPrice * trade.size).toFixed(2);
         document.getElementById('openTime').value = trade.openTime || '';
         document.getElementById('closeTime').value = trade.closeTime || '';
 
