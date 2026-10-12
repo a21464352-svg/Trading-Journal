@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>虛擬貨幣交易決策日誌</title>
+    <title>交易日誌</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -109,10 +109,9 @@
         }
     </style>
 </head>
-<body>
-    <!-- ================= 登入頁面 ================= -->
+<body><!-- ================= 登入頁面 ================= -->
 <div id="loginPage" class="container">
-    <h1><i class="fas fa-coins"></i> 虛擬貨幣交易日誌</h1>
+    <h1><i class="fas fa-coins"></i> 交易日誌</h1>
     <p>歡迎使用，請先登入</p>
     <button class="login-btn google-btn" onclick="loginWithGoogle()">
         <i class="fab fa-google"></i> Google 登入
@@ -270,7 +269,7 @@
                 <div class="card-title"><i class="fas fa-clipboard-check"></i> 5. 個人檢討 / 覆盤筆記</div>
                 <div class="form-group"><textarea id="personalReview" placeholder="記錄這筆交易學到了什麼？"></textarea></div>
             </div>
-            <button type="submit" id="submitBtn" class="tab-btn active" style="width:100%; padding:15px; font-size:1.1rem; margin-top:10px;"><i class="fas fa-save"></i> 儲存交易紀錄</button>
+            <button type="submit" id="submitBtn" style="width:100%; padding:15px; font-size:1.1rem; margin-top:10px; background: var(--acce"><i class="fas fa-save"></i> 儲存交易紀錄</button>
             <button type="button" id="cancelEditBtn" class="tab-btn" style="width:100%; padding:15px; font-size:1.1rem; margin-top:10px; border-color: var(--accent-red); color: var(--accent-red); display: none;" onclick="cancelEdit()"><i class="fas fa-times"></i> 取消編輯</button>
         </form>
     </div>
