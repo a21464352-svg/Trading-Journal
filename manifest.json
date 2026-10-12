@@ -1,0 +1,22 @@
+{
+  "name": "虛擬貨幣交易日誌",
+  "short_name": "交易日誌",
+  "description": "虛擬貨幣交易決策日誌",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#f0b90b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2920/2920277.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2920/2920277.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
