@@ -436,6 +436,11 @@
                 <span><i class="fas fa-trash-alt"></i> 已刪除交易紀錄</span>
                 <button onclick="undoDelete()">復原</button>
             </div>
+            <div style="margin-bottom: 12px;">
+                <button onclick="restoreDeletedTrades()" class="btn-secondary btn-yellow" style="width: 100%; justify-content: center; padding: 10px; font-size: 0.9rem;">
+                    <i class="fas fa-undo-alt"></i> 回復誤刪紀錄
+                </button>
+            </div>
             <div class="date-filter-container" style="margin-bottom: 15px;">
                 <input type="date" id="filterStartDate" onchange="renderDashboard()">
                 <span style="color: var(--text-secondary);">至</span>
@@ -731,7 +736,7 @@
         document.getElementById('shareStatTotalPL').textContent = totalPL.toFixed(2);
         const list = document.getElementById('shareHistoryList');
         list.innerHTML = '';
-        [...sharedTrades].reverse().forEach(t => {
+        [...sharedTrades].sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0)).forEach(t => {
             const item = document.createElement('div');
             item.className = 'history-item';
             const isWin = t.pl > 0;
@@ -898,8 +903,13 @@
 
     window.deleteTrade = async function(id) {
         if (!confirm('確定要刪除這筆交易紀錄嗎？')) return;
+        const trade = trades.find(t => t.id === id);
+        if (!trade) return;
         pendingDeleteId = id;
         try {
+            const backup = JSON.parse(localStorage.getItem('deletedTradesBackup')) || [];
+            backup.push(trade);
+            localStorage.setItem('deletedTradesBackup', JSON.stringify(backup));
             await deleteDoc(doc(db, 'users', currentUser.uid, 'trades', id));
             await loadTrades();
             updateFilterOptions();
@@ -918,7 +928,32 @@
         document.getElementById('undoToast').classList.remove('active');
         if (undoTimer) clearTimeout(undoTimer);
         pendingDeleteId = null;
-        showToast('已刪除，無法復原。請從備份還原。', 'error');
+        showToast('已刪除，如需回復請點「回復誤刪紀錄」。', 'info');
+    };
+
+    window.restoreDeletedTrades = async function() {
+        if (!currentUser) { showToast('請先登入', 'error'); return; }
+        const backup = JSON.parse(localStorage.getItem('deletedTradesBackup')) || [];
+        if (backup.length === 0) {
+            showToast('沒有可回復的誤刪紀錄。', 'error');
+            return;
+        }
+        if (!confirm(`確定要回復最近刪除的 ${backup.length} 筆紀錄嗎？`)) return;
+        showLoading('回復中...');
+        try {
+            for (const t of backup) {
+                const { id, ...tradeData } = t;
+                await addDoc(collection(db, 'users', currentUser.uid, 'trades'), tradeData);
+            }
+            localStorage.removeItem('deletedTradesBackup');
+            await loadTrades();
+            updateFilterOptions();
+            renderDashboard();
+            showToast(`成功回復 ${backup.length} 筆交易紀錄！`, 'success');
+        } catch (err) {
+            showToast('回復失敗：' + err.message, 'error');
+        }
+        hideLoading();
     };
 
     window.quickAdd = function() {
@@ -1484,7 +1519,7 @@
 
         const historyList = document.getElementById('historyList');
         historyList.innerHTML = '';
-        [...filteredTrades].reverse().forEach(t => {
+        [...filteredTrades].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).forEach(t => {
             const item = document.createElement('div');
             item.className = 'history-item';
             const isWin = t.pl > 0;
